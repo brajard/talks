@@ -1,0 +1,426 @@
+\documentclass{beamer}
+
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{tikz}
+\usepackage{framed}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{shapes.arrows}
+\usetikzlibrary{arrows}
+\usepackage{array}
+
+\usetheme{Boadilla}
+\usecolortheme{dolphin}
+
+\lstnewenvironment{codeC}
+{ \lstset{language=C,
+    otherkeywords={printf,scan}}
+}
+{}
+\newcommand{\red}{\textcolor{red}}
+%\newcommand \emph
+%Default size : 12.8 cm * 9.6 cm
+
+\newenvironment<>{codeblock}[1]{%begin
+  \setbeamercolor{block title}{fg=darkgray,bg=yellow}%
+  \begin{block}{#1}}
+  % \begin{codeC}}
+  %  {\end{codeC}
+{  
+\end{block}}
+
+\newenvironment<>{termblock}[1]{
+    \setbeamercolor{block title}{fg=white,bg=lightgray}%
+    \begin{block}{#1}}
+%     \begin{Verbatim}}
+{%\end{Verbatim}
+\end{block}
+}
+%\newcommand{\output}[1]{
+
+%%% Paramètres du cours (à régler)
+%Numéro du cours
+\newcommand{\nb}{1}
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+
+\title[Renorm. SW]{Premiers test de l'algorithme de renormalisation avec le modèle linéaire shallow-water}
+\author[J. Brajard]{julien.brajard@locean-ipsl.upmc.fr}
+\institute[LOCEAN]{LOCEAN}
+\date{10 Septembre 2015}
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%% SLIDES DE TITRE
+\begin{frame}
+\titlepage
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Les équations du shallow-water linéaire}
+\begin{eqnarray*}
+\partial_tu & = & -g^*.\partial_xh + f . v - \gamma . u \nonumber \\
+\partial_tv & = & -g^*.\partial_yh - f . u - \gamma . v \label{shal-lin}\\
+\partial_th & = & - H.(\partial_xu + \partial_yv) \nonumber
+\end{eqnarray*}
+
+\begin{block}{paramètres utilisés : }
+\centering
+\begin{tabular}{rcll}
+%$\Delta t$ & = & $1500 s$ \\
+%$\Delta x$ & = & $5000 m$ \\
+%$\Delta y$ & = & $5000 m$ \\
+$f$ & = & $0.0001 s^{-1}$& (paramètre de coriolis)\\
+$g^*$& = & $0.01 m.s^{-2}$& (gravité réduite)\\
+$\gamma$& = & $0.00001s^{-1}$& (dissipation)\\
+%$\alpha$& = & $0.15$\\
+$H$& = & $100 m$ & (Hauteur moyenne)\\
+\end{tabular}
+\end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+\frametitle{Modèle numérique}
+\begin{itemize}
+\item \textbf{Schéma spatial} : différences finies centrées sur une grille C d'Arakawa
+\begin{verbatim}
+h(i,j)  --  u(i,j) -- h(i+1,j)
+   |          |
+v(i,j)  --  z(i,j)
+   |
+h(i,j-1) 
+\end{verbatim}
+\item \textbf{Schéma temporel} : Schéma leap-frog (saute-mouton) d'ordre 2 avec filtre d'Asselin
+\begin{equation}
+\hat{x}_{ijt}  = x_{ijt} + \alpha(\hat{x}_{ijt-1} - 2 x_{ijt} + x_{ijt+1})\nonumber
+\end{equation}
+avec $\hat{x}$ désignant la valeur filtrée de la grandeur physique $x=h$,$u$ ou $v$.\\
+
+\end{itemize}
+\begin{block}{paramètres utilisés : }
+\centering
+\begin{tabular}{rcl}
+$\Delta t$ & = & $1500 s$ \\
+$\Delta x$ & = & $5000 m$ \\
+$\Delta y$ & = & $5000 m$ \\
+$\alpha$& = & $0.15$\\
+\end{tabular}
+\end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Initialisation du modèle}
+
+\begin{columns}
+\column{6cm}
+\onslide<1->{
+\begin{figure}
+\centering
+
+\begin{tikzpicture} [
+    auto,
+      block/.style    = { rectangle, draw=blue, thick, 
+                        fill=blue!20, text width=1.3cm, text centered,
+                        rounded corners, minimum height=2em,scale=0.8 },
+    line/.style     = { draw, thick, ->, shorten >=2pt,text width=4cm},
+    etiq/.style = {scale=0.8,midway,xshift=+4mm,right},
+    node distance=1.5cm,
+  ]
+\node (H0) [block]{$h_0$};
+\node (Init) [block,below of = H0]{$h_0$,$u_0$,$v_0$};
+\node (t1) [block,below of = Init]{$h_1$,$u_1$,$v_1$};
+\node (buf1) [below of = t1,yshift=+4mm]{...};
+\node (tn) [block,below of = buf1,yshift=+4mm]{$h_t$,$u_t$,$v_t$};
+\node (buf2) [below of = tn,yshift=+4mm]{...};
+\node (obs) [block,below of =buf2,yshift=+4mm]{$h_{obs}$};
+
+\begin{scope}[every path/.style=line]
+\path (H0) -- node[etiq] {Equilibre géostrophique} (Init);
+\path (Init) -- node[etiq] {Modèle (Euler)} (t1);
+\path (t1) -- node[etiq] {Modèle (leap-frog)}(buf1);
+%\path (buf1) -- node[etiq] {Modèle (leap-frog)}(tn);
+%\path (tn) -- (buf2);
+\path (buf2) -- node[etiq] {Echantillonnage}(obs);
+\end{scope}
+
+\end{tikzpicture}
+
+\end{figure}
+}
+\column{6cm}
+\onslide<2->{
+\begin{alertblock}{Système à résoudre}
+\begin{equation}
+\centering
+R \times h_0 = h_{obs} \nonumber
+\end{equation}
+$R$ est la matrice adjointe composée des $p$ matrices lignes $r_i$
+\end{alertblock}
+}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Résolution du système}
+\begin{block}{}
+\begin{equation}
+h_0 = \mu^T H_f^{-1} R_f \nonumber
+\end{equation}
+où $\mu = h_{hobs}$, et $H_f$, $R_f$ sont définis par la méthode de renormalisation.
+\end{block}
+\begin{itemize}
+\item Si $f=1$, on calcule exactement la solution de la pseudo-inverse,\\
+\item si $f$ est tel que $R_f^T H_f^{-1} R_f \equiv 1$, on calcule la solution renormalisée.
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Mise en oeuvre technique}
+\begin{itemize}
+\item Les fonction adjointes (lignes de $R$) sont calculées via le code généré par YAO.\\
+\item La méthode de renormalisation est implémentée dans le code YAO à l'aide de la bibliothèque d'algèbre linéaire Seldon\footnote{\url{http://seldon.sourceforge.net/}} interfacée avec Blas et Lapack.\\
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Première expérience (4 observartions)}
+\begin{figure}
+\includegraphics[scale=0.4]{./fig/4obs/eclairement.png}
+\caption{Fonction d'Eclairement (en racine carré) et position des observations}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Solution de la pseudo-inverse}
+\begin{figure}
+\includegraphics[scale=0.55]{./fig/4obs/pseudoinv-sol.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Solution par renormalisation}
+\begin{figure}
+\includegraphics[scale=0.55]{./fig/4obs/renorm-sol.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Solutions dans le temps}
+\begin{figure}
+\includegraphics[scale=0.55]{./fig/4obs/compare_sol.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Autre expérience (121 observations)}
+\begin{figure}
+\includegraphics[scale=0.4]{./fig/121obs/eclairement.png}
+\caption{Fonction d'Eclairement (en racine carré) et position des observations}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Solution de la pseudo-inverse}
+\begin{figure}
+\includegraphics[scale=0.55]{./fig/121obs/pseudoinv-sol.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Solution par renormalisation}
+\begin{figure}
+\includegraphics[scale=0.55]{./fig/121obs/renorm-sol.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Solutions dans le temps}
+\begin{figure}
+\includegraphics[scale=0.55]{./fig/121obs/compare_sol.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ecart à la référence}
+\begin{figure}
+\includegraphics[scale=0.55]{./fig/121obs/error_H.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Résulats pour le paramètre U  (pseudo-inverse)}
+\begin{figure}
+\includegraphics[scale=0.55]{./fig/121obs/pseudoinv-sol-U.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Résulats pour le paramètre U  (renormalisation)}
+\begin{figure}
+\includegraphics[scale=0.55]{./fig/121obs/renorm-sol-U.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Conclusion}
+\begin{itemize}
+\item Problème du schéma numérique (si le champ est trop irrégulier).\\
+\item Corriger l'instant initial pour $u$ et $v$ aussi afin de retrouver une plus grande variété de conditions initiales.\\
+\item Aller vers le non-linéaire.\\
+\end{itemize}
+\end{frame}
+
+
+%%%%%% SECTION 12
+%\include{algorithmes}
+\end{document}
+
+
+%%%%%%%%%%%%%%%%%%%%% SECTION 1
+\section{Les algorithmes}\label{section:1}
+\begin{frame}
+\begin{columns}
+        \column{4.8cm}
+            \tableofcontents[currentsection]
+        \column{7cm}
+        \centering{
+            \includegraphics[width=7cm]{fig/Algorithm-sheldon.png}
+            
+                 \textit{ I believe I've isolateblblblblblblsblbslbslbsl
+            sblbslblsblsblblsblbs
+            lbslblbslsb d the algorithm for making friends.}
+     
+            
+            \small{
+            \hfill Sheldon Cooper, 
+            
+            \hfill in \textit{The Big Band Theory}, Season 2, Episode 13
+            }
+}
+
+    \end{columns}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\subsection{Introduction}
+    \begin{frame}
+    \frametitle{Pourquoi faire appel à des algorithmes ?}
+    Pour automatiser des tâches
+    
+    Exemples :
+    \begin{itemize}
+    \item Métier à tisser\\
+    \item Méthode de calcul à la main d'une division\\
+    \item Recette de cuisine\\
+    \item ...\\
+    \end{itemize}
+    \end{frame}
+ 
+ %%%%%%%%%%%%%%%%%
+ 
+    \begin{frame}
+    \frametitle{Qu'est-ce qu'un algorithme ?}
+    \begin{block}{Définition}
+    Un algorithme est un ensemble 
+    ordonné d'instructions simples
+permettant de résoudre un problème.
+    \end{block}
+    \end{frame}
+    
+ %%%%%%%%%%%%%%%%%%
+ \subsection{Construction d'un algorithme}
+%%%%%%%%%%%%%%%%%%%    
+\section{La machine de Turing}
+%%%%%%%%%%%%%%%%%%%%
+ 
+  
+\begin{frame}[fragile]
+\frametitle{Un peu d'histoire...}
+\begin{codeblock}{Test}
+\begin{codeC}
+for (int i = 0 ; i < n ; i ++) {
+    //a comment
+    printf("%d",i);
+    }
+\end{codeC}
+\end{codeblock}
+
+\begin{termblock}{test 2}
+\lstset{escapeinside={§§}}
+\begin{lstlisting}
+§\textbf{>>}§./a.out
+§\color{darkgray}{\texttt{  Hello World}}§
+\end{lstlisting}
+\end{termblock}
+
+ \begin{block}{Bloc standard}
+blablabla
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{essai}
+\begin{columns}
+\column{6cm}
+\begin{block}
+
+\begin{figure}
+\begin{tikzpicture} [
+    auto,
+    decision/.style = { diamond, draw=blue, thick, fill=blue!20,
+                        text width=5em, text badly centered,
+                        inner sep=1pt, rounded corners },
+    block/.style    = { rectangle, draw=blue, thick, 
+                        fill=blue!20, text width=10em, text centered,
+                        rounded corners, minimum height=2em },
+    line/.style     = { draw, thick, ->, shorten >=2pt },
+  ]
+   \matrix [column sep=-10mm, row sep=10mm] {
+                    & \node [text centered] (x) {$\mathbf{X}$};            & \\
+                    & \node (null1) {};                                    & \\
+                    & \node [block] (doa) {\textsf{DoAE}($\mathbf{X}$)};   & \\
+  	               \node(null3){}; & \node [decision] (uiddes)
+                        {\textsf{UID}($\hat{\mathbf{X}}$)};
+                                  & \node[text centered](tra){$\mathbf{i}$}; \\
+                  & \node [block] (track) {\textsf{DoAT}($\mathbf{x}$)}; & \\
+                    & \node [block] (pesos)
+                        {\textsf{BF}(DoA$_{\mathrm{T}}$,DoAs)};            & \\
+                    & \node [block] (filtrado)
+                        {\textsf{SF}($\mathbf{w}$,$\mathbf{x}$)};          & \\
+                    & \node [text centered] (xf) {$\hat{x}(t)$ };          & \\
+  };
+  % connect all nodes defined above
+ \begin{scope} [every path/.style=line]
+    \path (x)        --    (doa);
+    \path (doa)      --    node [near start] {DoAs} (uiddes);
+    \path (tra)      --    (uiddes);
+    \path (uiddes)   --++  (-3,0) node [near start] {no} |- (null1);
+    \path (uiddes)   --    node [near start] {DoA} (track);
+    \path (track)    --    node [near start] {DoA$_{\mathrm{T}}$} (pesos);
+    \path (pesos)    --    node [near start] {\textbf{w}} (filtrado);
+    \path (filtrado) --    (xf);
+  
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{block}
+\column{3cm}
+\begin{block}{bulbul}
+\end{block}
+\end{columns}
+\end{frame}
+
+\end{document}
