@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[10pt]{beamer}
 
 \usepackage[frenchb]{babel}
 \usepackage[T1]{fontenc}
@@ -10,21 +10,39 @@
 \usepackage{framed}
 \usepackage{algorithm}
 \usepackage{algorithmic}
+  \usepackage{amsmath,amssymb,amsthm}
+  \usepackage{dsfont}\let\mathbb\mathds
+\usepackage{setspace}
 
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{shapes.arrows}
 \usetikzlibrary{arrows}
 \usepackage{array}
 
-\usetheme{Boadilla}
+%\usetheme{Boadilla}
+\usetheme{inria}
+\usepackage{helvet}
 \usecolortheme{dolphin}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
 
+
+\newcommand{\inriaswitchcolors}[1]{%
+\pgfaliasimage{figfootline}{figfootline-#1}% !!!
+\pgfaliasimage{figbackground}{figbackground-#1}% !!!
+\pgfaliasimage{figbackground}{figbackground-#1}% !!!
+}
+
+%\inriaswitchcolors{pastelgreen}
 \lstnewenvironment{codeC}
 { \lstset{language=C,
     otherkeywords={printf,scan}}
 }
 {}
 \newcommand{\red}{\textcolor{red}}
+\newcommand{\plus}[1]{\textcolor{orange}{\textbf{#1}}}
 %\newcommand \emph
 %Default size : 12.8 cm * 9.6 cm
 
@@ -50,16 +68,212 @@
 \newcommand{\nb}{1}
 \setbeamertemplate{navigation symbols}{}%remove navigation symbols
 
-\title[Renorm. SW]{Premiers test de l'algorithme de renormalisation avec le modèle linéaire shallow-water}
+\title[Renormalisation]{L'algorithme de \mbox{renormalisation}}
+\subtitle{Application au Shallow-Water}
 \author[J. Brajard]{julien.brajard@locean-ipsl.upmc.fr}
-\institute[LOCEAN]{LOCEAN}
-\date{10 Septembre 2015}
+\institute[CLIME]{Inria CLIME}
+\date{18 Septembre 2015}
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%% SLIDES DE TITRE
 \begin{frame}
 \titlepage
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Contexte de cette présentation}
+
+\begin {block}{}
+La méthode de renormalisation est une méthode proposé dans~\cite{issartel2007} pour la détection de source dans la dispersion atmosphérique.
+\end{block}
+\bibliographystyle{apalike} 
+\bibliography{bib-assim.bib}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]
+\setbeamercovered{transparent=50}
+\frametitle{Objectif général}
+\begin{columns}
+\column{.5\textwidth}
+\uncover<1-4>{
+\begin{block}{Détermination de sources}
+\begin{itemize}[<visible@+->]
+\item  Existence d'une \plus{source} de traceur inconnue $\sigma(x,y,z,t)$.\\
+\item  Un \plus{modèle} $M$ linéaire d'advection/diffusion permet de relier la source à la concentration de ce traceur en tout point : $\chi(x,y,z,t) = M.\sigma(x,y,z,t)$.\\
+\item  On dispose de $m$ \plus{observations} ponctuelles de concentration $\mu_i=<\pi_i,\chi>$.\\
+\end{itemize}
+\visible<4-> {\textbf {\red{Objectif :} Retrouver le \textit{meilleur} $\sigma$ sachant $\mu_i$ et $M$.}}
+\end{block}
+}
+\column{.5\textwidth}
+
+\only<5->{
+\begin{block}{Conditions initiales}
+\begin{itemize}
+\item Existence d'une \plus{hauteur} d'eau initiale inconnue $h(x,y,0)$.\\
+\item Un \plus{modèle} linéaire permet d'estimer la hauteur à tout moment : $h(x,y,t)=M.h(x,y,0)$.\\
+\item On dispose de $m$ \plus{observations} ponctuelle de hauteur réparties dans le temps $\mu_i = <\pi_i,h>$.\\
+\end{itemize}
+\visible<6-> {\textbf{\red{Objectif :} Retrouver le \textit{meilleur} champs de hauteur initial $h(x,y,0)$ sachant $\mu_i$ et $M$.}}
+\end{block}
+}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}
+\setbeamercovered{transparent=0}
+\frametitle{Formalisme du problème discrétisé}
+\begin{columns}
+\column{.4\textwidth}
+\begin{block}{Le modèle direct}
+\begin{itemize}
+\item $\sigma = h(x_j,y_j,0)$ de dimension $p$\\
+\item $\chi = h(x_j,y_j,t_j)$ de dimension $n$\\
+\item Le modèle $M \in \R^{n\times p}$.\\
+\end{itemize}
+On a alors :
+\begin{equation}
+\chi = M.\sigma \nonumber
+\end{equation}
+\end{block}
+\column{.6\textwidth}
+\begin{block}<2->{Le modèle adjoint}
+\begin{itemize}
+\item $\pi_i \in \R^n$ ($i=1..m$) est l'opérateur d'observation.\\
+\item $\mu_i \in \R$ ($i=1..m$) est la ième observations définie par :
+$
+\mu_i = <\pi_i,\chi>
+$
+\end{itemize}
+%\begin{spacing}{0.9}
+On peut donc écrire :
+\begin{eqnarray*}
+\mu_i & = & <\pi_i,\chi> \\
+      & = & <\pi_i,M.\sigma>\\
+      & = & <M^*.\pi_i,\sigma>\\
+      & = & <r_i,\sigma>
+\end{eqnarray*} 
+$r_i$ est appelé adjoint associé à la mesure $\mu_i$.
+
+%\end{spacing}
+\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Equation à résoudre}
+Si on note :
+$$
+\mu=
+\begin{pmatrix}
+\mu_1 \\ 
+\vdots\\ 
+\mu_m
+\end{pmatrix}
+$$
+
+
+$$
+R=
+\begin{pmatrix}
+{}^\top{r_1}\\
+ \vdots\\ 
+{}^\top{r_m}
+\end{pmatrix}
+$$
+\begin{alertblock}{Système à résoudre}
+$$
+R.\sigma = \mu
+$$
+\end{alertblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Le modèle shallow-water}
+\begin{eqnarray*}
+\partial_tu & = & -g^*.\partial_xh + f . v - \gamma . u \nonumber \\
+\partial_tv & = & -g^*.\partial_yh - f . u - \gamma . v \label{shal-lin}\\
+\partial_th & = & - H.(\partial_xu + \partial_yv) \nonumber
+\end{eqnarray*}
+
+\begin{block}{paramètres utilisés : }
+\centering
+\begin{tabular}{rcll}
+%$\Delta t$ & = & $1500 s$ \\
+%$\Delta x$ & = & $5000 m$ \\
+%$\Delta y$ & = & $5000 m$ \\
+$f$ & = & $0.0001 s^{-1}$& (paramètre de coriolis)\\
+$g^*$& = & $0.01 m.s^{-2}$& (gravité réduite)\\
+$\gamma$& = & $0.00001s^{-1}$& (dissipation)\\
+%$\alpha$& = & $0.15$\\
+$H$& = & $100 m$ & (Hauteur moyenne)\\
+\end{tabular}
+\end{block}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Exemple de simulation}
+\begin{columns}
+\column{.5\textwidth}
+\begin{figure}
+\includegraphics[scale=0.3]{./fig/fig1.png}
+\caption{Hauteur à t=0}
+\end{figure}
+\column{.5\textwidth}
+\begin{figure}
+\includegraphics[scale=0.3]{./fig/fig2.png}
+\caption{Hauteur à t=300pdt}
+\end{figure}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Evolution temporelle}
+\begin{figure}
+\includegraphics[scale=0.4]{./fig/fig3.png}
+\caption{Hauteur du point de coordonné (60,50) }
+
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Solution naïve au problème}
+Solution de la pseudo-inverse...
+\end{frame}
+
+\begin{frame}
+\frametitle{La renormalisation}
+Minimal au sens de la norme F
+\end{frame}
+
+\begin{frame}
+\frametitle{Détermination de $F^{opt}$}
+Propriété dans le cas d'une source ponctuelle.
+\end{frame}
+
+\begin{frame}
+\frametitle{Expérience avec le shallow-water}
+4 points
+montrer F, parler de visibilité
+\end{frame}
+
+\begin{frame}
+\frametitle{Solution obtenue avec la pseudo inverse}
+\end{frame}
+
+\begin{frame}
+\frametitle{Autre exemple}
+\end{frame}
+
+
 \begin{frame}
 \frametitle{Les équations du shallow-water linéaire}
 \begin{eqnarray*}
