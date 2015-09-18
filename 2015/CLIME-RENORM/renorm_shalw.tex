@@ -70,7 +70,7 @@
 
 \title[Renormalisation]{L'algorithme de \mbox{renormalisation}}
 \subtitle{Application au Shallow-Water}
-\author[J. Brajard]{julien.brajard@locean-ipsl.upmc.fr}
+\author[J. Brajard]{Julien Brajard}
 \institute[CLIME]{Inria CLIME}
 \date{18 Septembre 2015}
 \begin{document}
@@ -364,99 +364,131 @@ Propriété : Parmi toutes les solutions possibles, $\sigma^*$ \plus{minimise} $
 
 \begin{frame}
 \frametitle{La renormalisation}
-Minimal au sens de la norme F
-\end{frame}
-
-\begin{frame}
-\frametitle{Détermination de $F^{opt}$}
-Propriété dans le cas d'une source ponctuelle.
-\end{frame}
-
-\begin{frame}
-\frametitle{Expérience avec le shallow-water}
-4 points
-montrer F, parler de visibilité
-\end{frame}
-
-\begin{frame}
-\frametitle{Solution obtenue avec la pseudo inverse}
-\end{frame}
-
-\begin{frame}
-\frametitle{Autre exemple}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Les équations du shallow-water linéaire}
-\begin{eqnarray*}
-\partial_tu & = & -g^*.\partial_xh + f . v - \gamma . u \nonumber \\
-\partial_tv & = & -g^*.\partial_yh - f . u - \gamma . v \label{shal-lin}\\
-\partial_th & = & - H.(\partial_xu + \partial_yv) \nonumber
-\end{eqnarray*}
-
-\begin{block}{paramètres utilisés : }
-\centering
-\begin{tabular}{rcll}
-%$\Delta t$ & = & $1500 s$ \\
-%$\Delta x$ & = & $5000 m$ \\
-%$\Delta y$ & = & $5000 m$ \\
-$f$ & = & $0.0001 s^{-1}$& (paramètre de coriolis)\\
-$g^*$& = & $0.01 m.s^{-2}$& (gravité réduite)\\
-$\gamma$& = & $0.00001s^{-1}$& (dissipation)\\
-%$\alpha$& = & $0.15$\\
-$H$& = & $100 m$ & (Hauteur moyenne)\\
-\end{tabular}
-\end{block}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Résolution du système}
-\begin{block}{}
+\begin{block}<1->{Système à résoudre}
 \begin{equation}
-h_0 = \mu^T H_f^{-1} R_f \nonumber
+R.\sigma = \mu
+\label{eq:sys}
 \end{equation}
-où $\mu = h_{hobs}$, et $H_f$, $R_f$ sont définis par la méthode de renormalisation.
 \end{block}
-\begin{itemize}
-\item Si $f=1$, on calcule exactement la solution de la pseudo-inverse,\\
-\item si $f$ est tel que $R_f^T H_f^{-1} R_f \equiv 1$, on calcule la solution renormalisée.
-\end{itemize}
+
+\begin{block}<2->{Système équivalent}
+On introduit une matrice $D_f$ de taille $p$ et de coefficients $f_i>0$.
+Le système~\ref{eq:sys} est équivalent à :
+\begin{equation}
+R_f.D_f.\sigma = \mu
+\label{eq:syseq}
+\end{equation}
+avec $R_f = R.D_f^{-1}$
+\end{block}
+
+\begin{alertblock}<3->{Solution du système~\ref{eq:syseq}}
+$$
+\sigma^*={}^\top{R_f}.H_f^{-1}.\mu
+$$
+avec $H_f=R_f.D_f.^\top{R_f}$
+\end{alertblock}
+
 \end{frame}
+
+\begin{frame}
+\frametitle{Critère d'optimatlité pour $f_i$}
+\begin{block}{}
+La renormalisation optimale,  $f_i=\phi_i$ vérifie :
+$$
+\forall i \in\{1..p\}, {}^\top{r_{\phi_i}}.H_\phi^{-1}.r_{\phi_i} = 1
+$$
+où $r_{\phi_i}$ sont les colonnes de $R_\phi$
+\end{block}
+\begin{block}<2->{Quelques remarques...}
+\begin{itemize}
+\item La renormalisation pondère les points de l'espace de contrôle. Il donne plus de poids aux points ayant un adjoint faible.\\
+\item Dans le cas d'un modèle advection-diffusion, si la source $\sigma$ est ponctuelle, la solution estimée $\sigma^*$ est maximum au point de la source.\\
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détermination de $\phi$}
+\begin{columns}
+\column{.4\textwidth}
+\begin{block}{}
+$\phi_i$ est calculé itérativement comme la limite de $f_i^k$ :
+\begin{eqnarray*}
+f^0_i &= &1\\
+f_i^{k+1}& =&f_i^{k}\sqrt{{}^\top{r_{f^k_i}}.H_{f^k}^{-1}.r_{f^k_i}}\\
+\end{eqnarray*}
+\end{block}
+\column{.6\textwidth}
+\visible<2->{
+\begin{figure}
+\includegraphics[scale=0.35]{./fig/4obs/eclairement.png}
+\caption{Eclairement associé aux 4 observations}
+\end{figure}
+}
+\end{columns}
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Mise en oeuvre technique}
 \begin{itemize}
 \item Les fonction adjointes (lignes de $R$) sont calculées via le code généré par YAO.\\
-\item La méthode de renormalisation est implémentée dans le code YAO à l'aide de la bibliothèque d'algèbre linéaire Seldon\footnote{\url{http://seldon.sourceforge.net/}} interfacée avec Blas et Lapack.\\
+\item La méthode de renormalisation est implémentée dans le code YAO à l'aide de la bibliothèque d'algèbre linéaire Seldon interfacée avec Blas et Lapack.\\
 \end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}
-\frametitle{Première expérience (4 observartions)}
+\frametitle{Solution par renormalisation}
 \begin{figure}
-\includegraphics[scale=0.4]{./fig/4obs/eclairement.png}
-\caption{Fonction d'Eclairement (en racine carré) et position des observations}
+\centering
+\includegraphics[scale=0.5]{./fig/4obs/renorm-sol.png}
 \end{figure}
 \end{frame}
+
+
+\begin{frame}
+\frametitle{Autre exemple}
+\includegraphics[scale=0.5]{./fig/66obs/eclairement.png}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Solution de la pseudo-inverse}
 \begin{figure}
-\includegraphics[scale=0.55]{./fig/4obs/pseudoinv-sol.png}
+\includegraphics[scale=0.5]{./fig/66obs/pseudoinv-sol.png}
 \end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{Solution par renormalisation}
 \begin{figure}
-\includegraphics[scale=0.55]{./fig/4obs/renorm-sol.png}
+\includegraphics[scale=0.5]{./fig/66obs/renorm-sol.png}
 \end{figure}
 \end{frame}
+
+\begin{frame}
+\frametitle{Solutions dans le temps}
+\begin{figure}
+\includegraphics[scale=0.5]{./fig/121obs/compare_sol.png}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Conclusion}
+\begin{itemize}
+\item Problème du schéma numérique (si le champ est trop irrégulier).\\
+\item Corriger l'instant initial pour $u$ et $v$ aussi afin de retrouver une plus grande variété de conditions initiales.\\
+\item Aller vers le non-linéaire.\\
+\item Comparaison avec le 4D Var ?
+\end{itemize}
+\end{frame}
+
+\end{document}
+
 
 \begin{frame}
 \frametitle{Solutions dans le temps}
@@ -464,6 +496,7 @@ où $\mu = h_{hobs}$, et $H_f$, $R_f$ sont définis par la méthode de renormali
 \includegraphics[scale=0.55]{./fig/4obs/compare_sol.png}
 \end{figure}
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Autre expérience (121 observations)}
@@ -527,7 +560,6 @@ où $\mu = h_{hobs}$, et $H_f$, $R_f$ sont définis par la méthode de renormali
 
 %%%%%% SECTION 12
 %\include{algorithmes}
-\end{document}
 
 
 %%%%%%%%%%%%%%%%%%%%% SECTION 1
