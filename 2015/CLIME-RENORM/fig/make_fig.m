@@ -1,11 +1,16 @@
 close all
 clear all
-todo=[3];
+todo=[4];
 osave = true;
 indir='./';
 cax = [0 15];
+cax_adj=[-0.01 0.01];
 if (sum(todo==1 | todo==2 |todo==3 )>0 )
   Hfil = ncread([indir 'state_true.nc'],'Hfil');
+end %fig 1,2
+
+if (sum(todo==4)>0 )
+  dHfil = ncread([indir 'grad_true.nc'],'dHfil');
 end %fig 1,2
 
 if(sum(todo==1)>0)
@@ -50,5 +55,20 @@ if(sum(todo==3)>0)
   end
   
 end %fig 2
+
+
+if(sum(todo==4)>0)
+  figure(4);
+  clf
+  
+ imagesc(dHfil(:,:,2)',cax_adj);
+ axis image
+ colorbar
+ if osave
+   print -dpng -r300 fig4.png
+ end
+ 
+ 
+end %fig 4
 
 

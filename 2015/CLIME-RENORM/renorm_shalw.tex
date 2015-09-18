@@ -216,6 +216,92 @@ $H$& = & $100 m$ & (Hauteur moyenne)\\
 
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+\frametitle{Modèle numérique}
+\begin{itemize}
+\item \textbf{Schéma spatial} : différences finies centrées sur une grille C d'Arakawa
+\begin{verbatim}
+h(i,j)  --  u(i,j) -- h(i+1,j)
+   |          |
+v(i,j)  --  z(i,j)
+   |
+h(i,j-1) 
+\end{verbatim}
+
+
+\item \textbf{Schéma temporel} : Schéma leap-frog (saute-mouton) d'ordre 2 avec filtre d'Asselin
+
+\begin{equation}
+\hat{x}_{ijt}  = x_{ijt} + \alpha(\hat{x}_{ijt-1} - 2 x_{ijt} + x_{ijt+1})\nonumber
+\end{equation}
+avec $\hat{x}$ désignant la valeur filtrée de la grandeur physique $x=h$,$u$ ou $v$.\\
+
+
+\end{itemize}
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Configuration du modèle}
+
+\begin{columns}
+
+\column{6cm}
+\onslide<1->{
+\begin{figure}
+\centering
+
+\begin{tikzpicture} [
+    auto,
+      block/.style    = { rectangle, draw=blue, thick, 
+                        fill=blue!20, text width=1.3cm, text centered,
+                        rounded corners, minimum height=2em,scale=0.8 },
+    line/.style     = { draw, thick, ->, shorten >=2pt,text width=4cm},
+    etiq/.style = {scale=0.8,midway,xshift=+4mm,right},
+    node distance=1.5cm,
+  ]
+\node (H0) [block]{$h_0$};
+\node (Init) [block,below of = H0]{$h_0$,$u_0$,$v_0$};
+\node (t1) [block,below of = Init]{$h_1$,$u_1$,$v_1$};
+\node (buf1) [below of = t1,yshift=+4mm]{...};
+\node (tn) [block,below of = buf1,yshift=+4mm]{$h_t$,$u_t$,$v_t$};
+\node (buf2) [below of = tn,yshift=+4mm]{...};
+\node (obs) [block,below of =buf2,yshift=+4mm]{$h_{obs}$};
+
+\begin{scope}[every path/.style=line]
+\path (H0) -- node[etiq] {Equilibre géostrophique} (Init);
+\path (Init) -- node[etiq] {Modèle (Euler)} (t1);
+\path (t1) -- node[etiq] {Modèle (leap-frog)}(buf1);
+%\path (buf1) -- node[etiq] {Modèle (leap-frog)}(tn);
+%\path (tn) -- (buf2);
+\path (buf2) -- node[etiq] {Echantillonnage}(obs);
+\end{scope}
+
+\end{tikzpicture}
+
+\end{figure}
+}
+\column{6cm}
+\onslide<2->{
+\begin{block}{Paramètres}
+\centering
+\begin{tabular}{rcl}
+$\Delta t$ & = & $1500 s$ \\
+$\Delta x$ & = & $5000 m$ \\
+$\Delta y$ & = & $5000 m$ \\
+$\alpha$& = & $0.15$\\
+\end{tabular}
+\end {block}
+}
+\end{columns}
+
+\end{frame}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}
@@ -245,12 +331,32 @@ $H$& = & $100 m$ & (Hauteur moyenne)\\
 \end{frame}
 
 \begin{frame}
+\frametitle{La fonction adjointe}
+\framesubtitle{associée au point (50,50)}
+\begin{figure}
+\includegraphics[scale=0.4]{./fig/fig4.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
 \frametitle{Solution naïve au problème}
-Solution de la pseudo-inverse...
+\begin{block}{Système à résoudre}
+$$
+R.\sigma = \mu
+$$
+\end{block}
+
+\begin{alertblock}{Solution par la pseudo-inverse (ou Moore-Penrose)}
+$$
+\sigma^*={}^\top{R}.(R.{}^\top{R})^{-1}.\mu
+$$
+\end{alertblock}
+Propriété : Parmi toutes les solutions possibles, $\sigma^*$ \plus{minimise} $\|\sigma \|$.
 \end{frame}
 
 \begin{frame}
 \frametitle{Solution de la pseudo-inverse}
+\framesubtitle{4 observations}
 \begin{figure}
 \includegraphics[scale=0.5]{./fig/4obs/pseudoinv-sol.png}
 \end{figure}
@@ -304,89 +410,6 @@ $H$& = & $100 m$ & (Hauteur moyenne)\\
 \end{block}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]
-\frametitle{Modèle numérique}
-\begin{itemize}
-\item \textbf{Schéma spatial} : différences finies centrées sur une grille C d'Arakawa
-\begin{verbatim}
-h(i,j)  --  u(i,j) -- h(i+1,j)
-   |          |
-v(i,j)  --  z(i,j)
-   |
-h(i,j-1) 
-\end{verbatim}
-\item \textbf{Schéma temporel} : Schéma leap-frog (saute-mouton) d'ordre 2 avec filtre d'Asselin
-\begin{equation}
-\hat{x}_{ijt}  = x_{ijt} + \alpha(\hat{x}_{ijt-1} - 2 x_{ijt} + x_{ijt+1})\nonumber
-\end{equation}
-avec $\hat{x}$ désignant la valeur filtrée de la grandeur physique $x=h$,$u$ ou $v$.\\
-
-\end{itemize}
-\begin{block}{paramètres utilisés : }
-\centering
-\begin{tabular}{rcl}
-$\Delta t$ & = & $1500 s$ \\
-$\Delta x$ & = & $5000 m$ \\
-$\Delta y$ & = & $5000 m$ \\
-$\alpha$& = & $0.15$\\
-\end{tabular}
-\end{block}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Initialisation du modèle}
-
-\begin{columns}
-\column{6cm}
-\onslide<1->{
-\begin{figure}
-\centering
-
-\begin{tikzpicture} [
-    auto,
-      block/.style    = { rectangle, draw=blue, thick, 
-                        fill=blue!20, text width=1.3cm, text centered,
-                        rounded corners, minimum height=2em,scale=0.8 },
-    line/.style     = { draw, thick, ->, shorten >=2pt,text width=4cm},
-    etiq/.style = {scale=0.8,midway,xshift=+4mm,right},
-    node distance=1.5cm,
-  ]
-\node (H0) [block]{$h_0$};
-\node (Init) [block,below of = H0]{$h_0$,$u_0$,$v_0$};
-\node (t1) [block,below of = Init]{$h_1$,$u_1$,$v_1$};
-\node (buf1) [below of = t1,yshift=+4mm]{...};
-\node (tn) [block,below of = buf1,yshift=+4mm]{$h_t$,$u_t$,$v_t$};
-\node (buf2) [below of = tn,yshift=+4mm]{...};
-\node (obs) [block,below of =buf2,yshift=+4mm]{$h_{obs}$};
-
-\begin{scope}[every path/.style=line]
-\path (H0) -- node[etiq] {Equilibre géostrophique} (Init);
-\path (Init) -- node[etiq] {Modèle (Euler)} (t1);
-\path (t1) -- node[etiq] {Modèle (leap-frog)}(buf1);
-%\path (buf1) -- node[etiq] {Modèle (leap-frog)}(tn);
-%\path (tn) -- (buf2);
-\path (buf2) -- node[etiq] {Echantillonnage}(obs);
-\end{scope}
-
-\end{tikzpicture}
-
-\end{figure}
-}
-\column{6cm}
-\onslide<2->{
-\begin{alertblock}{Système à résoudre}
-\begin{equation}
-\centering
-R \times h_0 = h_{obs} \nonumber
-\end{equation}
-$R$ est la matrice adjointe composée des $p$ matrices lignes $r_i$
-\end{alertblock}
-}
-\end{columns}
-
-\end{frame}
 
 \begin{frame}
 \frametitle{Résolution du système}
