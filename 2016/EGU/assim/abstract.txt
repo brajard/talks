@@ -3,23 +3,23 @@ PRELIMINARY RESULTS
 
 The objective of ensemble data assimilation is to produce an ensemble of analysis
 from observations and a numerical model
-which is representative of the uncertainty of the system. In a baysian framework, the ensemble
-represents a sampling of the state vector probability knowing the observations
-of the system, denoted the a-posteriori probability.
+which is representative of the uncertainty of the system. In a bayesian framework, the ensemble
+represents a sampling of the state vector probability distribution conditioned to the available knowledge 
+of the system, denoted the a-posteriori probability distribution.
 
-Ensemble variational data assimilation (EnVar) consists in produce such an ensemble by 
-perturbating N times the observations following their error law, and run
-an standard variationnal assimilation for each perturbation.
+Ensemble variational data assimilation (EnsVar) consists in producing such an ensemble by 
+perturbating N times the observations according to their error law, and run
+a standard variationnal assimilation for each perturbation.
 An ensemble of N members is then produced. In the case of linear models, 
-there is a theorictical guarantee
+there is a theoretical guarantee
 that this ensemble is a sampling of the a-posteriori probability.
-But there is no theortical result in the
+But there is no theoretical result in the
 non-linear case.
 
-Some numerical experiment using non-linear numerical model suggest that the
+Numerical experiments using non-linear numerical models suggest that the
 conclusion reached for linear models still stands for non linear toy models.
 
-The objectif of the present work is to show preliminary results of EnVar applied to a more
+The objective of the present work is to show preliminary results of EnsVar applied to a more
 realistic model : a shallow-water model. Some statistical properties of the ensemble 
 are presented, and the sensitivity to the main features of the assimilation system (number,
 distribution of observations, size of the assimilation window, ...) are also studied.
