@@ -1,0 +1,11 @@
+Titre : Détermination des groupes de phytoplancton depuis l'espace : application à l'upwelling sénégalo-mauritanien
+
+Contributeurs :
+LOCEAN, IPSL : Yala Khalil, Julien Brajard*, Michel Crépon, Sylvie Thiria
+Extérieur IPSL : Ndeye Niang (CNAM, Paris)
+
+Les groupes de phytoplancton (groupes fonctionnels ou classes de taille) peuvent être estimés à partir des observation satellitales de couleur de l'océan en utilisant un algorithme de classification associé à des mesures in-situ de pigments. Par exemple, l'algorithme PHYSAT (http://log.univ-littoral.fr/Physat) donne des cartes globales des groupes dominants de phytoplancton à partir des capteurs MODIS ou SeaWiFS.
+
+Pour des régions ciblées, et plus particulièrement pour les régions productives comme l'upwelling sénégalo-mauritanien, l'algorithme global présente certaines limitations. Premièrement, PHYSAT actuellement exclue du traitement les fortes valeurs de chlorophylle-a et d'épaisseur optique aérosol pour ne traiter que les produits de meilleures qualité en réflectance marine et chlorophylle-a. Deuxiemement, PHYSAT étant basé sur des spectres de reflectances moyens normalizés, l'algorithme est insensible à de petites variations de la chlorophylle-a à l'échelle régionale.
+
+Un algorithme régional basé sur le même principe que PHYSAT a été proposé pour résoudre ces difficultés dans la région de l'upwelling sénégalo-mauritanien. La première modification a consisté à appliquer un algorithme de correction atmosphérique dédié pour prendre en compte la présence de poussières sahariennes. La deuxième modification a été d'utiliser des réseaux de neurones artificiels (perceptrons multicouches) pour estimer le spectre moyen de réflectance en fonction de la chlorophylle-a. Enuite, un algorithme de classification basé sur les cartes auto-organisatrices a été utilisé pour classifier l'information spectrale mesurée par le satellite. Les classes obtenues sont cohérentes spatialement, et peuvent être associés à des groupes de phytoplancton.

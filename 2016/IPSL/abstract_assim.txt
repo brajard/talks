@@ -1,0 +1,15 @@
+Titre : Application de l'Assimilation des observations spatiales
+
+Contributeurs :
+LATMOS, IPSL : François Mercier, Laurent Barthès, Cécile Mallet
+LOCEAN, IPSL : Julien Brajard, Laurent Mortier
+Extérieur-IPSL : Leila Issa (LAU, Liban), Milad Fakhri (CNRS, Liban), Dan Hayes (UCY, Chypre), Pierre-Marie Poulain (OGS, Italie)
+
+Résumé :
+L'assimilation de données regroupe un ensemble de méthodes consistant à combiner des observations avec un modèle numérique. Elle permet l'estimation d'un champ de paramètres donnant un compromis optimal entre des observations imparfaites (erreurs de mesures, données peu denses en temps et en espace) et des sorties de modèles numériques imparfaits (erreurs dans l'estimation des conditions initiales, des paramétrisations, ...)
+
+Nous présentons ici deux applications de l'assimilation de données. 
+
+La première consiste à combiner un modèle simple de transport des champs de pluie et des mesures de l’atténuation subie par les ondes électromagnétiques en bande Ku provenant de satellites commerciaux de télévision. Cette atténuation est reliée au taux de pluie moyen sur la liaison Terre-satellite. Cette méthode permet la restitution de cartes de précipitations à fine échelle (0.5*0.5km^2, 10s).
+
+La seconde permet de fusionner des données lagrangiennes issues de bouées dérivantes dans l'océan aux mesures eulériennes issues des produits interpolées AVISO obtenues à partir des données satellitaires altimétriques. Cette méthodologie permet d'améliorer l'estimation des courants de surface en Méditerranée Est.
