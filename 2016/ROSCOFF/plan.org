@@ -1,0 +1,47 @@
+Plan des cours Ecole d'été ROSCOFF
+
+* Intro (30min)
+** Sujet général de l'école d'été
+** Plan général des cours
+** Points logistiques
+
+* Python (1h)
+** Intro Python
+** Présentation du concept (langage interprété)
+** Présentation de spyder
+** Principales bibliothèques
+** Petit sondage rapide pour faire les groupes
+
+* Linear Algebra (1h30)
+** Scalar, Vectors, Matrices (and Tensors)
+transposition
+** Matrices/Vectors multiplication
+** Identity and Inverse Matrices
+** Norms (L1, L2)
+
+* Probas/Stats (3h)
+** Random variables
+** Proba distrib
+joint proba, marginal proba, conditional proba, independance
+** Expectation, Variance and Covariance
+** Gaussian
+** KL and cross-entropy
+** sampling
+** Estimator
+properties of estimators, mean-square
+** MLE (Maximum-likelihood estimation)
+** LSE (Least-square estimator) --> in Linear Regression ?
+
+* Linear Regression (3h)
+** Example (figures with positive, negative, dispersive, non-linear)
+** Least-Square
+** Some properties
+** Forecast error
+** Geometric interpretation
+
+* Classification (Logistic regression, Classification)
+
+* Multilinear regression, polynomial regression
+** overfitting
+** regularization
+** learning/test
