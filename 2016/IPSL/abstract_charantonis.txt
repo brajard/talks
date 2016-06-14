@@ -1,0 +1,14 @@
+Titre : Modélisation Statistique de L’Environnement par Classifications
+
+Contributeurs :
+LOCEAN, IPSL : Sylvie Thiria
+Extérieur-IPSL : Charantonis Anastase Alexandre (Télécom SudParis), Fouad Badran (CNAM), Frédéric Jourdin (SHOM)
+
+Résumé :
+La modélisation numérique de l’environnement ou d'un de ses sous-systèmes est typiquement effectué en proposant une résolution numérique d'un système d'équations au dérivées partielles paramétriques dont on estime les paramètres à partir d'observations du système.
+Les incertitudes sur les paramètres estimés et la non-linéarité de ces équations nécessite de fréquemment réajuster l'évolution prévue du système pour le rappeler aux observations. 
+L'assimilation des données est un domaine scientifique qui inclut plusieurs méthodes permettant d'effectuer ces mises à jours, telles que l'assimilation séquentielle, les méthodes d'ensembles, ou l'assimilation variationelle. 
+Nous présentons une autre méthode permettant de réajuster un système dynamique basée sur les Cartes Topologique et le Chaînes de Markov Cachées.
+Nous représenterons deux applications : 
+La première porte sur la synchronisation à des données observables de l'évolution temporelle de la concentration verticale de Chlorophylle-a dans les océans. Actuellement les données de surfaces de concentration de matière particulaire suspendue sont simulées avec les caractéristiques des capteurs SEVIRI en attendant d'y avoir pleinement accès.
+La seconde porte sur la synchronisation à des données observables (SST, SCHL issus de MODIS) de l'évolution spatio-temporelle de la concentration verticale de matière particulaire suspendue dans la Manche.
