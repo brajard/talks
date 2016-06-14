@@ -1,7 +1,7 @@
 Cher Martial,
 
-Voici ci-joint quatre abstracts pour la jouréne observations spatiales de l'IPSL.
-Ils regroupent des contributions relevant des thèmes du groupe SAMA de l'IPSL (http://sama.ipsl.jussieu.fr/). Les présentations ont donc en comment le thème de la Modélisation statistique inverse appliqué aux observations spatiales. La personne qui présentera les résultat est marqué d'une étoile (*).
+Voici comme convenu par téléphone avec Cécile Mallet, quatre abstracts pour la journée observations spatiales de l'IPSL.
+Ils regroupent des contributions relevant de thèmes du groupe SAMA de l'IPSL (http://sama.ipsl.jussieu.fr/) . Les présentations portent sur des travaux de nature méthodologiques, qui ont un caractère générique et des applications aux observations spatiales. Ces avancées méthodologiques sont principalement developpées dans le cadre de collaborations entre le LOCEAN et le LATMOS. La personne qui présentera les résultats est marquée d'une étoile (*).
 
 Bien cordialement,
 
