@@ -1,11 +1,19 @@
 DETERMINATION OF PHYTOPLANKTON GROUPS FROM SPACE
 APPLICATION TO SENEGALO-MAURITANEAN UPWELLING
 
-Authors : Khalil Yala, Julien Brajard, Michel Crépon, Eric Machu, Sylvie Thiria
+Authors : Khalil Yala, Julien Brajard, Michel Crépon, Eric Machu,  Ndeye Niang, Sylvie Thiria
 
-Phytoplankton groups can be estimated from ocean color spectral anomalies observations using a clustering algorithm combined with in-situ measurement of pigment concentration. The PHYSAT algorithm (http://log.univ-littoral.fr/Physat) gives global maps of dominant groups for the last ocean color sensor observing periods (MODIS, SeaWiFS).
-For some regional studies, especially in very productive regions such as the Senegalo-Mauritanian upwelling, it has been shown that the standard algorithm can present some limitations. First, PHYSAT in its published version uses thresholds on the chlorophyll-a concentration and aerosol optical thickness value to guaranty a “high-quality” estimation of the water-leaving reflectance and of the related chlorophyll-a. Second, PHYSAT is based on a mean water-leaving reflectance spectrum normalized by classes of chlorophyll-a concentration, and therefore, the algorithm can be insensitive to some small regional variation of the chlorophyll-a concentration.
-A regional algorithm applied to the Senegal coast  was  proposed to overcome these difficulties. A specific atmospheric correction algorithm  was used to produce accurate water-leaving reflectance under saharan dusts. Artificial neural network (Multilayer perceptrons) was used to simulate continuously the mean relationship between chlorophyll-a concentration and water-leaving reflectance. And finally, a clustering algorithm based on Self-organizing map was used to classify the satellite measurements.
-It was been shown that this new regional algorithm increases the number of pixels processed and shown coherent spatial patches of specific Ra. Based on expertise acquireed in others area of the ocean, these patches could be associated to phytoplanton groups such as diatoms. 
-Some in situ measurements of secondary pigments were conducted in the framework of UPSEN campaigns (2012 and 2013) and were used to validate this approach.
-PHRASE DE CONCLUSION PRINCIPAL A MODIFIER : We show that the in-situ measurement are in coherence with the remote sensing approach.
+Phytoplankton groups can be estimated from ocean color spectral satellite observations using a clustering algorithm combined with in-situ measurements of pigment concentration such as PHYSAT. This algorithm (http://log.univ-littoral.fr/Physat) gives global maps of dominant groups for the last ocean color satellite sensor observing periods (MODIS, SeaWiFS).
+
+For specific regional studies, especially in very productive regions such as the Senegalo-Mauritanian upwelling, it has been shown that the standard algorithm can present some limitations. 
+First, PHYSAT in its published version uses thresholds on the chlorophyll-a concentration and aerosol optical thickness values to guaranty a “high-quality” estimation of the water-leaving reflectance and of the related chlorophyll-a. 
+Second, since PHYSAT is based on mean water-leaving reflectance spectra (Ra) normalized by classes of chlorophyll-a concentration (Ra*spectra), the algorithm must be insensitive to some small regional variation of this parameter.
+
+A regional PHYSAT-like algorithm was applied to the Senegal coast to overcome these difficulties. 
+First, a specific atmospheric correction algorithm was applied to the satellite measurements to produce accurate water-leaving reflectances under Saharan dusts. 
+Artificial neural network (Multilayer perceptrons) was used to estimate the chlorophyll-a concentration from the water-leaving reflectance. 
+Then a clustering algorithm based on Self-organizing map was used to classify the spectral information (Ra,Ra*) spectra measured by the satellite.
+It has been shown that this new regional PHYSAT algorithm gives coherent spatial patches of Ra*. 
+Based on expertise acquired in others ocean area, these patches could be associated with phytoplankton groups such as diatoms. 
+In situ measurements of secondary pigments were conducted in the framework of the UPSEN campaigns (2012 and 2013) and were used to validate this approach.
+We show that these in-situ measurement are coherent with the remote sensing approach.

@@ -1,0 +1,11 @@
+Titre : 
+La modélisation multifractale : exemples d’applications en sciences géophysiques
+
+Contributeurs : 
+LATMOS, IPSL : Cécile Mallet, Laurent Barthès
+LOCEAN, IPSL: Sylvie Thiria, Michel Crépon
+Extérieur-IPSL: Sébastien Verrier (CESBIO, Toulouse/Auch, France) (*)
+
+Les processus géophysiques présentent une importante variabilité susceptible de mettre en défaut les statistiques usuelles. La modélisation multifractale désigne un ensemble de méthodes d’analyse capables de mettre en évidence des invariants statistiques valables sur une large gamme d’échelles spatiales et/ou temporelles. Cette modélisation offre une description multi-échelle exhaustive des processus décrits qui peut apporter une information sur la probabilité d’occurrence de structures extrêmes.
+L’analyse multifractale de séries et de cartes de précipitations a été menée au LATMOS et a permis de mieux caractériser les gammes d’échelle des précipitations en climats tempéré et tropical. L’étude de données de haute résolution temporelle a permis d’identifier une gamme d’échelle où le lien entre la physique de la turbulence et celles des précipitations se manifeste au niveau statistique.  Les lois d’échelle identifiées peuvent avoir un potentiel important pour la désagrégation de champs précipitants.
+Dans un second temps, nous montrerons que la démarche mise en œuvre est susceptible d’être appliquée à d’autres processus et d’autres variables physiques, notamment en océanographie et en sciences du sol. Différentes variables (SST, plancton océanique, indices de végétation sur les continents) suivent également des lois d’échelles spécifiques qui méritent d’être investiguées. De possibles axes de développement concernant à la fois l’analyse de sorties de modèles et de données d’imagerie satellitaire seront présentées. Les contraintes liées à ces nouvelles applications seront également présentées : simulation et désagrégation de processus "non conservatifs", anisotropie, résolution effective des données...
