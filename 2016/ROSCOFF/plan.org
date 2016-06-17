@@ -19,6 +19,8 @@ transposition
 ** Identity and Inverse Matrices
 ** Norms (L1, L2)
 
+** Eigen values ? SVD ?
+** Moore/Penrose ?
 * Probas/Stats (3h)
 ** Random variables
 ** Proba distrib
