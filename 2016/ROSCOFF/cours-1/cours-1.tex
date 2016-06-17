@@ -56,24 +56,49 @@
 
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 
-
-\lstset{language=C,
+\lstset{ language=Python,%
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=tb,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  otherkeywords={*,...},           % if you want to add more keywords to the set
+  numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=3,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+%\lstset{language=Python,
 % breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
 %  breaklines=true,                 % sets automatic line breaking
 %  captionpos=b,                
-commentstyle=\itshape\color{mymauve},
-keywordstyle=\bfseries\color{myblue},
+%%commentstyle=\itshape\color{mymauve},
+%%keywordstyle=\bfseries\color{myblue},
 %numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
 %  numbersep=8pt,                   % how far the line-numbers are from the code
 %  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
-  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+%%  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
 %  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-  showstringspaces=false,          % underline spaces within strings only
+%%  showstringspaces=false,          % underline spaces within strings only
 %  showtabs=false,                  % show tabs within strings adding particular underscores
 %  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
-  stringstyle=\color{mygreen},     % string literal style
+%%  stringstyle=\color{mygreen},     % string literal style
 %  tabsize=2 
-}
+%}
 \ifdefined\ishandout
 \newcommand{\red}{\textbf}
 \else
@@ -204,17 +229,113 @@ Writing the instruction directly in the console
 \includegraphics[width=0.9\textwidth]{fig/fig_console_python.png}
 \end{figure}
 \column{0.45\textwidth}
-
-Writing all the instructions in a file (extentions \texttt{.py}
+Writing all the instructions in a file (extention \texttt{.py})
 and execute the file as as \alert{script}
-
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{fig/fig_script.png}
+\end{figure}
 \end{columns}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+\frametitle{Variables}
+In Python, all the data you want to use, to save, to modify or to create are defined in the
+workspace.
+
+Example:
+\begin{lstlisting}
+x = [0,4,2]
+for i in x:
+   print x
+\end{lstlisting}
+In \texttt{Spyder}, you can see all the variables in the variables explorer:
+\begin{figure}
+\centering
+\includegraphics[width=0.4\textwidth]{fig/fig_variables.png}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+\frametitle{Block of instructions}
+In Python, each block of instruction is identified by the indentation level
+\begin{lstlisting}
+x = [0,3,5,1,2,4]
+#Print if values ar even or not
+for val in x:
+   print val,"is ",
+   if val%2==0:
+      print "even"
+   else:
+      print "odd"
+print "finished"
+\end{lstlisting}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+\frametitle{Other important Python features}
+\begin{itemize}
+\item Python has several native useful data type 
+(\texttt{lists},\texttt{tuples},\texttt{dictionnary},...)
+\item Python is an oriented-object language. You can
+use various class or define your owns.
+\item Python can be interfaced easily with other programming
+languages such as C
+\item Python has a large user community
+\item \alert<2->{You can run Python files as scripts}
+\item \alert<2->{There are plenty of libraries to use Python in a particular
+purpose.}
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+\frametitle{How to run a Python script ?}
+\begin{itemize}
+\item In \texttt{Spyder} using the play command
+\item In a \texttt{IPython} console using the magic
+\verb|%run| command
+\item In a terminal using : \verb|python myfile.py|
+\item In a terminal like a script : \verb|./myfile.py|.
+For that, you would need to add a line in the begining of the \verb|.py| file :
+\begin{lstlisting}[title=\texttt{myfile.py}]
+#!/usr/bin/env python
+
+print 'Hello world !'
+\end{lstlisting}
+
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Some Python libraries}
+Here is a list of libraries we use for data science applications
+\begin{itemize}
+\item \alert{\texttt{matplotlib}}:  a plotting library\\
+\url{http://matplotlib.org/}
+\item \alert{\texttt{NumPy}}: deals with numerical data (e.g. arrays)\\
+\url{http://www.numpy.org/}
+\item \alert{\texttt{SciPy}}: contains basic scientifics processings (e.g. physical constants,
+interpolation, ...)\\
+\url{https://www.scipy.org/}
+\item \alert{\texttt{scikit-learn}} : machine learning (built on NumPy, SciPy and matplotib)\\
+\url{http://scikit-learn.org}
+\item \alert{\texttt{TensorFlow}} : Deep learning including CPUs or GPUs computation (originally 
+developped by the Google Brain Team)\\
+ \url{https://www.tensorflow.org}
+\end{itemize}
+\begin{block}{}
+All these libraries are open-source.
+\end{block}
 
 
 \end{frame}
 
 \end{document} 
-
 %%%%%%%%%%%%%%%%%%%%% SECTION 1
 \section{Les algorithmes}\label{section:1}
 \begin{frame}
