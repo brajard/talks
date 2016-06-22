@@ -219,6 +219,15 @@ In 3-D, an element of the tensor $\bm{A}$ is denoted $A_{i,j,k}$.
 \item The Transpose $^T$ operation is defined by : $(A^T)_{i,j}=A_{j,i}$
 \item Sum of matrix (or vectors) : $\bm{C} = \bm{A} + \bm{B}$ is defined by:\\
 $C_{i,j} = A_{i,j}+B_{i,j}$
+\item Adding or multiplying a matrix by a scalar : $\bm{D} = a \cdot \bm{B} + c$ is defined by:\\
+$D_{i,j} = a \cdot B_{i,j} +c$
+\item Multiplying Matrices : $\bm{C} = \bm{A} \cdot \bm{B}$ is defined by:\\
+$C_{i,j} = \sum_k A_{i,k}\cdot B_{k,j}$
+%% :note: Make some remarks here !!! distributtiviy, associativity, no-commutativity
+\item Dot product between two vectors : $\bm{x}^Ty$
+\item System of linear equations : $\bm{Ax} = \bm{b}$ \\
+where $\bm{A} \in \R^{m\times n}$, $\bm{b} \in \R^m$ are known, and $\bm{x} \in \R^n$ is unknown
+%% :notes: give an example
 \end{itemize}
 \end{frame}
 
