@@ -239,18 +239,135 @@ where $\bm{A} \in \R^{m\times n}$, $\bm{b} \in \R^m$ are known, and $\bm{x} \in 
 
 \begin{frame}
 \frametitle{Identity and Inverse matrix}
+\begin{itemize}
+\item Identity matrix $\bm{I}_n \in \R^{n\times n}$ contains 1 on the diagonal, and 0 elsewhere.
+$$
+\begin{pmatrix}
+1 & 0 & \ldots \\
+0 & \ddots &  \\
+\vdots & & 1 
+\end{pmatrix}
+$$
+$\bm{I}_n$ verifies : $\forall x \in \R^n,  \bm{I}_nx = x$\\
 
+\item The matrix inverse of $\bm{A} \in \R^{n\times n}$ is defined such that :
+$$\bm{A}^{-1}\bm{A} = \bm{A}\bm{A}^{-1} = \bm{I}_n$$
+\begin{block}{}
+The inverse matrix is \alert{not} defined for any matrix $\bm{A}$. If the inverse exists, 
+matrix $\bm{A}$ is said to be \alert{nonsingular}
+\end{block}
+\end{itemize}
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Resolving linear systems}
+Let us consider the follwing linear system:
+$$
+\bm{A}x = n
+$$
+where $\bm{A}\in\R^{n\times n}$.
+
+If $\bm{A}$ is nonsingular, the solution $x$ is given by:
+$$
+x = \bm{A}^{-1}b
+$$
+
+\begin{block}{}
+In practice, $\bm{A}^{-1}$ is not computed explicity because :
+\begin{itemize}
+\item the computation can have accuracy issues due to the limited precision.
+\item $\bm{A}$ is too big.
+\end{itemize}
+\note{Demonstration of the resolution}
+\end{block}
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}
 \frametitle{Norms}
+Norm is a notion that gives a rigourous answer to the intuitive question of
+\textit{"how big a vector is ?"}
 
+\begin{exampleblock}{The $L^p$ norm}
+$$
+\| \bm{x} \|_p = \left( \sum_i |x_i|^p \right)^{\frac{1}{p}}
+$$
+
+\end{exampleblock}
+Note that the $L^2$ norm can be expressed in term of \alert{dot product} :
+$$
+\|\bm{x} \| = (\bm{x}^T\bm{x})^{\frac{1}{2}}
+$$
+
+\begin{exampleblock}{The $L^\infty$ or max norm}
+$$
+\| \bm{x} \|_\infty = \underset{i}{\text{max}} |x_i|
+$$
+\end{exampleblock}
+\note{Give example of small sized vectors}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{More on norms...}
+\begin{itemize}
+\item A norm on matrices can be defined, denoted the \alert{Frobenius norm} :
+$$
+\|\bm{A}\|_F = \sqrt{\sum_{i,j} A^2_{i,j}}
+$$
+\item We can rewrite the dot product in term of norms :
+$$
+\bm{x}^T\bm{y} = \|\bm{x}\|_2\|\bm{y}\|_2 cos(\theta)
+$$
+where $\theta$ is the angle between $x$ and $y$.
+\end{itemize}
 \end{frame}
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Linear dependance}
+\begin{block}{Definition}
+A set of vector $\{\bm{v}^{(1)},\bm{v}^{(2)},\ldots,\bm{v}^{(n)}\}$ is said to be linearly dependant if :
+$$
+\exists \{c_1,c_2,\ldots,c_n\}, \sum_i c_i\bm{v}^{(i)} = 0
+$$
+where $c_i \in \R$ and at least one $c_i \neq 0$
+\end{block}
+\begin{itemize}
+\item If a set of vector is linearly independant, one vector is a linear combination of the other.
+\item If a vector appears two times in a set (to a scalar factor), the set of vector is linearly dependant.
+\end{itemize}
+If we considere  $\{\bm{A_{\cdot,1}},\ldots,\bm{A_{\cdot,n}}\}$, the set of columns of the matrix $\bm{A}$.
+\begin{itemize}
+\item The set is linearly dependant $\Leftrightarrow$ $\bm{A}$ is singular.
+\end{itemize}
+\note{Give the explaination in term of linear systems}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Eigen decomposition}
+An \alert{eigen vector} of $\bm{A} \in \R^{n^2}$ is a vector $\bm{v} \neq 0 \in \R^n$ such that :
+$$
+\bm{Av} = \lambda\bm{v}
+$$
+The scalar $\lambda$ is called the \alert{eigen value} associated to the vector $v$.
+
+$v$ is note unique and is defined to a multiplicative constante. Usually, the eigen vector is considered
+such as $\|v\| =1$.
+\vspace{1em}
+If $\bm{A}$ has 
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Some properties of eigen decomposition}
+\end{frame}
 \end{document} 
 %%%%%%%%%%%%%%%%%%%%% SECTION 1
 \section{Les algorithmes}\label{section:1}
