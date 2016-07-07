@@ -265,13 +265,13 @@ matrix $\bm{A}$ is said to be \alert{nonsingular}
 \frametitle{Resolving linear systems}
 Let us consider the follwing linear system:
 $$
-\bm{A}x = n
+\bm{A}\bm{x} = \bm{b}
 $$
 where $\bm{A}\in\R^{n\times n}$.
 
 If $\bm{A}$ is nonsingular, the solution $x$ is given by:
 $$
-x = \bm{A}^{-1}b
+\bm{x} = \bm{A}^{-1}\bm{b}
 $$
 
 \begin{block}{}
@@ -375,7 +375,93 @@ where:
 
 \begin{frame}
 \frametitle{Some properties of eigen decomposition}
+\begin{itemize}
+\item The eigen decomposition may not exist or may involve complexe numbers.
+For our future applications, the decomposition is supposed to exist and to involve only real numbers.
+\item If $\bm{A}$ is symmetric, the eigen decomposition can be written : $\bm{A} = \bm{Q}\Lambda\bm{Q}^T$
+where $\bm{Q}$ is orthogonal (meaning that $\bm{Q}^{-1}=\bm{Q}^T$).
+\item The matrix is non-singular $\Leftrightarrow$ all the eigen values are non zeros.
+\item If all its eigen values are strictly positives, the matrix $\bm{A}$ is called \alert{positive definite}
+and $\forall  \bm{x}, \bm{x}^T\bm{A}\bm{x} \geq 0$.
+\item if $\bm{A}$ is symetric, positive and definite, it can define a norm : $\|\bm{x}\|^2_{\bm{A}} =  \bm{x}^T\bm{A}\bm{x}$
+\end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{Singular Value Decomposition}
+\textit{Singular Valeur Decomposition}(SVD) can be considered as a generalization of the eigen decomposition.
+The SVD of the matrix of matrix $\bm{A} \in \R^{m\times n}$ is defined by : 
+$$
+\bm{A} = \bm{U}\bm{D}\bm{V}^T
+$$
+where 
+\begin{itemize}
+\item $\bm{U} \in \R^{m\times m}$ and $\bm{V} \in \R^{n\times n}$ are both orthogonal
+\item $\bm{D} \in \R^{m\times n}$ is diagonal (but not necessarily square). 
+\end{itemize}
+
+Elements if $\bm{D}$ are called the \alert{singular values}
+
+\note{Make the link with the eigen decomposition of $AA^T$ and $A^TA$}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Remarks on linear systems}
+We define $\bm{A}\in \R^{m\times n}$, and consider the system :
+$$
+\bm{A}\bm{x} = \bm{b}
+$$
+
+\begin{itemize}
+\item if $m>n$ (more equations than unknowns - overdeterminated) : possibly no solutions
+\item if $m=n$ (and $\bm{A}$ is non singular) : one solution
+\item if $m<n$ (more unknowns than equation - underdeterminated) : possibly many solutions
+\end{itemize}
+
+\begin{block}{Question}
+Is there something we can do if the system is over/under-determinated ?
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The Moore-Penrose Pseudo-inverse}
+\begin{block}{Definition}
+The pseudo-inverse $\bm{A}^+$ of $\bm{A}$ is defined by:
+$$
+\bm{A}^+ = \bm{V}\bm{D^+}\bm{U}^T
+$$
+where $\bm{U}$, $\bm{D}$ and  $\bm{V}$ are the SVD of $\bm{A}$.
+
+If $\bm{D}=
+\quad
+\begin{pmatrix}
+d_1 & &\\
+& \ddots & \\
+& & d_n
+\end{pmatrix}
+$
+then,
+$\bm{D}^+=
+\quad
+\begin{pmatrix}
+\frac{1}{d_1} & &\\
+& \ddots & \\
+& & \frac{1}{d_n}
+\end{pmatrix}
+$, for all $d_i \neq 0$
+\end{block}
+\begin{itemize}
+\item if $\bm{A}$ is square and non-singular, $\bm{A}^+=\bm{A}^{-1}$
+\item if $m>n$, $\bm{x}=\bm{A}^+\bm{b}$ is the solution of the system with minimal $L^2$ norm ($\|\bm{x}\|_2$ is minimal)
+\item if $m<n$,  $\bm{x}=\bm{A}^+\bm{b}$ is such as $\bm{A}\bm{x}$ is as close as possible to $b$
+($\|\bm{Ax} - \bm{b}\|_2$ is minimal)
+\end{itemize}
+\note{Give an example with two points, and with a point and 2 lines}
+\end{frame}
+
+
 \end{document} 
 %%%%%%%%%%%%%%%%%%%%% SECTION 1
 \section{Les algorithmes}\label{section:1}
