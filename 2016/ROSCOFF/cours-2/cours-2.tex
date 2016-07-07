@@ -361,8 +361,16 @@ The scalar $\lambda$ is called the \alert{eigen value} associated to the vector 
 $v$ is note unique and is defined to a multiplicative constante. Usually, the eigen vector is considered
 such as $\|v\| =1$.
 \vspace{1em}
-If $\bm{A}$ has 
-
+If $\bm{A}$ has $n$ linearly independant eigen vectors denoted $\{\bm{v}^{(1)},\bm{v}^{(2)},\ldots,\bm{v}^{(n)}\}$, associated with eigen values $\{\lambda_1,\lambda_2,\ldots,\lambda_n\}$, we can define the \textit{eigen decomposition} of $\bm{A}$:
+$$
+\bm{A} = \bm{V}\text{diag}(\bm{\lambda})\bm{V}^{-1}
+$$
+where:
+\begin{itemize}
+\item $\bm{V}$ is the matrix obtained by the concatenation of eigen vectors: $\bm{V}=[\bm{v}^{(1)},\ldots,\bm{v}^{(n)}]$
+\item similarly, $\bm{\lambda}$ is the vector defined by: $\bm{\lambda}=[\lambda_1,\lambda_2,\ldots,\lambda_n]$
+\end{itemize}
+\note{show an exemple (to be fine)}
 \end{frame}
 
 \begin{frame}
