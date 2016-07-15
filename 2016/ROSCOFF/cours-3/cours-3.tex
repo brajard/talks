@@ -20,9 +20,10 @@
 \ifdefined\ishandout
 \usepackage{handoutWithNotes}
 \fi
-
+\usepackage{slashbox}
 \usepackage{amsmath}
 \usepackage{bm}
+\usepackage{hhline}
 
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{positioning}
@@ -281,7 +282,7 @@ variable. The way to describe it depends if the variable is continue or discrete
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Probability Mass Function}
-Given a random variable $X$, the Probability Mass function $P$ gives 
+Given a discrete random variable $X$, the Probability Mass function $P$ gives 
 the probability of each state possibility taken by $X$. 
 
 This probability is denoted $P(x)$ or 
@@ -314,8 +315,76 @@ joint probability of two random variables $X$ and $Y$, i.e. the probability  tha
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Probability density function}
-\end{frame}
+\vspace{-3em}
+\begin{columns}[t]
+\column{.55\textwidth}
+\begin{block}{Definition}
+A probability density function $f_X(x)$ is a function defined such as:
+$$
+P(a \leq X < b) = \int_{x=a}^b f_X(x) dx
+$$
+\end{block}
+Some properties:
+\begin{itemize}
+\item $\forall x, f_X(x) \geq 0$
+\item $\int _{x\in\R} f_X(x) dx = 1$
+\item It is \alert{not required} that $f_X(x) \leq 1$
+\item We can also define joint probability : 
+\begingroup\footnotesize
+\begin{eqnarray}
+P(a \leq X < b,c \leq Y < d) = \nonumber\\
+\int_a^b \int_c^d f_{X,Y}(x,y)d_x d_y \nonumber
+\end{eqnarray}
+\endgroup
 
+\end{itemize}
+
+\column{.42\textwidth}
+\begin{exampleblock}{Example: uniform density probability}
+\vspace{-1em}
+\begin{eqnarray}
+f_X(x) = & \frac{1}{b-a} & \text{if } x\in [a;b] \nonumber\\
+         & 0 & \text{otherwise} \nonumber
+\end{eqnarray}
+\vspace{-3em}
+\begin{figure}
+\includegraphics[width=0.9\textwidth]{./fig/fig_unif.png}
+\caption{$a=-1$ and $b=1$}
+\end{figure}
+\end{exampleblock}
+\end{columns}
+\note{make basics calculations with uniform probability}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{An example of joint probability}
+Among 27 students who attend a class this day :
+\begin{itemize}
+\item 6 had a party last night and are still attentive in class 
+\item 12 had a party last night and feel too sleepy to be attentive
+\item 3 had no party last night but are not attentive in class
+\item 6 had no party last night and are attentive in class
+\end{itemize}
+
+In term of Probability Mass Function:
+\begin{itemize}
+\item $N$ is a random variable such as $N=1$ if a random student did have a party and $0$ otherwise.
+\item $A$ is a random variabl  suche as $A=1$ if a random student is attentive and $0$ otherwise.
+\end{itemize}
+\begin{table}
+\centering
+\begin{tabular}{|l||c|c|}
+\hline
+\backslashbox{N}{A} & 0 & 1 \\
+\hline \hline
+0 & 1/9 & 2/9 \\
+\hline
+1 & 4/9 & 2/9 \\
+\hline
+\end{tabular}
+\end{table}
+\note{Basic calculations (normalization), scheme}
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
