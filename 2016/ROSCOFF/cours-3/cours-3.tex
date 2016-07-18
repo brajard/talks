@@ -356,6 +356,8 @@ f_X(x) = & \frac{1}{b-a} & \text{if } x\in [a;b] \nonumber\\
 \note{make basics calculations with uniform probability}
 
 \end{frame}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{An example of joint probability}
 Among 27 students who attend a class this day :
@@ -369,7 +371,7 @@ Among 27 students who attend a class this day :
 In term of Probability Mass Function:
 \begin{itemize}
 \item $N$ is a random variable such as $N=1$ if a random student did have a party and $0$ otherwise.
-\item $A$ is a random variabl  suche as $A=1$ if a random student is attentive and $0$ otherwise.
+\item $A$ is a random variable  such as $A=1$ if a random student is attentive and $0$ otherwise.
 \end{itemize}
 \begin{table}
 \centering
@@ -389,18 +391,85 @@ In term of Probability Mass Function:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Marginal probability}
+\begin{block}{Definition}
+Given a set of random variable with a probability distribution $P(X_1,X_2,X_3, \cdots,X_n)$
+The marginal probability is the probability distribution over a subset of these variables:
+$P(X_1,\cdots,X_p$ with $p<n$
+\end{block}
+For two random variables $X$,$Y$:
+\begin{itemize}
+\item In the discrete case: $P(X=x) = \sum_y P(X=x,Y=y)$
+\item In the continous case: $f_X(x) = \int f_{X,Y}(x,y)dy$
+\end{itemize}
+
+With the Previous example:
+\begin{table}
+\centering
+\begin{tabular}{|l||c|c|r|}
+\hline
+\backslashbox{N}{A} & 0 & 1 & $P(N=n)$ \\
+\hline \hline
+0 & 1/9 & 2/9 & 3/9 \\
+\hline
+1 & 4/9 & 2/9 & 6/9\\
+\hline
+$P(A=a)$ & 5/9 & 4/9 & 1 \\
+\hline
+\end{tabular}
+\end{table}
+\note{Do a calculation, explain in plain english}
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Conditional probability}
+\begin{block}{Definition}
+A conditional probability is the probability of some event (e.g. $Y=y$) given that
+some other event actually happened (e.g. $X=x$). This can be computed given the
+formula:
+$$
+P(Y=y | X=x) = \frac{P(Y=y,X=x)}{P(X=x)}
+$$
+\end{block}
+There are some equivalent formulas if $X$ and/or $Y$ are continous:
+\begin{itemize}
+\item if both $X$ and $Y$ are continuous: $f_{Y=y|X=x}(y)=\frac{f_{X,Y}(x,y)}{f_X(x)}$
+\item if only $X$ is continous: $P(Y=y | X=x) = \frac{f_{X,Y}(x,y)}{f_X(x)}$
+\item if only $Y$ is continous: $f_{Y=y|X=x}(y) =  \frac{f_{X,Y}(x,y)}{P(X=x)}$
+\end{itemize}
+\note{Follow the example: what is the probability of being attentive knowing that the
+student has(or not) a party the night before, and the reverse probability (what is the 
+probability of having a party the day before knowing he had a party the night before}}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Joint probability and independance}
+If two random variables $X$ and $Y$ are independant:
+\begin{itemize}
+\item In the discrete case: $P(X=x,Y=y)=P(X=x)P(Y=y)$ and therefore  $P(Y=y|X=x)=P(Y=y)$
+\item In the coninous case: $f_{X,Y}=f_X(x)f_Y(y)$ and therefore $f_{Y|X=x}(y) = f_Y(y)$.
+\end{itemize}
+\note{Are the events of being attentive in class and having a party the night before
+are independant ?}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Expectation}
+
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Expectation, Variance, Covariance}
+\frametitle{Variance, Covariance}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
