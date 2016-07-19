@@ -39,8 +39,9 @@
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
-
-
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\text{Var}}
+\newcommand{\Cov}{\text{Cov}}
 \ifdefined\ishandout
 \pgfpagesuselayout{3 on 1 with notes}[a4paper,border shrink=5mm]
 \usecolortheme{dove}
@@ -394,7 +395,7 @@ In term of Probability Mass Function:
 \begin{block}{Definition}
 Given a set of random variable with a probability distribution $P(X_1,X_2,X_3, \cdots,X_n)$
 The marginal probability is the probability distribution over a subset of these variables:
-$P(X_1,\cdots,X_p$ with $p<n$
+$P(X_1,\cdots,X_p)$ with $p<n$
 \end{block}
 For two random variables $X$,$Y$:
 \begin{itemize}
@@ -440,7 +441,7 @@ There are some equivalent formulas if $X$ and/or $Y$ are continous:
 \end{itemize}
 \note{Follow the example: what is the probability of being attentive knowing that the
 student has(or not) a party the night before, and the reverse probability (what is the 
-probability of having a party the day before knowing he had a party the night before}}
+probability of having a party the day before knowing he had a party the night before)}
 
 \end{frame}
 
@@ -462,20 +463,119 @@ are independant ?}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Expectation}
+\begin{block}{Definition}
+Given a function $g$ of a random variable $X$, the \alert{expectation} is  defined as:
+\begin{itemize}
+\item if $X$ is discrete: $\E[g(X)]=\sum_xg(x)P(X=x)$
+\item if $X$ is continous: $\E[g(X)]=\int_x g(x)f_X(x)dx$
+\end{itemize}
+\end{block}
+In particular:
+\begin{itemize}
+\item $\E[X] = \sum_xxP(X=x)$ (discrete variable)
+\item $\E[X]=\int_x xf_X(x)dx$ (continous variable)
+\end{itemize}
+Intuitively, the expectation gives an idea of the average value to be expected for a
+random variable.
+\begin{exampleblock}{Linearity}
+$$
+\E[a.g(X) + b] = a.\E[g(X)] + b
+$$
+where $a$ and $b$ are scalar.
+\end{exampleblock}
+\note{Make the calculation for one dice (21/6 = 3.5) and for two dice (7)}
 
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Variance, Covariance}
+\frametitle{Variance}
+\begin{block}{Definition}
+Given a function $g$ of random variable $X$, the \alert{variance} is defined as:
+$$
+\Var(g(X)) = E\left[ (g(X)-\E[g(X)])^2\right] = \E[g(X)^2] - \E[g(X)]^2
+$$
+\end{block}
+In particular:
+$$
+\Var(X) = E\left[ (X-\E[X])^2\right] = \E[X^2] - \E[X]^2
+$$
+Intuitively, the variance describes the spread of the value of a random variable
+around its average.
+
+Often, the standard deviation is used:
+$$
+\sigma(X) = \sqrt(\Var(X))
+$$ 
+Note : if the variable $X$ has a unit (e.g. meter, second, ...) the expectation and
+the standard deviation are of the same unit.
+\end{frame}
+
+\begin{frame}{Co-variance}
+
+\begin{block}{Definnition}
+The covariance between two random variables $X$ and $Y$ is defined by:
+$$
+\Cov(X,Y) = \E\left[(X-\E[X])(Y-\E[Y])\right]
+$$
+\end{block}
+if we have a random vector $\bm{X}$, the variance-covariance matrix $\bm{C}$ is defined by:
+$$
+C_{ij} = \Cov(X_i,X_j)
+$$
+The diagonal elements of $\bm{C}$ give the variance terms.
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Gaussian Distribution}
+\vspace{-0.5em}
+\begin{block}{Definition}
+The \alert{normal distribution} or \alert{gaussian distribution} is largely used.
+Given, two parameters $\mu$ and $\sigma$, the density function of a random variable $X$
+following such a distribution (denoted $X \sim \mathcal{N}(\mu,\sigma)$) is defined as:
+$$
+f_X(x) = \sqrt{\frac{1}{2\pi \sigma^2}} \text{exp}\left( -\frac{1}{2\sigma^2}(x-\mu)^2\right)
+$$
+$\mu$ and $\sigma$ are such that: $\E[X]=\mu$ and $\Var[X]=\sigma^2$
+\end{block}
+\vspace{-0.5em}
+\begin{columns}
+\column{0.6\textwidth}
+\begin{figure}
+\includegraphics[height=.35\textheight]{./fig/fig_gauss.png}
+\end{figure}
+\column{0.4\textwidth}
+$\mathcal{N}(0,1)$,
+
+Gaussian distribution for $\mu=0$ and $\sigma=1$ called
+the \alert{standard normal distribution}.
+\end{columns}
 \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Some properties of the gaussian distribution}
+\begin{itemize}
+\item If $X \sim \mathcal{N}(\mu,\sigma)$. Let's define $X_c=\frac{X-\mu}{\sigma}$. 
+We can prove that $X_c \sim \mathcal{N}(0,1)$. This is called \alert{standardization}
+\item There is no analytical formula for $P(x \in [a;b])$ except for particular values of $a$
+and $b$ ($\{a;b\} \in \{-\infty;0;\infty\}$). So a numeric integration and tabulated values
+are used.
+\item To give an idea of the spread: $P (-2\sigma < X - \mu < 2\sigma) = 95.45\%$. It means that if 
+a random variable follow a normal law, more than 95\% of the realizations (values taken) are
+between $-2\sigma$ and $2\sigma$.
+\end{itemize}
+We can extend this law by defining a multidimensional law on the random vector $\bm{X}$
+with the average $\bm{\mu}$ and covariance matrix $\bm{\Sigma}$:
+$$
+f_{\bm{X}}(\bm{x}) = \sqrt{\frac{\text{det}(\bm{\Sigma}^{-1})}{(2\pi)^n}}
+\text{exp}\left(-\frac{1}{2}(\bm{x}-\bm{\mu})^T\bm{\Sigma}^{-1}(\bm{x}-\bm{\Sigma})\right)
+$$
+
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
@@ -485,7 +585,7 @@ are independant ?}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Body's temperature and the magic of Bayes's rule}
+\frametitle{Body's temperature and the magic of Bayes' rule}
 \end{frame}
 
 
