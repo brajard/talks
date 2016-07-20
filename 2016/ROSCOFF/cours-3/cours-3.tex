@@ -576,23 +576,139 @@ $$
 
 \end{frame}
 
-
+\begin{frame}
+\frametitle{Example of one 2-dimensional gaussian}
+$\bm{\mu} = (0,0)^T$, $\bm{\Sigma}=\text{Diag}(0.3,0.5)^T$ 
+\begin{figure}
+\includegraphics[height=.8\textheight]{./fig/fig_gauss2.png}
+\end{figure}
+\note{point the axes and remark the difference in spread}
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Bayes' Rule}
+\begin{alertblock}{}
+$$
+P(X=x|Y=y) = \frac{P(X=x)P(Y=y|X=x)}{P(Y=y)}
+$$
+\end{alertblock}
+There are equivalent formulation when it involves continous random variables.
+For example if $Y$ is continous:
+$$
+P(X=x|Y=y) = \frac{P(X=x)f_{Y|X=x}(y)}{f_Y(y)}
+$$
+In practice, it is not needed to calculate $P(Y=y)$, it is possible to use the formula:
+$$P(Y=y) = \sum_x P(Y=y|X=x)P(X=x)$$
+
+\note{some quick demonstration + one calculation on a previous example}
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Body's temperature and the magic of Bayes' rule}
+\framesubtitle{Data of the problem}
+\vspace{-0.8em}
+\begin{enumerate}
+\item Let's consider 2 random variables $X$ and $Y$ related to a randomly picked individual
+in the population. $X=1$ if the individual is sick and $0$ otherwise. $Y$ is the random variable
+corresponding to his(her) body's temperature.
+\item We know the Probability mass function of $X$
+\begin{tabular}{|c|c|c|}
+\hline
+$x$ & 0 & 1 \\
+\hline
+$P(X=x)$ & 0.9 & 0.1 \\
+\hline
+\end{tabular}
+\item We know the conditional density probablility functions $f_{Y|X=i}(y)$
+which are gaussians with mean $\mu_i$ and standard deviation $\sigma_i$.
+\end{enumerate}
+\vspace{-.5em}
+\begin{columns}
+\column{0.3\textwidth}
+\textcolor[rgb]{0.0, 0.5019607843137255, 0.0}{Healthy:}
+\begin{itemize}
+\item $\mu_0=37^o$
+\item $\sigma_0=0.15^o$
+\end{itemize}
+
+\textcolor{red}{Sick:}
+\begin{itemize}
+\item $\mu_1=38.5^o$
+\item $\sigma_1=0.8^o$
+\end{itemize}
+
+\column{0.6\textwidth}
+\begin{figure}
+\centering
+\includegraphics[height=.4\textheight]{./fig/fig_bodyt.png}
+\end{figure}
+
+\end{columns}
 \end{frame}
+
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
+\frametitle{Body's temperature and the magic of Bayes' rule}
+\framesubtitle{What is the question ?}
+\begin{block}{}
+Given a random person with a body temperature of $y$, what is the probability
+of beeing sick ?
+\end{block}
+Numerical application: $y=37.4^o$
+
+\begin{figure}
+\includegraphics[height=.5\textheight]{./fig/fig_sick.png}
+\end{figure}
+
+\note{$P(x=1|y=37.4=0.22)$}
+
+
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Entropy}
+\begin{block}{Definition}
+The \alert{shannon entropy} of a discrete random variable $X \sim P(X=x)$ is defined as:
+$$
+H(X) = -\E[\text{log}(P(X=x))] = - \sum_x P(X=x)\text{log}(P(X=x))
+$$
+\end{block}
+For continuous variable one can use the \alert{Differential entropy}:
+$$
+h(X) = - \int f_X(x)\text{log}f_X(x)dx
+$$
+Intuitively, the entropy gives an idea of the surprise expected from a random variable.
+A deterministic variable has an entropy of 0.
+
+\note{0log(0)=0}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Example of entropy}
+Let's considere a random variable $X$ with two possible values $0$ and $1$.
+We note $P(X=1)=p$ and $P(X=0)=1-p$
+In this case the entropy is $H(X) = (p-1)\text{log}(1-p) - p \text{log}p$.
+
+\begin{figure}
+\includegraphics[height=0.6\textheight]{./fig/fig_entropy.png}
+\end{figure}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
 \frametitle{Kullback-Leibler (KL) divergence}
+
 \end{frame}
 
 
