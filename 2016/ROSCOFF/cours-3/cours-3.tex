@@ -708,6 +708,18 @@ In this case the entropy is $H(X) = (p-1)\text{log}(1-p) - p \text{log}p$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Kullback-Leibler (KL) divergence}
+\begin{block}{Definition}
+The \alert{The Kullback-Leibler(KL) divergence} is a way to "measure" the difference between 
+two probability mass function $P(x)$ and $Q(x)$:
+$$
+D_{KL}(P\|Q) = \sum_i P(i) \text{log}\frac{P(i)}{Q(i)}
+$$
+\end{block}
+For continuous variables, one can use the definition:
+$$
+D_{KL}(f_\| f_Y) = \int_x f_X(x) \text{log}\frac{f_X(x)}{f_Y(x)}dx
+$$
+\textbf{Note:} The divergence is \alert{asymetric}: $D_{KL}(P\|Q) \neq D_{KL}(Q\|P)$
 
 \end{frame}
 
@@ -716,12 +728,37 @@ In this case the entropy is $H(X) = (p-1)\text{log}(1-p) - p \text{log}p$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{An example}
+Let's consider $p(x)$ a given density function (in the example $p$ is a sum of two gaussian).
+We want to find the gaussian $q^*(x)$ that minimize the KL divergence.
+\begin{figure}
+\includegraphics[height=.4\textheight]{./fig/fig_kl.png}\\
+\footnotesize{\textit{from Goodfellow et al., Deep Learning, www.deeplearningbook.org}}
+\end{figure}
+\begin{itemize}
+\item if $D_{KL}(p\|q)$ is minimum: $p(x)$ is likely $\Rightarrow$ $q^*(x)$ is likely
+\item if $D_{KL}(q\|p)$ is minimum: $p(x)$ is unlikely $\Rightarrow$ $q^*(x)$ is unlikely
+\end{itemize}
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Cross-entropy}
+\begin{block}{Definition}
+The cross-entropy of the probability distributions $p$ and $q$ are defined by:
+$$
+H(p,q) = H(p) + D_{KL}(p\|q)
+$$
+\end{block}
+If $p$ and $q$ are density functions, it gives:
+$$
+H(p,q) = \int_X p(x) \text{log}q(x) dx
+$$
+
+Intuitively, the cross-entropy, is the degree of surprise of a random variable X if we consider
+a pratical distribution $q$ different from the true distribution $p$
+
+
 \end{frame}
 
 
