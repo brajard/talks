@@ -41,6 +41,7 @@ properties of estimators, mean-square
 ** Forecast error
 ** Geometric interpretation
 
+** Gradient descent
 * Classification (Logistic regression, Classification)
 
 * Multilinear regression, polynomial regression
