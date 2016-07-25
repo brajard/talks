@@ -781,30 +781,89 @@ In practice, we have access to a particular realization of a random sample denot
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Estimator/Estimate}
+Let's denote $\theta$ a parameter of a probabiliy distribution (e.g. $\theta = \mu$, the expectation
+of a normal distribtion)
+\begin{block}{Definition of an Estimator}
+An estimator $\Theta$ is random variable defined as a function of the random variables $\Theta = u(X_1,\ldots,X_n)$ 
+that gives a "good estimation" of $\theta$.
+\end{block}
+
+\begin{block}{Definition of the point estimate}
+A point estimate (often) denoted $\hat{\theta}$ is the function $u$ applied to the observed values
+$$
+\hat{\theta} = u(x_1,\ldots,x_n)
+$$
+\end{block}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Example of the expectation}
+\frametitle{Example of the Expectation}
+\begin{exampleblock}{Estimation of the expectation}
+$$
+M = \frac{1}{n}\sum_i X_i
+$$
+where $\{X_1,X_2,\ldots,X_n\}$ is a i.i.d sample, is an estimator of the
+expectation $\E(X)$
+\end{exampleblock}
+
+\begin{alertblock}{}
+Is it a good estimator ?
+\end{alertblock}
+
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Properties of an estimator}
-MSE
-Bias
-Constitency
+Let $\bm{X}=^T(X_1,\ldots,X_n)$ a random sample depending on a parameter $\theta$ and 
+$\Theta$ an estimator of $\theta$.\\
+Here are some properties of $\Theta$:
+\begin{itemize}
+\item Mean-square error $\text{MSE}(\Theta) = \E\left[ (\Theta - \theta)^2 \right]$\\
+$\text{MSE}(\Theta)$ is espected to be minimum.
+\item Bias $B(\Theta) = E(\Theta) - \theta$\\
+The bias is expected to be $0$, the estimator is the called \alert{unbiased}
+\item $\Theta_n$ (where $n$ denotes the size of the sample) is consistent if and only if:\\
+$$\forall \epsilon>0, \lim_{n \to \infty} Pr(|\Theta_n - \theta|<\epsilon)=1$$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Example with a normal distribution}
+We consider the following estimator of the expectation:
+$$
+M = \frac{1}{n}\sum_i X_i
+$$
+we suppose:
+$\{X_1,\ldots,X_n\} \sim \mathcal{N}(\mu,\sigma)$
+\begin{itemize}
+\item $\text{MSE}(M) = \frac{\sigma}{n}$
+\item $B(M) = 0$ (no need to make a normal assumption).
+\end{itemize}
+\note{make the calculation}
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Maximum-likelihood estimator}
-\end{frame}
+Knowing a parameter $\theta$, we can compute the following propability:
+$$
+\mathcal{L}(\theta) = p(x_1,\ldots,x_n | \theta) = p(x_1 | \theta) . p(x_2 | \theta) . \ldots p(x_n | \theta)
+$$
+$\mathcal{L}$ is called the likelihood.\\
 
-\begin{frame}
-\frametitle{Example with a normal distribution}
+A method to construct an estimator is the construct an estimator that maximimze the likelihood.
+In pratice, we use the log-likelihood :
+$$
+l = \log{\mathcal{L}} = \sum_{i=1}^n \log{p(x_i|\theta)}
+$$
+\note{Make the calcultion of expectation/Variance with a normal function}
+
 \end{frame}
 
 \end{document}
