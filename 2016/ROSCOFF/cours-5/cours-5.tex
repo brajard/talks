@@ -361,23 +361,78 @@ Is it relevant to take the least-square function?
 
 \begin{frame}
 \frametitle{Problem with the least-square cost function}
-pratical problem : non convex function
-theorical problem : it is not the maximum likelihood esimator.
+\begin{itemize}
+\item First problem (practical): the function is non-convex and the minimum is unclear
+\begin{figure}
+\includegraphics[height=.5\textheight]{./fig/cost_lmsq.png}
+\end{figure}
+\item Second problem (theorical): the mimimum of this cost function is not the maximum
+likekihood estimator
+
+\end{itemize}
+\note{explain the example,draw other non-convex function, remind likelihood}
 \end{frame}
 
 \begin{frame}
 \frametitle{Logistic regression cost function}
 \framesubtitle{A intuitive definition}
-
-Two cost functions to understand
+For logistic regression, the cost function is contructed as follow:
+\begin{itemize}
+\item $D(h_\theta(x),y=1) = -\log(h_\theta(x))$
+\item $D(h_\theta(x),y=0) = -\log(1-h_\theta(x))$
+\end{itemize}
+\begin{columns}
+\column{.5\textwidth}
+\begin{figure}
+If $y=1$\\
+\includegraphics[height=.5\textheight]{./fig/cost1.png}
+\end{figure}
+\column{.5\textwidth}
+\begin{figure}
+If $y=0$\\
+\includegraphics[height=.5\textheight]{./fig/cost0.png}
+\end{figure}
+\end{columns}
+\note{Make comments on the different values and the limits}
 \end{frame}
 
 \begin{frame}
 \frametitle{Logistic cost function}
- \frametitle{A compact definition}
+ \framesubtitle{A compact definition}
+The logistic cost function can be rewritten:
+$$
+D(h_\theta(x),y) = -y\log(h_\theta(x)) - (1-y)\log(1-h_\theta(x))
+$$
+\begin{itemize}
+\item The value $\theta$ that minimize this cost function is the maximum of likelkihood
+(maximum of $P(y|x,\theta$)
+\item If we consider that $h_\theta(x)$ is a probability $q_1$ of the prediction $\hat{y}$ to be one.
+We have a "true" probability $p_{y=1}=y$. Minimizing $D$ is equivalent to minimizing to cross-entropy
+between $p$ and $q$.
+\end{itemize}
+\note{detail each point}
+\end{frame}
 
-Log of Cross entropy !!!!
-Maximum of likelihood
+\begin{frame}
+\frametitle{The cost function}
+\begin{columns}[t]
+\column{.5\textwidth}
+\begin{figure}
+Points to classify:\\
+\includegraphics[width=.99\textwidth]{./fig/fig_2cl_noise.png}\\
+
+model : $h_\theta(x)=\theta_1 x_1 + \theta_2 x_2$
+\end{figure}
+
+\column{.5\textwidth}
+\begin{figure}
+The cost unction to minimize:\\
+\includegraphics[width=.99\textwidth]{./fig/cost_log.png}\\
+
+\end{figure}
+
+\end{columns}
+
 \end{frame}
 
 \begin{frame}
