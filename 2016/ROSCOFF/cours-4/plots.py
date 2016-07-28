@@ -8,6 +8,14 @@ from mpl_toolkits.mplot3d import Axes3D
 #pixels /inch 
 dpi =200
 
+def fig_lin(f,x,sigma,name,xlabel='',ylabel=''):
+    plt.figure()
+    y = f(x)+np.random.normal(0,sigma,x.shape)
+    plt.scatter(x,y,marker='+',color='red',s=50)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.savefig(os.path.join('./fig',name))
+
 def fig_sigm():
     """ Figue of sigmoid
     """
@@ -142,13 +150,10 @@ def trim():
             os.system(cmdline)
 
 #List of figs
-#fig_sigm()
-#fig_2cl_nonoise([[-1,-1],[1,1]],0.4,'2cl_nonoise')
-#fig_2cl_nonoise([[-1,-1],[1,1]],1,'2cl_noise')
-#fig_2cl_nonoise([[-1,-1],[-1,1],[1,1],[1,-1]],0.3,'4cl_nonoise')
-#fig_lmsq()
-#fig_log()
-#fig_cost0()
-#fig_cost1()
+#fig_lin(lambda x:2000*x+1000,9+70*np.random.rand(20),10000,'surf_price',xlabel='Surface',ylabel='Price')
+#fig_lin(lambda x:2*x +1, 10*np.random.rand(30),5,'positive')
+#fig_lin(lambda x:-3*x +2, 10*np.random.rand(20),1,'negative')
+#fig_lin(lambda x:np.exp(x),4*np.random.rand(20),1,'nolinear')
+#fig_lin(lambda x:0,6*np.random.rand(20),0.1,'nolink')
 
 trim()

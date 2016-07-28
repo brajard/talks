@@ -42,6 +42,7 @@
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\Var}{\text{Var}}
 \newcommand{\Cov}{\text{Cov}}
+\newcommand{\h}{h_\theta(x)}
 \ifdefined\ishandout
 \pgfpagesuselayout{3 on 1 with notes}[a4paper,border shrink=5mm]
 \usecolortheme{dove}
@@ -199,20 +200,182 @@
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Supervise learning}
-Example of the price/surface price of appartment
-what is a learning dataset
-what is a model
-what is a prediction
-regression
+\frametitle{Supervised learning}
+\begin{columns}[t]
+\column{0.6\textwidth}
+Here are a example of a plot of two variables : the surface of an appartment (denoted $x$) and
+the price of the appartment (denoted $y$).
+\begin{figure}
+\includegraphics[height=.5\textheight]{./fig/surf_price.png}
+\end{figure}
+\column{0.4\textwidth}
+\begin{block}{}
+Questions asked given the data:
+\end{block}
+\begin{itemize}
+\item Is there a relationship between the surface and the price?
+\item If so, Can we define this relationship?
+\item Can we predict the price of appartement with a given surface?
+\item What is the error of this prediction ?
+\end{itemize}
+\end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Vocabulary}
+\begin{itemize}
+\item the set $\{(x_1,y_1),\ldots,(x_n,y_n)\}$ is called the \alert{learning dataset},
+
+where:
+\begin{itemize}
+\item Variables $x_i$ are called the \alert{predictors}
+\item Variables $y_i$ are called the \alert{targets}
+\end{itemize}
+
+\item A \alert{model}, or the hypothesis function is denoted $h_\theta(x)$ and is defined as:
+$$
+y_i = h_\theta(x_i) + e_i
+$$
+where:
+\begin{itemize}
+\item $e_i$ the error of the model or the \alert{residual}.
+\item $\theta \in \R^p$ is a parameter of the function $h_\theta(x)$.
+\end{itemize}
+\item We define a \alert{prediction} $\hat{y}$ to be the output of the model given a particular $x$:
+$\hat{y} = h_\theta(x)$.
+\end{itemize}
+
+\begin{alertblock}{}
+The prediction of a numerical variable $y$ from a predictor $x$ given a learning dataset is called
+a \alert{regression}.
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The probabilistic point of view}
+$x_i$, $y_i$ and $e_i$ are realizations of the random variables $X_i$ and $Y_i$ and
+$\epsilon_i$.
+
+The hypothesis function can be written:
+$$
+Y_i = h_\theta(X_i) + \epsilon_i
+$$
+
+For the further results, we need to make two strong hypothesis:
+\begin{exampleblock}{Hypothesis 1}
+$$\forall i, \E[\epsilon_i]=0$$
+\end{exampleblock}
+
+\begin{exampleblock}{Hypothesis 2}
+$\Var(\epsilon_i)=\sigma^2$ and $\forall i \neq j, \epsilon_i$ and $\epsilon_j$ are independant.
+\end{exampleblock}
+
+\begin{alertblock}{Danger !}
+Very often, the hypothesis 2 is not verified.
+\end{alertblock}
+
+\note{show why hypothesis 2 is hard}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Choice of the hypothesis}
+\begin{block}{}
+In linear regression, the function $\h$ is assumed to be linear:
+$$
+\h = \theta_0 + \theta_1 x
+$$
+
+\end{block}
+\begin{itemize}
+\item Linear regression is often (always) the first model to test
+\item Some non-linear models can be handled through linear regression (using a transformation of
+the predictor $x$ or the target $y$).
+\end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Other examples of dependencies}
+\begin{columns}
+\column{.5\textwidth}
+\vspace{-2em}
+\begin{figure}
+Positive linear with noise\\
+\includegraphics[height=.38\textheight]{./fig/positive.png}
+\end{figure}
+\vspace{-2em}
+\begin{figure}
+Negative linear\\
+\includegraphics[height=.38\textheight]{./fig/negative.png}
+\end{figure}
+\column{.5\textwidth}
+\vspace{-2em}
+\begin{figure}
+Non-linear \\
+\includegraphics[height=.38\textheight]{./fig/nolinear.png}
+\end{figure}
+\vspace{-2em}
+\begin{figure}
+No dependancy\\
+\includegraphics[height=.38\textheight]{./fig/nolink.png}
+\end{figure}
+
+\end{columns}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
-cours 
+\begin{frame}
+\frametitle{Estimation of the parametre $\theta$}
+\begin{itemize}
+\item Learning dataset: $\{(x_1,y_1),\ldots,(x_n,y_n)\}$
+\item Hypothesis function: $\h = \theta_0 + \theta_1 x$
+\end{itemize}
+\begin{block}{The principle}
+Estimating $\theta=(\theta_0,\theta_1)$ is performed by
+minimizing the misfit between targets $y_i$ and 
+predictions $\hat{y_i}=h_\theta(x_i)$ for $i \in \{1,\ldots,n\}$.
+So $\hat{\theta_0}$ and $\hat{\theta_1}$ are chosen such as:
+$$
+J(\theta_0,\theta_1) = \sum_{i=1}^n D(h_\theta(x_i),y_i)
+$$
+is minimum.
+\end{block}
+
+\begin{alertblock}{}
+What is chosen for the misfit $D$ ?
+\end{alertblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The least-mean square}
+\begin{block}{The last-mean square function}
+$$
+D(\hat{y},y)= \frac{1}{2}(\hat{y} - y)^2
+$$
+\end{block}
+We can rewrite $J:$
+$$
+J(\theta_0,\theta_1) =\frac{1}{2} \sum_{i=1}^n (y_i - \theta_0 - \theta_1 x_1)^2
+$$
+\begin{alertblock}{Determination of $\hat{\theta}_0$ and $\hat{\theta}_1$}
+$$
+\hat{\theta}_0 = \overline{y} - \hat{\theta}_1\overline{x}
+$$
+where $\overline{y}=\frac{1}{n}\sum y_i$ and $\overline{x}=\frac{1}{n}\sum x_i$ are the mean values
+and:
+$$
+\hat{\theta}_1 = \frac {\sum_{i=1}^n (x_i-\overline{x})y_i}
+{\sum_{i=1}^n (x_i-\overline{x})^2}
+$$
+\end{alertblock}
+\note{explain the factor 0.5, make the demonstration}
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Multivariate linear regression}
