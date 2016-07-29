@@ -199,7 +199,111 @@
 %%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{What is the subject of the summer school ?}
+A lot of data ...\\[1ex]
+\includegraphics[width=0.5\textwidth]{./fig/Satellite.jpg}
+\includegraphics[width=0.5\textwidth]{./fig/internet.jpg}\\
+\includegraphics[width=0.5\textwidth]{./fig/sea_level.png}
+
 
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{What is the subject of the summer school ?}
+\begin{alertblock}{}
+Can we extract knowledge, make some predictions, determine a "model" using this large
+amount of data ?
+\end{alertblock}
+\begin{figure}
+\begin{tikzpicture} [
+	auto,
+	node distance = 1cm]
+	\node(H0) [anchor=east]{\includegraphics[width=0.4\textwidth]{./fig/mnistExamples.png}};
+	\node(H1) [right of =  H0, xshift = .4\textwidth]  
+	{Digit \newline $\in \{0,\ldots,9\}$};
+	\node(legend) [below of = H0,yshift=-4ex]{Base of images};
+	\draw [very thick, ->] (H0)--(H1);
+\end{tikzpicture}
+\end{figure}
+
+\begin{itemize}
+\item From high dimensional data (thousands to millions dimensions) to reduced dimension data (less than 100)
+\item From disorganized data to comprehensive information
+\item \alert{Can we teach a machine how to do that ?}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Two classes of problems in datascience}
+\begin{enumerate}
+\item \alert{Regression}: Determination of a quantitative variable from a set of data
+\begin{itemize}
+\item The price of a building from various informations (Surface, ...)
+\item A pysical value (Temperature, humidity, ...) in the future knowing the past
+\item ...
+\end{itemize}
+\item \alert{Classification}: Determination of a class (a label) 
+\begin{itemize}
+\item A digit from a image
+\item Identification of the content of an image
+\item ...
+\end{itemize}
+\end{enumerate}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Two modes of "learning"}
+
+\begin{enumerate}
+\item \alert{Supervised learning}: we have a set of data with examples of what
+we want to obtain (some measurements, a survey, ...). We want to derive a general 
+rule.
+\item \alert{Unsupervised learning}: we only know the data, we have no examples of
+what we want to obtain. We want to extract a "useful" representation of these data, or
+some coherent categories.
+\begin{itemize}
+\item Determine typical client behaviors of clients in a supermarket
+\end{itemize}
+\end{enumerate}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Outline of the summer school}
+\begin{block}{The main idea}
+The purpose is to introduce some powerful tools and concepts to 
+extract meaning from an amount of data.
+\end{block}
+\begin{itemize}
+\item Week 1 (J. Brajard) :
+\begin{itemize}
+\item Basics of Linear Algebra 
+\item Some probability and statistics
+\item Linear Regression
+\item Logistic "Regression"
+\item Toward non-linear regression
+\end{itemize}
+\item Week 2 (G. Contardo):
+\begin{itemize}
+\item Machine Learning - Neural Networks
+\item Deep Learning - Convolutionnal Neural Networks
+\item Deep Learning - Recurrent Neural Networks
+\item Unsupervised Learning - ACP
+\item Unsupervised Learning - K-means, NMF
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Pratical organization}
+
+\begin{itemize}
+\item Morning (9:00 - 12:00) : Lectures in class
+\item Afternon (14:00 - 17:00) : Practical work (using \texttt{Python})
+\end{itemize}
+\end{frame}
+
 
 \end{document}
