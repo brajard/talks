@@ -170,7 +170,7 @@
 \newcommand{\nb}{1}
 
 \title[Python]{Getting started with Python}
-\author[]{julien.brajard@upmc.fr}
+\author[J. Brajard]{julien.brajard@upmc.fr}
 \institute[UPMC]{UPMC}
 \date{1-5 August 2016}
 \begin{document}
@@ -198,7 +198,7 @@ Among other tasks, python allows you to:
 \end{itemize}
 
 Python is a interpreted language, which means that instructions are "translated" 
-sequentially each time an instruction is read by the \alert{interpretexr}.
+sequentially each time an instruction is read by the \alert{interpreter}.
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -222,20 +222,20 @@ than the python interpreter alone)
 To write an instruction in Python, you can either:
 \end{block}
 \vspace{1em}
-\begin{columns}
-\column{.45\textwidth}
+\begin{columns}[t]
+\column{.49\textwidth}
 Writing the instruction directly in the console 
 (recommanding for quick and easy instructions)
 \begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth]{fig/fig_console_python.png}
+\includegraphics[width=1\textwidth]{fig/fig_console_python.png}
 \end{figure}
-\column{0.45\textwidth}
+\column{0.49\textwidth}
 Writing all the instructions in a file (extention \texttt{.py})
 and execute the file as as \alert{script}
 \begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth]{fig/fig_script.png}
+\includegraphics[width=1\textwidth]{fig/fig_script.png}
 \end{figure}
 \end{columns}
 \end{frame}
@@ -313,6 +313,7 @@ purpose.}
 \item In \texttt{Spyder} using the play command
 \item In a \texttt{IPython} console using the magic
 \verb|%run| command
+\item in iPython notebook clicking on play, with \texttt{Ctrl+Enter} or with \texttt{Shift+Enter}
 \item In a terminal using : \verb|python myfile.py|
 \item In a terminal like a script : \verb|./myfile.py|.
 For that, you would need to add a line in the begining of the \verb|.py| file :
@@ -348,6 +349,32 @@ All these libraries are open-source.
 \end{block}
 
 
+\end{frame}
+
+\begin{frame}
+\frametitle{Some questions...}
+\begin{itemize}
+\item Linux environment:
+\begin{itemize}
+\item Very familiar (use of terminal, shell commands)
+\item Basic knowledge (user but mainly with graphic interface)
+\item Almost never used yet.
+\end{itemize}
+\item Programming languages:
+\begin{itemize}
+\item Compiled language (C, Fortran)
+\item Interpreted language (Matlab, Octave, Scilab , Python)
+\item Specialized/high level language (php, R, Excel)
+\item Language oriented (java, C++)
+\end{itemize}
+\item knowledge of Python
+\begin{itemize}
+\item Advanced user (use of toolbox, plot, script, class definition)
+\item Beginners (basics of the language)
+\item Never used Python.
+\end{itemize}
+
+\end{itemize}
 \end{frame}
 
 \end{document} 

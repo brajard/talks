@@ -130,3 +130,9 @@ sympy-plots-for-*.tex/
 
 #pdf
 *.pdf
+
+#For roscoff
+slashbox.sty
+
+#Mac
+.DS_Store
