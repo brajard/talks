@@ -202,7 +202,7 @@
 \begin{frame}
 \frametitle{Scalars, Vectors, Matrices (and Tensors)}
 We define some mathematical objects :
-\begin{itemize}
+\begin{itemize}[<+->]
 \item \alert{Scalars}: a single number usually real ($\in \R$)
 \item \alert{Vectors}: An array of numbers. For example, $\bm{x} \in \R^n$
 is a vector containing $n$ elements, the i-th element
@@ -219,7 +219,7 @@ In 3-D, an element of the tensor $\bm{A}$ is denoted $A_{i,j,k}$.
 
 \begin{frame}
 \frametitle{Operations on matrix and vectors}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item The Transpose $^T$ operation is defined by : $(A^T)_{i,j}=A_{j,i}$
 \item Sum of matrix (or vectors) : $\bm{C} = \bm{A} + \bm{B}$ is defined by:\\
 $C_{i,j} = A_{i,j}+B_{i,j}$
@@ -228,7 +228,7 @@ $D_{i,j} = a \cdot B_{i,j} +c$
 \item Multiplying Matrices : $\bm{C} = \bm{A} \cdot \bm{B}$ is defined by:\\
 $C_{i,j} = \sum_k A_{i,k}\cdot B_{k,j}$
 \note[item]{Multiplication: Make some remarks here !!! distributtiviy, associativity, no-commutativity}
-\item Dot product between two vectors : $\bm{x}^Ty$
+\item Dot product between two vectors : $\bm{x}^T\bm{y}$
 \item System of linear equations : $\bm{Ax} = \bm{b}$ \\
 where $\bm{A} \in \R^{m\times n}$, $\bm{b} \in \R^m$ are known, and $\bm{x} \in \R^n$ is unknown
 \note[item]{Linear system: give an example}
@@ -239,7 +239,7 @@ where $\bm{A} \in \R^{m\times n}$, $\bm{b} \in \R^m$ are known, and $\bm{x} \in 
 
 \begin{frame}
 \frametitle{Identity and Inverse matrix}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item Identity matrix $\bm{I}_n \in \R^{n\times n}$ contains 1 on the diagonal, and 0 elsewhere.
 $$
 \begin{pmatrix}
@@ -252,7 +252,7 @@ $\bm{I}_n$ verifies : $\forall x \in \R^n,  \bm{I}_nx = x$\\
 
 \item The matrix inverse of $\bm{A} \in \R^{n\times n}$ is defined such that :
 $$\bm{A}^{-1}\bm{A} = \bm{A}\bm{A}^{-1} = \bm{I}_n$$
-\begin{block}{}
+\begin{block}<2->{}
 The inverse matrix is \alert{not} defined for any matrix $\bm{A}$. If the inverse exists, 
 matrix $\bm{A}$ is said to be \alert{nonsingular}
 \end{block}
@@ -274,6 +274,7 @@ $$
 \bm{x} = \bm{A}^{-1}\bm{b}
 $$
 
+\pause
 \begin{block}{}
 In practice, $\bm{A}^{-1}$ is not computed explicity because :
 \begin{itemize}
@@ -301,7 +302,7 @@ Note that the $L^2$ norm can be expressed in term of \alert{dot product} :
 $$
 \|\bm{x} \| = (\bm{x}^T\bm{x})^{\frac{1}{2}}
 $$
-
+\pause
 \begin{exampleblock}{The $L^\infty$ or max norm}
 $$
 \| \bm{x} \|_\infty = \underset{i}{\text{max}} |x_i|
@@ -314,7 +315,7 @@ $$
 
 \begin{frame}
 \frametitle{More on norms...}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item A norm on matrices can be defined, denoted the \alert{Frobenius norm} :
 $$
 \|\bm{A}\|_F = \sqrt{\sum_{i,j} A^2_{i,j}}
@@ -323,7 +324,7 @@ $$
 $$
 \bm{x}^T\bm{y} = \|\bm{x}\|_2\|\bm{y}\|_2 cos(\theta)
 $$
-where $\theta$ is the angle between $x$ and $y$.
+where $\theta$ is the angle between $\bm{x}$ and $\bm{y}$.
 \end{itemize}
 \end{frame}
 
@@ -358,7 +359,7 @@ $$
 $$
 The scalar $\lambda$ is called the \alert{eigen value} associated to the vector $v$.
 
-$v$ is note unique and is defined to a multiplicative constante. Usually, the eigen vector is considered
+$v$ is not unique and is defined to a multiplicative constante. Usually, the eigen vector is considered
 such as $\|v\| =1$.
 \vspace{1em}
 If $\bm{A}$ has $n$ linearly independant eigen vectors denoted $\{\bm{v}^{(1)},\bm{v}^{(2)},\ldots,\bm{v}^{(n)}\}$, associated with eigen values $\{\lambda_1,\lambda_2,\ldots,\lambda_n\}$, we can define the \textit{eigen decomposition} of $\bm{A}$:
@@ -375,7 +376,7 @@ where:
 
 \begin{frame}
 \frametitle{Some properties of eigen decomposition}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item The eigen decomposition may not exist or may involve complexe numbers.
 For our future applications, the decomposition is supposed to exist and to involve only real numbers.
 \item If $\bm{A}$ is symmetric, the eigen decomposition can be written : $\bm{A} = \bm{Q}\Lambda\bm{Q}^T$
@@ -400,7 +401,7 @@ where
 \item $\bm{D} \in \R^{m\times n}$ is diagonal (but not necessarily square). 
 \end{itemize}
 
-Elements if $\bm{D}$ are called the \alert{singular values}
+Elements in $\bm{D}$ are called the \alert{singular values}
 
 \note{Make the link with the eigen decomposition of $AA^T$ and $A^TA$}
 
