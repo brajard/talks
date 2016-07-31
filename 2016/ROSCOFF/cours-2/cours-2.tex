@@ -454,8 +454,8 @@ $, for all $d_i \neq 0$
 \end{block}
 \begin{itemize}
 \item if $\bm{A}$ is square and non-singular, $\bm{A}^+=\bm{A}^{-1}$
-\item if $m>n$, $\bm{x}=\bm{A}^+\bm{b}$ is the solution of the system with minimal $L^2$ norm ($\|\bm{x}\|_2$ is minimal)
-\item if $m<n$,  $\bm{x}=\bm{A}^+\bm{b}$ is such as $\bm{A}\bm{x}$ is as close as possible to $b$
+\item if $n>m$, $\bm{x}=\bm{A}^+\bm{b}$ is the solution of the system with minimal $L^2$ norm ($\|\bm{x}\|_2$ is minimal), $\bm{A}^+=\bm{A}^T(\bm{AA}^T)^{-1}$
+\item if $n<m$,  $\bm{x}=\bm{A}^+\bm{b}$ is such as $\bm{A}\bm{x}$ is as close as possible to $b$, $\bm{A}^+=(\bm{A}^T\bm{A})^{-1}\bm{A}^T$
 ($\|\bm{Ax} - \bm{b}\|_2$ is minimal)
 \end{itemize}
 \note{Give an example with two points, and with a point and 2 lines}
