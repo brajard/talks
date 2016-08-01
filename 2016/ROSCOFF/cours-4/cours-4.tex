@@ -255,12 +255,11 @@ a \alert{regression}.
 
 \begin{frame}
 \frametitle{The probabilistic point of view}
-$x_i$, $y_i$ and $e_i$ are realizations of the random variables $X_i$ and $Y_i$ and
-$\epsilon_i$.
-
-The hypothesis function can be written:
+$e_i$ is considered as the realization of a random variable $\epsilon_i$.
+So $y_i$ (depending on $e_i$) is also a realization of a random variable $Y_i$
+with the expression
 $$
-Y_i = h_\theta(X_i) + \epsilon_i
+Y_i = h_\theta(x_i) + \epsilon_i
 $$
 
 For the further results, we need to make two strong hypothesis:
@@ -376,7 +375,96 @@ $$
 \note{explain the factor 0.5, make the demonstration}
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Some remarks}
+\begin{itemize}
+\item From $\hat{\theta}_0 = \overline{y} - \hat{\theta}_1\overline{x}$, we conclude
+that the center of gravity $(\overline{x},\overline{y})$ is on the regression line.
+\item We can derive the theoritical property:
+$$
+\hat{\theta}_0 = \theta_0 + \frac{\sum(x_i - \overline{x})e_i}{\sum(x_i - \overline{x})^2}
+$$
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Some probabilistic properties}
+\begin{block}{}
+$\hat{\theta}_0$ and $\hat{\theta}_1$ are estimators of the parameters $\theta_0$ and
+$\theta_1$
+\end{block}
+\begin{itemize}
+\item Estimators are unbiased, $\E[\hat{\beta}_0] = \beta_0$ and $\E[\hat{\beta}_1] = \beta_1$
+\item $\Var(\hat{\beta}_0)=\sigma^2\left( \frac{1}{n} + \frac{\overline{x}^2}{\sum(x_i - \overline{x})^2} \right)$
+\item $\Var(\hat{\beta}_1)=\frac{\sigma^2}{\sum(x_i - \overline{x})^2)}$
+\item with the assumption that $\epsilon_i \sim \mathcal{N}(0,\sigma)$, we can demonstrate that
+$\hat{\theta}_0$ and $\hat{\theta}_1$ are maximum likelihood estimators. It means, it maximize:
+$p(Y_i=y_i | \theta_0,\theta_1, x_i)$
+\end{itemize}
+
+\note{rewrite relation in term of random values}
+\end{frame}
+
+%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Residuals}
+\begin{block}{Estimation of residual}
+We estimate the residuals $\epsilon_i$ using the formula:
+$$
+\hat{\epsilon}_i = y_i - \hat{\theta}_0 - \hat{\theta}_1 x_i =
+(y_i - \overline{y}) - \theta_1(x_i - \overline{x})
+$$
+\end{block}
+Note that $ \sum \hat{\epsilon}_i =0 $.
+
+\begin{block}{Estimation (unbiased) of $\sigma$}
+$$\hat{\sigma}^2 = \sum \frac{\hat{\epsilon}_i^2}{n-2}$$
+\end{block}
+\note{make a graphic representation}
+\end{frame}
+%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Prediction}
+
+Making a prediction is to estimate the target $y$ given a new variable $x_{n+1}$
+under the assumption that $y$ is following the same model:
+$$Y_{n+1} = \theta_0 + \theta_1 x_{n+1} + \epsilon_{n_1}
+$$
+\begin{block}{Predicted value}
+$$\hat{y}_{n+1} = h_\theta(x_{n+1}) = \theta_0 + \theta_1x_{n+1}$$
+\end{block}
+Property of the prediction error $\hat{\epsilon}_{n+1} = \hat{y}_{n+1} - y_{n+1}$:
+\begin{itemize}
+\item $\E[\hat{\epsilon}_{n+1} ] = 0$
+\item $\Var(\hat{\epsilon}_{n+1} ) = \sigma^2 
+\left(  1 + \frac{1}{n} + \frac{(x_{n+1} -\overline{x})^2}{\sum(x_i - \overline{x})^2}\right)$
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{geometric interpretation}
+
+Let's denote $\bm{x}=(x_1,\ldots,x_n)^T$ and 
+$\bm{y}=(y_1,\ldots,y_n)^T$
+$\bm{x}$ and $\bm{y} \in \R^n$
+\begin{block}{Linear regression as a projection}
+The linear regression estimate:
+$\bm{\hat{y}} = \hat{\theta}_0 + \hat{theta}_1 \bm{x}$,
+$\bm{\hat{y}} = \{\hat{y}_1,\ldots,\hat{y}_n \}$ 
+is belonging to the subspace $\mathcal{M}(\bm{x})$ of dimension 2 spanned by vectors
+$\bm{x}$  and $\bm{1} = (1,\ldots,1)^T$
+and is the orthogonal projection of $\bm{y}$ on $\mathcal{M}(\bm{x})$
+\end{block}
+Note that (by definition) the orthogonal projection minimize the norm $\| \bm{\hat{y}} - \bm{y} \|$
+\note{make a draw here}
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%
+
 \begin{frame}
 \frametitle{Multivariate linear regression}
 Example of surface/price + number of rooms + Age of the building + floor
