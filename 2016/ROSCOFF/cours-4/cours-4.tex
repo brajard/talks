@@ -69,9 +69,10 @@
 
 \fi
 
+%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Notes
-%\setbeameroption{show only notes}
-
+%\setbeameroption{show notes}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 
@@ -215,7 +216,7 @@ Questions asked given the data:
 \end{block}
 \begin{itemize}[<+->]
 \item Is there a relationship between the surface and the price?
-\item If so, Can we define this relationship?
+\item If so, can we define this relationship?
 \item Can we predict the price of appartement with a given surface?
 \item What is the error of this prediction ?
 \end{itemize}
@@ -262,7 +263,7 @@ with the expression
 $$
 Y_i = h_\theta(x_i) + \epsilon_i
 $$
-
+\pause
 For the further results, we need to make two strong hypothesis:
 \begin{exampleblock}{Hypothesis 1}
 $$\forall i, \E[\epsilon_i]=0$$
@@ -271,7 +272,7 @@ $$\forall i, \E[\epsilon_i]=0$$
 \begin{exampleblock}{Hypothesis 2}
 $\Var(\epsilon_i)=\sigma^2$ and $\forall i \neq j, \epsilon_i$ and $\epsilon_j$ are independant.
 \end{exampleblock}
-
+\pause
 \begin{alertblock}{Danger !}
 Very often, the hypothesis 2 is not verified.
 \end{alertblock}
@@ -291,6 +292,7 @@ $$
 $$
 
 \end{block}
+\pause
 \begin{itemize}
 \item Linear regression is often (always) the first model to test
 \item Some non-linear models can be handled through linear regression (using a transformation of
@@ -329,11 +331,12 @@ No dependancy\\
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Estimation of the parametre $\theta$}
+\frametitle{Estimation of the parameter $\theta$}
 \begin{itemize}
 \item Learning dataset: $\{(x_1,y_1),\ldots,(x_n,y_n)\}$
 \item Hypothesis function: $\h = \theta_0 + \theta_1 x$
 \end{itemize}
+\pause
 \begin{block}{The principle}
 Estimating $\theta=(\theta_0,\theta_1)$ is performed by
 minimizing the misfit between targets $y_i$ and 
@@ -344,7 +347,7 @@ J(\theta_0,\theta_1) = \sum_{i=1}^n D(h_\theta(x_i),y_i)
 $$
 is minimum.
 \end{block}
-
+\pause
 \begin{alertblock}{}
 What is chosen for the misfit $D$ ?
 \end{alertblock}
@@ -362,6 +365,7 @@ We can rewrite $J:$
 $$
 J(\theta_0,\theta_1) =\frac{1}{2} \sum_{i=1}^n (y_i - \theta_0 - \theta_1 x_1)^2
 $$
+\pause
 \begin{alertblock}{Determination of $\hat{\theta}_0$ and $\hat{\theta}_1$}
 $$
 \hat{\theta}_0 = \overline{y} - \hat{\theta}_1\overline{x}
@@ -379,7 +383,7 @@ $$
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Some remarks}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item From $\hat{\theta}_0 = \overline{y} - \hat{\theta}_1\overline{x}$, we conclude
 that the center of gravity $(\overline{x},\overline{y})$ is on the regression line.
 \item We can derive the theoritical property:
@@ -396,7 +400,7 @@ $$
 $\hat{\theta}_0$ and $\hat{\theta}_1$ are estimators of the parameters $\theta_0$ and
 $\theta_1$
 \end{block}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item Estimators are unbiased, $\E[\hat{\beta}_0] = \beta_0$ and $\E[\hat{\beta}_1] = \beta_1$
 \item $\Var(\hat{\beta}_0)=\sigma^2\left( \frac{1}{n} + \frac{\overline{x}^2}{\sum(x_i - \overline{x})^2} \right)$
 \item $\Var(\hat{\beta}_1)=\frac{\sigma^2}{\sum(x_i - \overline{x})^2)}$
@@ -415,11 +419,11 @@ $p(Y_i=y_i | \theta_0,\theta_1, x_i)$
 We estimate the residuals $\epsilon_i$ using the formula:
 $$
 \hat{\epsilon}_i = y_i - \hat{\theta}_0 - \hat{\theta}_1 x_i =
-(y_i - \overline{y}) - \theta_1(x_i - \overline{x})
+(y_i - \overline{y}) - \hat{\theta}_1(x_i - \overline{x})
 $$
 \end{block}
 Note that $ \sum \hat{\epsilon}_i =0 $.
-
+\pause
 \begin{block}{Estimation (unbiased) of $\sigma$}
 $$\hat{\sigma}^2 = \sum \frac{\hat{\epsilon}_i^2}{n-2}$$
 \end{block}
@@ -436,6 +440,7 @@ $$
 \begin{block}{Predicted value}
 $$\hat{y}_{n+1} = h_\theta(x_{n+1}) = \theta_0 + \theta_1x_{n+1}$$
 \end{block}
+\pause
 Property of the prediction error $\hat{\epsilon}_{n+1} = \hat{y}_{n+1} - y_{n+1}$:
 \begin{itemize}
 \item $\E[\hat{\epsilon}_{n+1} ] = 0$
@@ -460,6 +465,7 @@ is belonging to the subspace $\mathcal{M}(\bm{x})$ of dimension 2 spanned by vec
 $\bm{x}$  and $\bm{1} = (1,\ldots,1)^T$
 and is the orthogonal projection of $\bm{y}$ on $\mathcal{M}(\bm{x})$
 \end{block}
+\pause
 Note that (by definition) the orthogonal projection minimize the norm $\| \bm{\hat{y}} - \bm{y} \|$
 \note{make a draw here}
 \end{frame}
@@ -491,26 +497,28 @@ $$
 \h = \bm{\theta}^T\bm{x}
 $$
 \end{block}
+\pause
 
 The least mean square cost function is then:
 $$
-J(\bm{\theta}) =\frac{1}{2} \sum (y_j - \bm{\theta}^T\bm{x_j})^2
+J(\bm{\theta}) =\frac{1}{2} \sum (y_j - \bm{\theta}^T\bm{x_{\cdot j}})^2
 $$
-
+where $\bm{x_{\cdot j}} = (x_{0,1},\ldots,x_{p,1})^T$
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Finding theta}
-As for the univariate linear regression, find $\bm{\hat{\theta}} = (\theta_0,\ldots,\theta_p)^T$, such as:
+As for the univariate linear regression, find $\bm{\hat{\theta}} = (\theta_0,\ldots,\theta_p)^T$, such as $J$ is minimum:
 $$
 \frac{\partial J}{\partial \theta_i} = 0
 $$
 with: $ \frac{\partial J}{\partial \theta_i} = - \sum_{j=1}^n (y_j - \bm{\theta}^T\bm{x_j}).x_{ij}$
+\pause
 \begin{block}{Normal equations}
 $$
-\forall i \in  \{0,\ldots,p\}, -(\bm{y} - \bm{X}\theta)^T\bm{x}_{i \cdot} =0
+\forall i \in  \{0,\ldots,p\}, (\bm{y} - \bm{X}\theta)^T\bm{x}_{i \cdot} =0
 $$
-where $\bm{x}_{i \cdot} = (x_{i1},\ldots,x_{in})^T$
+where $\bm{x}_{i \cdot} = (x_{i,1},\ldots,x_{i,n})^T$
 \end{block}
 
 \end{frame}
@@ -522,8 +530,9 @@ $$
 \bm{\hat{\theta}} = (X^TX)^{-1}X^TY
 $$
 \end{block}
+\pause
 \begin{itemize}
-\item Note that the solution is the solution using the moore-penrose inverse of the system:
+\item Note that the solution is the solution using the Moore-Penrose pseudo-inverse of the system:
 $$
 \bm{X}^T \bm{\theta} = \bm{Y}
 $$
@@ -548,6 +557,7 @@ $$
 \end{pmatrix}
 $$
 \end{block}
+\pause
 Remark: the gradient gives the direction of the greatest slope of the cost function.
 In the linear regression, the $i-$th component of the gradient is :
 $$
@@ -580,6 +590,7 @@ $$
 \begin{itemize}
 \item $G = G - (y_j - \bm{\theta}^T\bm{x_j}).x_{ij}$
 \end{itemize}
+\pause
 \item Update the parameter : $ \theta = \theta - \nu G$
 
 \end{enumerate}
@@ -589,8 +600,13 @@ $$
 
 \begin{frame}
 \frametitle{prelimary remarks}
-Dont need the cost fucnction, only the gradient
-The hypothesis model don't need to be linear (only differentiable)
-Can be parelleized
+Some remarks on the gradient descent algorithm:
+\begin{itemize}[<+->]
+\item The computation of the cost function is not needed, only the gradient function is 
+necessary.
+\item The linearity of the hypothesis model is not used, it only needs to be differential
+
+\item A gradient algorithm can easily be parallelized
+\end{itemize}
 \end{frame}
 \end{document}
