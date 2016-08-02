@@ -188,7 +188,7 @@
 \newcommand{\nb}{1}
 
 \title[Regression]{Linear regression}
-\author[]{julien.brajard@upmc.fr}
+\author[J. Brajard]{julien.brajard@upmc.fr}
 \institute[UPMC]{UPMC}
 \date{1-5 August 2016}
 \begin{document}
@@ -208,11 +208,12 @@ the price of the appartment (denoted $y$).
 \begin{figure}
 \includegraphics[height=.5\textheight]{./fig/surf_price.png}
 \end{figure}
+\pause
 \column{0.4\textwidth}
 \begin{block}{}
 Questions asked given the data:
 \end{block}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item Is there a relationship between the surface and the price?
 \item If so, Can we define this relationship?
 \item Can we predict the price of appartement with a given surface?
@@ -225,7 +226,7 @@ Questions asked given the data:
 \begin{frame}
 \frametitle{Vocabulary}
 \begin{itemize}
-\item the set $\{(x_1,y_1),\ldots,(x_n,y_n)\}$ is called the \alert{learning dataset},
+\item<1-> the set $\{(x_1,y_1),\ldots,(x_n,y_n)\}$ is called the \alert{learning dataset},
 
 where:
 \begin{itemize}
@@ -233,7 +234,7 @@ where:
 \item Variables $y_i$ are called the \alert{targets}
 \end{itemize}
 
-\item A \alert{model}, or the hypothesis function is denoted $h_\theta(x)$ and is defined as:
+\item<2-> A \alert{model}, or the hypothesis function is denoted $h_\theta(x)$ and is defined as:
 $$
 y_i = h_\theta(x_i) + e_i
 $$
@@ -242,10 +243,10 @@ where:
 \item $e_i$ the error of the model or the \alert{residual}.
 \item $\theta \in \R^p$ is a parameter of the function $h_\theta(x)$.
 \end{itemize}
-\item We define a \alert{prediction} $\hat{y}$ to be the output of the model given a particular $x$:
+\item<3-> We define a \alert{prediction} $\hat{y}$ to be the output of the model given a particular $x$:
 $\hat{y} = h_\theta(x)$.
 \end{itemize}
-
+\pause[4]
 \begin{alertblock}{}
 The prediction of a numerical variable $y$ from a predictor $x$ given a learning dataset is called
 a \alert{regression}.

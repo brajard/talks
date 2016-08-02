@@ -187,7 +187,7 @@
 \newcommand{\nb}{1}
 
 \title[Linear Algebra]{Probabilities/Statistics}
-\author[]{julien.brajard@upmc.fr}
+\author[J. Brajard]{julien.brajard@upmc.fr}
 \institute[UPMC]{UPMC}
 \date{1-5 August 2016}
 \begin{document}
@@ -252,8 +252,9 @@ $$P(A\cap B)=P(A)\times P(B)$$
 \begin{block}{Definition (intuitive)}
 A \alert{random variable} is a variable that can take randomly different values.
 \end{block}
+\pause
 A random variable can be:
-\begin{itemize}
+\begin{itemize}[<+->]
 \item Discrete
 \begin{exampleblock}{Ex. 1: Value of a dice}
 The result $X$ of a dice roll is a random variable with values in $\{1,2,3,4,5,6\}$.
@@ -284,16 +285,17 @@ variable. The way to describe it depends if the variable is continue or discrete
 \begin{frame}
 \frametitle{Probability Mass Function}
 Given a discrete random variable $X$, the Probability Mass function $P$ gives 
-the probability of each state possibility taken by $X$. 
+the probability of each state possibly taken by $X$. 
 
 This probability is denoted $P(x)$ or 
 more clearly $P(X=x)$. 
 
 Note that $ \sum_x P(X=x) = 1 $
+\pause
 \begin{exampleblock}{Example 1:one dice roll}
 $P(X=x) = \frac{1}{6}$ (uniform distribution)
 \end{exampleblock}
-
+\pause
 \begin{exampleblock}{Example 2: the sum of two dice rolls}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
@@ -305,11 +307,6 @@ $P(X=x)$& $\frac{1}{36}$ &  $\frac{2}{36}$ &  $\frac{3}{36}$ & $\frac{4}{36}$ &
 \hline
 \end{tabular}
 \end{exampleblock}
-
-\begin{block}{joint probabillity distribution}
-$P(X=x, Y=y)$ describes the 
-joint probability of two random variables $X$ and $Y$, i.e. the probability  that $X=x$ and $Y=y$ simultaneously.
-\end{block}
 \end{frame}
 
 
@@ -325,21 +322,14 @@ $$
 P(a \leq X < b) = \int_{x=a}^b f_X(x) dx
 $$
 \end{block}
+\pause
 Some properties:
 \begin{itemize}
 \item $\forall x, f_X(x) \geq 0$
 \item $\int _{x\in\R} f_X(x) dx = 1$
-\item It is \alert{not required} that $f_X(x) \leq 1$
-\item We can also define joint probability : 
-\begingroup\footnotesize
-\begin{eqnarray}
-P(a \leq X < b,c \leq Y < d) = \nonumber\\
-\int_a^b \int_c^d f_{X,Y}(x,y)d_x d_y \nonumber
-\end{eqnarray}
-\endgroup
 
 \end{itemize}
-
+\pause
 \column{.42\textwidth}
 \begin{exampleblock}{Example: uniform density probability}
 \vspace{-1em}
@@ -358,7 +348,21 @@ f_X(x) = & \frac{1}{b-a} & \text{if } x\in [a;b] \nonumber\\
 
 \end{frame}
 
+\begin{frame}
+\begin{block}{joint probabillity distribution}
+$P(X=x, Y=y)$ describes the 
+joint probability of two random variables $X$ and $Y$, i.e. the probability  that $X=x$ and $Y=y$ simultaneously.
+\end{block}
 
+For continous variables: 
+%\begingroup\footnotesize
+$$
+P(a \leq X < b,c \leq Y < d) = 
+\int_a^b \int_c^d f_{X,Y}(x,y)d_x d_y
+$$
+%\endgroup
+
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{An example of joint probability}
 Among 27 students who attend a class this day :
@@ -368,7 +372,7 @@ Among 27 students who attend a class this day :
 \item 3 had no party last night but are not attentive in class
 \item 6 had no party last night and are attentive in class
 \end{itemize}
-
+\pause
 In term of Probability Mass Function:
 \begin{itemize}
 \item $N$ is a random variable such as $N=1$ if a random student did have a party and $0$ otherwise.
@@ -397,12 +401,13 @@ Given a set of random variable with a probability distribution $P(X_1,X_2,X_3, \
 The marginal probability is the probability distribution over a subset of these variables:
 $P(X_1,\cdots,X_p)$ with $p<n$
 \end{block}
+\pause
 For two random variables $X$,$Y$:
 \begin{itemize}
 \item In the discrete case: $P(X=x) = \sum_y P(X=x,Y=y)$
 \item In the continous case: $f_X(x) = \int f_{X,Y}(x,y)dy$
 \end{itemize}
-
+\pause
 With the Previous example:
 \begin{table}
 \centering
@@ -433,6 +438,7 @@ $$
 P(Y=y | X=x) = \frac{P(Y=y,X=x)}{P(X=x)}
 $$
 \end{block}
+\pause
 There are some equivalent formulas if $X$ and/or $Y$ are continous:
 \begin{itemize}
 \item if both $X$ and $Y$ are continuous: $f_{Y=y|X=x}(y)=\frac{f_{X,Y}(x,y)}{f_X(x)}$
@@ -448,9 +454,9 @@ probability of having a party the day before knowing he had a party the night be
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Joint probability and independance}
 If two random variables $X$ and $Y$ are independant:
-\begin{itemize}
+\begin{itemize}[<+->]
 \item In the discrete case: $P(X=x,Y=y)=P(X=x)P(Y=y)$ and therefore  $P(Y=y|X=x)=P(Y=y)$
-\item In the coninous case: $f_{X,Y}=f_X(x)f_Y(y)$ and therefore $f_{Y|X=x}(y) = f_Y(y)$.
+\item In the continuous case: $f_{X,Y}=f_X(x)f_Y(y)$ and therefore $f_{Y|X=x}(y) = f_Y(y)$.
 \end{itemize}
 \note{Are the events of being attentive in class and having a party the night before
 are independant ?}
@@ -467,7 +473,7 @@ are independant ?}
 Given a function $g$ of a random variable $X$, the \alert{expectation} is  defined as:
 \begin{itemize}
 \item if $X$ is discrete: $\E[g(X)]=\sum_xg(x)P(X=x)$
-\item if $X$ is continous: $\E[g(X)]=\int_x g(x)f_X(x)dx$
+\item if $X$ is continuous: $\E[g(X)]=\int_x g(x)f_X(x)dx$
 \end{itemize}
 \end{block}
 In particular:
@@ -475,11 +481,13 @@ In particular:
 \item $\E[X] = \sum_xxP(X=x)$ (discrete variable)
 \item $\E[X]=\int_x xf_X(x)dx$ (continous variable)
 \end{itemize}
+\pause
 Intuitively, the expectation gives an idea of the average value to be expected for a
 random variable.
+\pause
 \begin{exampleblock}{Linearity}
 $$
-\E[a.g(X) + b] = a.\E[g(X)] + b
+\E[a.g(X) + b.h(Y)] = a.\E[g(X)] + b.\E[h(Y)]
 $$
 where $a$ and $b$ are scalar.
 \end{exampleblock}
@@ -501,12 +509,13 @@ In particular:
 $$
 \Var(X) = E\left[ (X-\E[X])^2\right] = \E[X^2] - \E[X]^2
 $$
+\pause
 Intuitively, the variance describes the spread of the value of a random variable
 around its average.
-
+\pause
 Often, the standard deviation is used:
 $$
-\sigma(X) = \sqrt(\Var(X))
+\sigma(X) = \sqrt{\Var(X)}
 $$ 
 Note : if the variable $X$ has a unit (e.g. meter, second, ...) the expectation and
 the standard deviation are of the same unit.
@@ -514,7 +523,7 @@ the standard deviation are of the same unit.
 
 \begin{frame}{Co-variance}
 
-\begin{block}{Definnition}
+\begin{block}{Definition}
 The covariance between two random variables $X$ and $Y$ is defined by:
 $$
 \Cov(X,Y) = \E\left[(X-\E[X])(Y-\E[Y])\right]
@@ -557,7 +566,7 @@ the \alert{standard normal distribution}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Some properties of the gaussian distribution}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item If $X \sim \mathcal{N}(\mu,\sigma)$. Let's define $X_c=\frac{X-\mu}{\sigma}$. 
 We can prove that $X_c \sim \mathcal{N}(0,1)$. This is called \alert{standardization}
 \item There is no analytical formula for $P(x \in [a;b])$ except for particular values of $a$
@@ -567,11 +576,12 @@ are used.
 a random variable follow a normal law, more than 95\% of the realizations (values taken) are
 between $-2\sigma$ and $2\sigma$.
 \end{itemize}
+\pause[4]
 We can extend this law by defining a multidimensional law on the random vector $\bm{X}$
 with the average $\bm{\mu}$ and covariance matrix $\bm{\Sigma}$:
 $$
 f_{\bm{X}}(\bm{x}) = \sqrt{\frac{\text{det}(\bm{\Sigma}^{-1})}{(2\pi)^n}}
-\text{exp}\left(-\frac{1}{2}(\bm{x}-\bm{\mu})^T\bm{\Sigma}^{-1}(\bm{x}-\bm{\Sigma})\right)
+\text{exp}\left(-\frac{1}{2}(\bm{x}-\bm{\mu})^T\bm{\Sigma}^{-1}(\bm{x}-\bm{\mu})\right)
 $$
 
 \end{frame}
@@ -592,11 +602,12 @@ $$
 P(X=x|Y=y) = \frac{P(X=x)P(Y=y|X=x)}{P(Y=y)}
 $$
 \end{alertblock}
-There are equivalent formulation when it involves continous random variables.
-For example if $Y$ is continous:
+There are equivalent formulation when it involves continuous random variables.
+For example if $Y$ is continuous:
 $$
 P(X=x|Y=y) = \frac{P(X=x)f_{Y|X=x}(y)}{f_Y(y)}
 $$
+\pause
 In practice, it is not needed to calculate $P(Y=y)$, it is possible to use the formula:
 $$P(Y=y) = \sum_x P(Y=y|X=x)P(X=x)$$
 
@@ -610,10 +621,10 @@ $$P(Y=y) = \sum_x P(Y=y|X=x)P(X=x)$$
 \framesubtitle{Data of the problem}
 \vspace{-0.8em}
 \begin{enumerate}
-\item Let's consider 2 random variables $X$ and $Y$ related to a randomly picked individual
+\item<1-> Let's consider 2 random variables $X$ and $Y$ related to a randomly picked individual
 in the population. $X=1$ if the individual is sick and $0$ otherwise. $Y$ is the random variable
 corresponding to his(her) body's temperature.
-\item We know the Probability mass function of $X$
+\item<2-> We know the Probability mass function of $X$
 \begin{tabular}{|c|c|c|}
 \hline
 $x$ & 0 & 1 \\
@@ -621,9 +632,10 @@ $x$ & 0 & 1 \\
 $P(X=x)$ & 0.9 & 0.1 \\
 \hline
 \end{tabular}
-\item We know the conditional density probablility functions $f_{Y|X=i}(y)$
+\item<3-> We know the conditional density probability functions $f_{Y|X=i}(y)$
 which are gaussians with mean $\mu_i$ and standard deviation $\sigma_i$.
 \end{enumerate}
+\pause[3]
 \vspace{-.5em}
 \begin{columns}
 \column{0.3\textwidth}
@@ -660,7 +672,7 @@ Given a random person with a body temperature of $y$, what is the probability
 of beeing sick ?
 \end{block}
 Numerical application: $y=37.4^o$
-
+\pause
 \begin{figure}
 \includegraphics[height=.5\textheight]{./fig/fig_sick.png}
 \end{figure}
@@ -685,6 +697,7 @@ For continuous variable one can use the \alert{Differential entropy}:
 $$
 h(X) = - \int f_X(x)\text{log}f_X(x)dx
 $$
+\pause
 Intuitively, the entropy gives an idea of the surprise expected from a random variable.
 A deterministic variable has an entropy of 0.
 
@@ -730,10 +743,12 @@ $$
 \frametitle{An example}
 Let's consider $p(x)$ a given density function (in the example $p$ is a sum of two gaussian).
 We want to find the gaussian $q^*(x)$ that minimize the KL divergence.
+\pause
 \begin{figure}
 \includegraphics[height=.4\textheight]{./fig/fig_kl.png}\\
 \footnotesize{\textit{from Goodfellow et al., Deep Learning, www.deeplearningbook.org}}
 \end{figure}
+
 \begin{itemize}
 \item if $D_{KL}(p\|q)$ is minimum: $p(x)$ is likely $\Rightarrow$ $q^*(x)$ is likely
 \item if $D_{KL}(q\|p)$ is minimum: $p(x)$ is unlikely $\Rightarrow$ $q^*(x)$ is unlikely
@@ -772,6 +787,7 @@ Considering a random variable $X$ following a probability distribution.
 A \alert{sample}, is a set of $n$ independant random variables $\{X_1,X_2,\ldots,X_n\}$ such as 
 each $X_i$ is following the same distribution as $X$.
 \end{block}
+\pause
 \begin{block}{Observed values}
 In practice, we have access to a particular realization of a random sample denoted
  $\{x_1,x_2,\ldots,x_n\}$
@@ -787,7 +803,7 @@ of a normal distribtion)
 An estimator $\Theta$ is random variable defined as a function of the random variables $\Theta = u(X_1,\ldots,X_n)$ 
 that gives a "good estimation" of $\theta$.
 \end{block}
-
+\pause
 \begin{block}{Definition of the point estimate}
 A point estimate (often) denoted $\hat{\theta}$ is the function $u$ applied to the observed values
 $$
@@ -807,7 +823,7 @@ $$
 where $\{X_1,X_2,\ldots,X_n\}$ is a i.i.d sample, is an estimator of the
 expectation $\E(X)$
 \end{exampleblock}
-
+\pause
 \begin{alertblock}{}
 Is it a good estimator ?
 \end{alertblock}
@@ -821,7 +837,7 @@ Is it a good estimator ?
 Let $\bm{X}=^T(X_1,\ldots,X_n)$ a random sample depending on a parameter $\theta$ and 
 $\Theta$ an estimator of $\theta$.\\
 Here are some properties of $\Theta$:
-\begin{itemize}
+\begin{itemize}[<+->]
 \item Mean-square error $\text{MSE}(\Theta) = \E\left[ (\Theta - \theta)^2 \right]$\\
 $\text{MSE}(\Theta)$ is espected to be minimum.
 \item Bias $B(\Theta) = E(\Theta) - \theta$\\
@@ -856,7 +872,7 @@ $$
 \mathcal{L}(\theta) = p(x_1,\ldots,x_n | \theta) = p(x_1 | \theta) . p(x_2 | \theta) . \ldots p(x_n | \theta)
 $$
 $\mathcal{L}$ is called the likelihood.\\
-
+\pause
 A method to construct an estimator is the construct an estimator that maximimze the likelihood.
 In pratice, we use the log-likelihood :
 $$

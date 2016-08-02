@@ -16,6 +16,20 @@ def fig_lin(f,x,sigma,name,xlabel='',ylabel=''):
     plt.ylabel(ylabel)
     plt.savefig(os.path.join('./fig',name))
 
+
+def cost(f,x,sigma):
+    y = f(x)+np.random.normal(0,sigma,x.shape[0])
+    lim = (-5,5,-5,5)
+    [t0,t1]=np.meshgrid(np.linspace(lim[0],lim[1],80),np.linspace(lim[0],lim[1],80))
+    J = np.zeros(t0.shape)
+    G = np.zeros((t0.shape[0],t0.shape[1],2))
+    for i in range(t0.shape[0]):
+        for j in range(t0.shape[1]):
+            theta = [t0[i,j],t1[i,j]]
+            J[i,j]=np.sum((y-theta[0]*x[:,0]-theta[1]*x[:,1])**2)
+    plt.imshow(np.log(J),extent=lim)
+    plt.savefig('./fig/cost_lmsq.png')
+    
 def fig_sigm():
     """ Figue of sigmoid
     """
@@ -155,5 +169,7 @@ def trim():
 #fig_lin(lambda x:-3*x +2, 10*np.random.rand(20),1,'negative')
 #fig_lin(lambda x:np.exp(x),4*np.random.rand(20),1,'nolinear')
 #fig_lin(lambda x:0,6*np.random.rand(20),0.1,'nolink')
+
+cost(lambda x:2*x[:,0]-x[:,1],2*np.random.rand(20,2)-1,0.1)
 
 trim()
