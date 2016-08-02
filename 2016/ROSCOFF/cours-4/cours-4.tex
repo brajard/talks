@@ -454,7 +454,7 @@ $\bm{y}=(y_1,\ldots,y_n)^T$
 $\bm{x}$ and $\bm{y} \in \R^n$
 \begin{block}{Linear regression as a projection}
 The linear regression estimate:
-$\bm{\hat{y}} = \hat{\theta}_0 + \hat{theta}_1 \bm{x}$,
+$\bm{\hat{y}} = \hat{\theta}_0 + \hat{\theta}_1 \bm{x}$,
 $\bm{\hat{y}} = \{\hat{y}_1,\ldots,\hat{y}_n \}$ 
 is belonging to the subspace $\mathcal{M}(\bm{x})$ of dimension 2 spanned by vectors
 $\bm{x}$  and $\bm{1} = (1,\ldots,1)^T$
@@ -468,23 +468,129 @@ Note that (by definition) the orthogonal projection minimize the norm $\| \bm{\h
 
 \begin{frame}
 \frametitle{Multivariate linear regression}
-Example of surface/price + number of rooms + Age of the building + floor
+\begin{exampleblock}{Extension of the problem}
+Instead of only the surface, other predictors can be provide, like the number of rooms,
+the age of the building, the floor. A predictor $\bm{x_i}$, is then a vector $(x_{1,i},\ldots,x_{n,i})$
+To be more general, we can add a predictor $x_{0,i}$ such as $\forall i, x_{0,i} = 1$
+The learning dataset $\bm{X}$ is a matrix with 
+\end{exampleblock}
+\begin{itemize}
+\item $n$ columns : the number of predictors
+\item $p+1$ rows: the size of each predictor
+\end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{New hypothesis model}
-Say about $X^0=1$
+$\bm{x} \in \R^{p+1}$: a predictor\\
+$\bm{\theta} \in \R^{p+1}$: the parameter\\
+\begin{block}{}
+The hypothesis function $\h$ is defined as:
+$$
+\h = \bm{\theta}^T\bm{x}
+$$
+\end{block}
+
+The least mean square cost function is then:
+$$
+J(\bm{\theta}) =\frac{1}{2} \sum (y_j - \bm{\theta}^T\bm{x_j})^2
+$$
+
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Finding theta}
-Pseudo-invers
+As for the univariate linear regression, find $\bm{\hat{\theta}} = (\theta_0,\ldots,\theta_p)^T$, such as:
+$$
+\frac{\partial J}{\partial \theta_i} = 0
+$$
+with: $ \frac{\partial J}{\partial \theta_i} = - \sum_{j=1}^n (y_j - \bm{\theta}^T\bm{x_j}).x_{ij}$
+\begin{block}{Normal equations}
+$$
+\forall i \in  \{0,\ldots,p\}, -(\bm{y} - \bm{X}\theta)^T\bm{x}_{i \cdot} =0
+$$
+where $\bm{x}_{i \cdot} = (x_{i1},\ldots,x_{in})^T$
+\end{block}
+
 \end{frame}
 
 \begin{frame}
+\frametitle{Solutions of the normal equations}
+\begin{block}{}
+$$
+\bm{\hat{\theta}} = (X^TX)^{-1}X^TY
+$$
+\end{block}
+\begin{itemize}
+\item Note that the solution is the solution using the moore-penrose inverse of the system:
+$$
+\bm{X}^T \bm{\theta} = \bm{Y}
+$$
+
+\item For a big number of parameters ($p$ is big) and a great number of sample ($n$ is big)
+the computation can become costly.
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
 \frametitle{Gradient descent method}
+Gradient descent method is an iterative scheme in order to compute the minimum, without
+inverse explicitely the matrix $X^TX$.
+
+\begin{block}{Definition of the gradient}
+$$
+\nabla_{ \bm{\theta} } J(\bm{\theta})= 
+\begin{pmatrix}
+\frac{\partial J}{\partial \theta_0}\\
+\vdots\\
+\frac{\partial J}{\partial \theta_p}
+\end{pmatrix}
+$$
+\end{block}
+Remark: the gradient gives the direction of the greatest slope of the cost function.
+In the linear regression, the $i-$th component of the gradient is :
+$$
+\nabla_{ \bm{\theta} } J(\bm{\theta})_i = - \sum_{j=1}^n (y_j - \bm{\theta}^T\bm{x_j}).x_{ij}
+$$
 \end{frame}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Example with a 2-dimensional cost function}
+\begin{figure}
+\includegraphics[height=0.65\textheight]{./fig/cost_lmsq.png}
+\end{figure}
+Update of the parameters:
+$$
+\bm{\theta}^{k+1} = \bm{\theta}^k - \nu.\nabla_{ \bm{\theta} } J(\bm{\theta})
+$$
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The gradient algorithm}
+\begin{enumerate}
+\item Intialize $\theta = \theta^0$
+\item Repeat $N$ times the following instructions:
+\begin{enumerate}
+\item Initiatialize the gradient $G=0$
+\item Repeat $n$ times
+\begin{itemize}
+\item $G = G - (y_j - \bm{\theta}^T\bm{x_j}).x_{ij}$
+\end{itemize}
+\item Update the parameter : $ \theta = \theta - \nu G$
+
+\end{enumerate}
+\item return $\theta$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{prelimary remarks}
+Dont need the cost fucnction, only the gradient
+The hypothesis model don't need to be linear (only differentiable)
+Can be parelleized
+\end{frame}
 \end{document}
