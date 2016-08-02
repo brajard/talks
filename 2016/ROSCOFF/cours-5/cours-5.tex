@@ -437,18 +437,51 @@ The cost unction to minimize:\\
 
 \begin{frame}
 \frametitle{Gradient descent}
+To minimize the cost function, the gradient descent algorithm can be used in the same way as
+for the linear regression.\\
+The gradient of the cost function $J(\theta)$:
+$$
+\nabla_{ \bm{\theta} } J(\bm{\theta})= 
+\begin{pmatrix}
+\frac{\partial J}{\partial \theta_0}\\
+\vdots\\
+\frac{\partial J}{\partial \theta_p}
+\end{pmatrix}
+$$
+After calculation, we obtain:
+\begin{block}{}
+$$
+\frac{\partial J}{\partial \theta_i} = - \frac{1}{m}\sum_j^n (y_j-h_\theta(x_j))x_{ij}
+$$
+\end{block}
+ 
 \end{frame}
 
 \begin{frame}
 \frametitle{Gradient algorithm}
+\begin{enumerate}
+\item Intialize $\theta = \theta^0$
+\item Repeat $N$ times the following instructions:
+\begin{enumerate}
+\item Initiatialize the gradient $G=0$
+\item Repeat $n$ times
+\begin{itemize}
+\item $G = G - (y_j - h_\theta(x_j)).x_{ij}$
+\end{itemize}
+\item Update the parameter : $ \theta = \theta - \nu G$
+
+\end{enumerate}
+\item return $\theta$
+\end{enumerate}
 \end{frame}
 
 \begin{frame}
 \frametitle{Problems with the gradient algorithm}
 \begin{itemize}
-\item The method is sensitive to different order of magnitude for the different coordinates in
+\item The method is sensitive to different order of magnitude for the components of
 $x$.
-\item There is an hyper-parameter to determine : the learning rate $\mu$
+\item There is an hyper-parameter to determine : the learning rate $\nu$
+\item A stopping criteria has to be found to confirm the convergence
 \item For large samples, the convergence is very long
 
 \end{itemize}
@@ -456,30 +489,80 @@ $x$.
 
 \begin{frame}
 \frametitle{Scaling of $x$}
-Two kind of scaling
-reduce
-minmax
+A easy way to avoid some problems of different order of magnitudes of $\bm{x}$  component,
+variables can be re-scaled before the regression process.
+\begin{block}{Option 1: reduction}
+Let's define
+$
+m_i=\frac{1}{n} \sum_{j=1}^n x_{ij}
+$
+and
+$
+s_i=\frac{1}{n-1}\sum_{j=1}^n (x_{ij} - m_i)^2
+$.\\
+Reduction:
+$$
+\tilde{x}_i = \frac{x_i - m_i}{s_i}
+$$
+
+\end{block}
+
+\begin{block}{Option 2: minmax}
+The scaled parameter is stricly comprised between 0 and 1:
+$$
+\tilde{x}_i = \frac{x_i - min(x_i)}{max(x_i)-min(x_i)} 
+$$
+\end{block}
+
 \end{frame}
 
-\begin{frame}
-\frametitle{Scaling of $x$}
-Two kind of scaling
-reduce
-minmax
-\end{frame}
+
 
 \begin{frame}
-\frametitle{The learning rate $\mu$}
-Other optimisation algorithmss (more complex)
-\end{frame}
-
-\begin{frame}
-\frametitle{Computation cost}
-Stochastic gradient
+{The learning rate $\nu$}
+It is possible to use more complex algorithms that doesn't need to specifiy a learning rate (or that optimizes the learning rate during the minimization)
+\begin{itemize}
+\item Conjugate gradient
+\item BFGS (Broyden-Fletcher-Goldfarb-Shanno)
+\item L-BFGS (Limited Memory BFGS)
+\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Stochastic gradient algorithm}
+During the gradient process, the gradient is calculated $n$ times by iterations,
+and the parameters are updated only 1 time by iteration.\\
+
+To allow a more frequent update of the parameter, it is possible to update the parameters each time a regressor $x_i$ is calculated
+\begin{enumerate}
+\item Intialize $\theta = \theta^0$
+\item Repeat $N$ times the following instructions:
+\begin{enumerate}
+%\item Initiatialize the gradient $G=0$
+\item Repeat $n$ times
+\begin{itemize}
+\item $G = G - (y_j - h_\theta(x_j)).x_{ij}$
+\item Update the parameter : $ \theta = \theta - \nu G$
+\end{itemize}
+
+\end{enumerate}
+\item return $\theta$
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Remarks on the logistic gradient}
+\begin{exampleblock}{Advantages}
+\begin{itemize}
+\item It can converge faster
+\item It can make a natural use of GPU (Graphical Processor Unites) for the computation
+\end{itemize}
+\end{exampleblock}
+\begin{alertblock}{Drawbacks}
+It is unstable near the optimum
+\end{alertblock}
+
 \end{frame}
 
 \end{document}
