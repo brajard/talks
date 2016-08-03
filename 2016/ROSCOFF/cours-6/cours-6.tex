@@ -201,11 +201,46 @@
 %%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Polynomial regression}
+LInear regression
+Polynome degree two
+how to solve it ?
+like linear regression
+increasing the degree of the polynome ?
+Values of coefficients ?
+Idea of the regression
+Ridge or Lasso
+Ridge regression,
+results for maxdeg 15 and different value of alpha
+lasso regression
+results for maxdeg 15 and different value of alpha
+why it can be exactly zeros
+model selection
+learning/test/
+validation
 \end{frame}
-
+\begin{frame}
+\frametitle{Example of a non-linear relashionship}
+\begin{figure}
+\includegraphics[height=0.55\textheight]{./fig/scatter.png}
+\end{figure}
+\begin{block}{An idea}
+We could take an polynomial hypothesis model:
+$$
+h_{\bm{\theta}}(x) = \theta_0 x^0 + \theta_1 x^1 + \ldots + \theta_p x^p
+$$
+\end{block}
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Example}
+$\{(x_1,y_1),\ldots,(x_n,y_n)\}$ is the learning dataset.
+
+For a given polynom degree $p$, parameters $\bm{\theta}$ are determined minimizing the 
+least-mean square cost function:
+$$
+J(\bm{\theta}) = \frac{1}{n} \sum (y_i - h_{\bm{\theta}}(x))^2
+$$
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%
