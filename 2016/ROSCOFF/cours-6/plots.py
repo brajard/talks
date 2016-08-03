@@ -2,11 +2,74 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-from matplotlib import cm
-from scipy.stats import multivariate_normal
-from mpl_toolkits.mplot3d import Axes3D
+import pandas as pd
+import random
+#%matplotlib inline
+from matplotlib.pylab import rcParams
+rcParams['figure.figsize'] = 12, 10
+
+plt.close("all")
+
 #pixels /inch 
 dpi =200
+#Define input array with angles from 60deg to 300deg converted to radians
+x = np.array([i*np.pi/180 for i in range(60,300,4)])
+np.random.seed(10)  #Setting seed for reproducability
+y = np.sin(x) + np.random.normal(0,0.15,len(x))
+data = pd.DataFrame(np.column_stack([x,y]),columns=['x','y'])
+plt.figure()
+plt.plot(data['x'],data['y'],'+',markersize=10)
+plt.savefig('./fig/scatter.png',dpi=dpi)
+#plt.show()
+
+for i in range(2,16):  #power of 1 is already there
+    colname = 'x_%d'%i      #new var will be x_power
+    data[colname] = data['x']**i
+
+from sklearn.linear_model import LinearRegression
+def linear_regression(data, power, models_to_plot):
+    #initialize predictors:
+    predictors=['x']
+    if power>=2:
+        predictors.extend(['x_%d'%i for i in range(2,power+1)])
+    
+    #Fit the model
+    linreg = LinearRegression(normalize=True)
+    linreg.fit(data[predictors],data['y'])
+    y_pred = linreg.predict(data[predictors])
+    
+    #Check if a plot is to be made for the entered power
+    if power in models_to_plot:
+        #plt.subplot(models_to_plot[power])
+        #plt.tight_layout()
+        plt.figure()
+        plt.plot(data['x'],data['y'],'.',markersize=15)
+        plt.plot(data['x'],y_pred,color='red',linewidth=2)
+        #plt.title('power: %d'%power)
+        plt.savefig('./fig/linreg_pow' + models_to_plot[power] + '.png')
+    
+    #Return the result in pre-defined format
+    rss = sum((y_pred-data['y'])**2)
+    ret = [rss]
+    ret.extend([linreg.intercept_])
+    ret.extend(linreg.coef_)
+    return ret
+
+#Initialize a dataframe to store the results:
+col = ['rmse','th_0'] + ['th_%d'%i for i in range(1,16)]
+ind = ['max_pow_%d'%i for i in range(1,16)]
+coef_matrix_simple = pd.DataFrame(index=ind, columns=col)
+
+#Define the powers for which a plot is required:
+models_to_plot = {1:'1',3:'3',6:'4',9:'9',12:'12',15:'15'}
+
+#Iterate through all powers and assimilate results
+for i in range(1,16):
+    coef_matrix_simple.iloc[i-1,0:i+2] = linear_regression(data, power=i, models_to_plot=models_to_plot)
+
+with open('coeflin.tex','w') as f:
+    f.write(coef_matrix_simple.to_latex())    
+
 
 def fig_sigm():
     """ Figue of sigmoid
@@ -23,116 +86,6 @@ def fig_sigm():
     plt.xticks([0])
     plt.yticks([0,0.5,1])
     plt.savefig('./fig/fig_sigm.png',dpi=dpi)
-
-def genere_sample(N,sigma):
-    x0 = np.random.normal(-1,sigma,(N,2))
-    y0 = np.zeros(x0.shape[0])
-    x1 = np.random.normal(1,sigma,(N,2))
-    y1 = np.ones(x1.shape[0])
-    
-    x = np.concatenate((x0,x1),axis=0)
-    y = np.concatenate((y0,y1))
-    mix = np.arange(2*N)
-    np.random.shuffle(mix)
-    return(x[mix],y[mix])
-    
-
-def h(theta,x):
-    theta.shape = (theta.shape[0],1)
-    x = x.reshape(theta.shape[0],1)
-    scal = np.dot(theta.T,x)
-    return 1.0/(1+ np.exp(-scal))
-
-def lmsq(x,y,theta):
-    n = y.size
-    D = np.array([0.5*(h(theta,x[i,:])-y[i])**2 for i in range(n)])
-    return (1.0/n)*np.sum(D)
-
-def log_cost(x,y,theta):
-    n = y.size
-    D = np.array([(y[i]-1)*np.log(1-h(theta,x[i,:]))-y[i]*np.log(h(theta,x[i,:])) for i in range(n)])
-    return (1.0/n)*np.sum(D)
-
-def fig_lmsq():
-    plt.figure()
-    (x,y) = genere_sample(100,1)
-    xv,yv = np.meshgrid(np.linspace(0,7,20),np.linspace(0,7,20))
-    J = np.zeros(xv.shape)
-    for i in range(xv.shape[0]):
-        for j in range(xv.shape[1]):
-            theta = np.array([xv[i,j],yv[i,j]])
-#            J[i,j] = log_cost(x,y,theta)
-            J[i,j] = lmsq(x,y,theta)
-    plt.imshow(np.log(J))
-    plt.gca().invert_yaxis()
-    plt.xticks([0])
-    plt.yticks([0])
-    plt.rc('text', usetex=True)
-    plt.xlabel(r'$\theta_1$')
-    plt.ylabel(r'$\theta_2$')
-    plt.savefig('./fig/cost_lmsq.png')
-
-def fig_log():
-    plt.figure()
-    (x,y) = genere_sample(100,1)
-    xv,yv = np.meshgrid(np.linspace(0,6,20),np.linspace(0,6,20))
-    J = np.zeros(xv.shape)
-    for i in range(xv.shape[0]):
-        for j in range(xv.shape[1]):
-            theta = np.array([xv[i,j],yv[i,j]])
-            J[i,j] = log_cost(x,y,theta)
-#            J[i,j] = lmsq(x,y,theta)
-    plt.imshow(np.log(J+1e-6))
-    plt.gca().invert_yaxis()
-    plt.xticks([0])
-    plt.yticks([0])
-    plt.rc('text', usetex=True)
-    plt.xlabel(r'$\theta_1$')
-    plt.ylabel(r'$\theta_2$')
-    plt.savefig('./fig/cost_log.png')
-
-
-
-def fig_2cl_nonoise(mu,sigma,name):
-    """Figure of linearly separated gaussian"""
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    #mu = [np.array([-1,-1]),np.array([1,1])]
-    #sigma = np.array([0.4,0.4])
-    color = ['blue','red','blue','red']
-    shape = ['o','x','o','x']
-    N = 50
-    for i in range(len(mu)):
-        x = np.random.normal(mu[i][0],sigma,N)
-        y = np.random.normal(mu[i][1],sigma,N)
-        ax.plot(x,y,color=color[i],marker=shape[i],markersize=8,linestyle='')
-    
-    plt.savefig(os.path.join('./fig','fig_'+name),dpi=dpi)
-
-       
-def fig_cost1():
-    plt.figure()
-    x = np.linspace(0,1,50)
-    y = -np.log(x)
-    plt.plot(x,y,LineWidth=3)
-    plt.rc('text', usetex=True)
-    plt.xlabel(r'$h_\theta(x)$')
-    plt.ylabel('D')
-    plt.xticks([0,1])
-    plt.yticks([])
-    plt.savefig('./fig/cost1.png')
-     
-def fig_cost0():
-    plt.figure()    
-    x = np.linspace(0,1,50)
-    y = -np.log(1-x)
-    plt.plot(x,y,LineWidth=3)
-    plt.rc('text', usetex=True)
-    plt.xlabel(r'$h_\theta(x)$')
-    plt.ylabel('D')
-    plt.xticks([0,1])
-    plt.yticks([])
-    plt.savefig('./fig/cost0.png')
 
 def trim():
     for filename in os.listdir('./fig/'):
@@ -151,4 +104,5 @@ def trim():
 #fig_cost0()
 #fig_cost1()
 
-trim()
+#trim()
+
