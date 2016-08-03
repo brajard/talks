@@ -401,9 +401,9 @@ $\hat{\theta}_0$ and $\hat{\theta}_1$ are estimators of the parameters $\theta_0
 $\theta_1$
 \end{block}
 \begin{itemize}[<+->]
-\item Estimators are unbiased, $\E[\hat{\beta}_0] = \beta_0$ and $\E[\hat{\beta}_1] = \beta_1$
-\item $\Var(\hat{\beta}_0)=\sigma^2\left( \frac{1}{n} + \frac{\overline{x}^2}{\sum(x_i - \overline{x})^2} \right)$
-\item $\Var(\hat{\beta}_1)=\frac{\sigma^2}{\sum(x_i - \overline{x})^2)}$
+\item Estimators are unbiased, $\E[\hat{\theta}_0] = \theta_0$ and $\E[\hat{\theta}_1] = \theta_1$
+\item $\Var(\hat{\theta}_0)=\sigma^2\left( \frac{1}{n} + \frac{\overline{x}^2}{\sum(x_i - \overline{x})^2} \right)$
+\item $\Var(\hat{\theta}_1)=\frac{\sigma^2}{\sum(x_i - \overline{x})^2)}$
 \item with the assumption that $\epsilon_i \sim \mathcal{N}(0,\sigma)$, we can demonstrate that
 $\hat{\theta}_0$ and $\hat{\theta}_1$ are maximum likelihood estimators. It means, it maximize:
 $p(Y_i=y_i | \theta_0,\theta_1, x_i)$
@@ -503,7 +503,7 @@ The least mean square cost function is then:
 $$
 J(\bm{\theta}) =\frac{1}{2} \sum (y_j - \bm{\theta}^T\bm{x_{\cdot j}})^2
 $$
-where $\bm{x_{\cdot j}} = (x_{0,1},\ldots,x_{p,1})^T$
+where $\bm{x_{\cdot j}} = (x_{0,j},\ldots,x_{p,j})^T$
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
