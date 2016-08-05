@@ -187,7 +187,7 @@
 \newcommand{\nb}{1}
 
 \title[Classification]{Classification}
-\author[]{julien.brajard@upmc.fr}
+\author[J. Brajard]{julien.brajard@upmc.fr}
 \institute[UPMC]{UPMC}
 \date{1-5 August 2016}
 \begin{document}
@@ -204,6 +204,7 @@
 A classification problems is a prediction problem
 where the value to predict $y$ is categorical.
 \end{block}
+\pause
 Examples:
 \begin{itemize}
 \item Identify manuscript digits (10 classes)
@@ -227,7 +228,7 @@ and then apply a threshold to the output of the linear regression:
 \item If $h_\theta(x) \geq 0.5$, predict $1$
 \item If $h_\theta(x) < 0.5$, predict $0$.
 \end{itemize}
-
+\pause
 Why is it \alert{not} satifactory ?
 \begin{itemize}
 \item Not robust (unexpected behaviors)
@@ -259,12 +260,14 @@ h_\theta(x) =  \frac{1}{1 + \exp(-\theta^Tx)}
 $$
 
 \begin{block}{}
-$h_\theta(x)$ can be interpereted as the probability that $y=1$ knowning $x$:
+$h_\theta(x)$ can be interpreted as the probability that $y=1$ knowing $x$:
 
 $$
 h_\theta(x) = P(Y=1 | x ; \theta)
 $$
 \end{block}
+
+\pause
 Example:\\
 If $ x = \left( \begin{array}{c}1 \\ \text{body temperature} \end{array} \right)$,
 $h_\theta(x) = 0.6$ means that the probability to be sick given the temperature (and the paramter $\theta$) is 0.6.\\
@@ -281,7 +284,7 @@ In order to predict an ouptut $y \in \{0;1\}$, the following rule is used:
 \item if  $ h_\theta(x) < 0.5$, we predict 0. 
 \end{itemize}
 \end{block}
-
+\pause
 Note: $h_\theta(x) \geq 0.5 \Leftrightarrow \theta^Tx \geq 0$
 
 \note{make the demonstration of the note}
@@ -304,10 +307,11 @@ $$
 with $\bm{\theta} = (0,1,1)^T$
 \end{columns}
 The system predicts $y=1$ if $x_1 + x_2 \geq 0$
+\pause
 \begin{block}{}
 The \alert{Decision boundary} is the line defined by the equation $x_1+x_2 =0$
 \end{block}
-
+\pause
 \begin{alertblock}{}
 Using logistic regression, the boundary is always linear (an hyperplane of the space)
 \end{alertblock}
@@ -349,7 +353,7 @@ J(\theta) = \frac{1}{n} \sum_{i=1}^{n} D(h_\theta(x_i),y_i)
 $$
 where $D$ is a misfit function between the target output $y$ and the output of the classifier $h_\theta(x)$
 \end{block}
-
+\pause
 Note, if we take the least-square cost function: $D(\hat{y},y)= \frac{1}{2}(\hat{y} - y)^2$, the cost function
 is equivalent to the linear regression cost function.
 
@@ -366,7 +370,7 @@ Is it relevant to take the least-square function?
 \begin{figure}
 \includegraphics[height=.5\textheight]{./fig/cost_lmsq.png}
 \end{figure}
-\item Second problem (theorical): the mimimum of this cost function is not the maximum
+\item<2-> Second problem (theorical): the mimimum of this cost function is not the maximum
 likekihood estimator
 
 \end{itemize}
@@ -378,8 +382,8 @@ likekihood estimator
 \framesubtitle{A intuitive definition}
 For logistic regression, the cost function is contructed as follow:
 \begin{itemize}
-\item $D(h_\theta(x),y=1) = -\log(h_\theta(x))$
-\item $D(h_\theta(x),y=0) = -\log(1-h_\theta(x))$
+\item<1-> $D(h_\theta(x),y=1) = -\log(h_\theta(x))$
+\item<2-> $D(h_\theta(x),y=0) = -\log(1-h_\theta(x))$
 \end{itemize}
 \begin{columns}
 \column{.5\textwidth}
@@ -387,6 +391,7 @@ For logistic regression, the cost function is contructed as follow:
 If $y=1$\\
 \includegraphics[height=.5\textheight]{./fig/cost1.png}
 \end{figure}
+\pause[2]
 \column{.5\textwidth}
 \begin{figure}
 If $y=0$\\
@@ -403,7 +408,7 @@ The logistic cost function can be rewritten:
 $$
 D(h_\theta(x),y) = -y\log(h_\theta(x)) - (1-y)\log(1-h_\theta(x))
 $$
-\begin{itemize}
+\begin{itemize}[<+->]
 \item The value $\theta$ that minimize this cost function is the maximum of likelkihood
 (maximum of $P(y|x,\theta$)
 \item If we consider that $h_\theta(x)$ is a probability $q_1$ of the prediction $\hat{y}$ to be one.
@@ -423,10 +428,10 @@ Points to classify:\\
 
 model : $h_\theta(x)=\theta_1 x_1 + \theta_2 x_2$
 \end{figure}
-
+\pause
 \column{.5\textwidth}
 \begin{figure}
-The cost unction to minimize:\\
+The cost function to minimize:\\
 \includegraphics[width=.99\textwidth]{./fig/cost_log.png}\\
 
 \end{figure}
@@ -448,6 +453,7 @@ $$
 \frac{\partial J}{\partial \theta_p}
 \end{pmatrix}
 $$
+\pause
 After calculation, we obtain:
 \begin{block}{}
 $$
@@ -458,7 +464,7 @@ $$
 \end{frame}
 
 \begin{frame}
-\frametitle{Gradient algorithm}
+\frametitle{Gradient algorithm (batch gradient)}
 \begin{enumerate}
 \item Intialize $\theta = \theta^0$
 \item Repeat $N$ times the following instructions:
@@ -477,7 +483,7 @@ $$
 
 \begin{frame}
 \frametitle{Problems with the gradient algorithm}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item The method is sensitive to different order of magnitude for the components of
 $x$.
 \item There is an hyper-parameter to determine : the learning rate $\nu$
@@ -491,6 +497,7 @@ $x$.
 \frametitle{Scaling of $x$}
 A easy way to avoid some problems of different order of magnitudes of $\bm{x}$  component,
 variables can be re-scaled before the regression process.
+\pause
 \begin{block}{Option 1: reduction}
 Let's define
 $
@@ -506,7 +513,7 @@ $$
 $$
 
 \end{block}
-
+\pause
 \begin{block}{Option 2: minmax}
 The scaled parameter is stricly comprised between 0 and 1:
 $$
@@ -559,10 +566,46 @@ To allow a more frequent update of the parameter, it is possible to update the p
 \item It can make a natural use of GPU (Graphical Processor Unites) for the computation
 \end{itemize}
 \end{exampleblock}
+\pause
 \begin{alertblock}{Drawbacks}
 It is unstable near the optimum
 \end{alertblock}
-
 \end{frame}
 
+\begin{frame}
+\frametitle{"mini-batch gradient"}
+Let's define the size of a "small" amount of data, call a "mini-batch" size, denoted $m$
+\begin{enumerate}
+\item Intialize $\theta = \theta^0$
+\item Repeat $N$ times the following instructions:
+\begin{enumerate}
+%\item Initiatialize the gradient $G=0$
+\item Initilalize the gradient $G=0$
+\item Repeat $n$ times
+\begin{itemize}
+\item $G = G - (y_j - h_\theta(x_j)).x_{ij}$
+\item Every $m$ iteration:\\
+ Update the parameter : $ \theta = \theta - \nu G$ and\\
+Set the gradient $G=0$
+\end{itemize}
+
+\end{enumerate}
+\item return $\theta$
+\end{enumerate}
+
+\begin{block}{Remark}
+\begin{itemize}
+\item If $m=1$, it is equivalent to the stochastic gradient algorithm.
+\item If $m=n$, it is equiivalent to the batch gradient algorithm
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Demonstration}
+\href{http://playground.tensorflow.org/#activation=sigmoid&batchSize=30&dataset=gauss&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=5&networkShape=1&seed=0.80270&showTestData=false&discretize=false&percTrainData=90&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false}{Large batch}
+
+\href{http://playground.tensorflow.org/#activation=sigmoid&batchSize=1&dataset=gauss&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=5&networkShape=1&seed=0.80270&showTestData=false&discretize=false&percTrainData=90&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false}{Stochastic algorithm}
+
+\end{frame}
 \end{document}
