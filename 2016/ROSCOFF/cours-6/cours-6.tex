@@ -188,7 +188,7 @@
 \newcommand{\nb}{1}
 
 \title[non-linear]{Toward non-linear regression/classification}
-\author[non-linear]{julien.brajard@upmc.fr}
+\author[J. Brajard]{julien.brajard@upmc.fr}
 \institute[UPMC]{UPMC}
 \date{1-5 August 2016}
 
@@ -755,7 +755,7 @@ Training set: $\{(x_1,y_1),\ldots,(x_n,y_n)\}$
 \item We consider the data $(x_j,y_j)$
 \item The perceptron predicts $\hat{y}_j$
 \item Update of the weights:\\
-$w_i=w_i+ (\hat{y}_j - y_j)\times x_{ij}$
+$w_i=w_i- (\hat{y}_j - y_j)\times x_{ij}$
 \item Back to step 2
 \end{enumerate}
 \end{block}
