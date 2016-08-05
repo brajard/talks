@@ -47,7 +47,7 @@ def linear_regression(data, power, models_to_plot,test=None):
     predictors=['x']
     if power>=2:
         predictors.extend(['x_%d'%i for i in range(2,power+1)])
-    
+    n = len(data['x'])
     #Fit the model
     linreg = LinearRegression(normalize=True)
     linreg.fit(data[predictors],data['y'])
@@ -64,13 +64,14 @@ def linear_regression(data, power, models_to_plot,test=None):
         plt.savefig('./fig/linreg_pow' + models_to_plot[power] + '.png',dpi=dpi)
     
     #Return the result in pre-defined format
-    rss = sum((y_pred-data['y'])**2)
+    rss = (1.0/n)*sum((y_pred-data['y'])**2)
     ret = [rss]
     ret.extend([linreg.intercept_])
     ret.extend(linreg.coef_)
     if test is not None:
+        nt = len(test['x'])
         y_test = linreg.predict(test[predictors])
-        test_rss = sum((y_test - test['y'])**2)
+        test_rss = (1.0/nt)*sum((y_test - test['y'])**2)
         ret.extend([test_rss])
     return ret
 
@@ -103,7 +104,7 @@ def ridge_regression(data, predictors, alpha, models_to_plot={},test=None):
     ridgereg = Ridge(alpha=alpha,normalize=True)
     ridgereg.fit(data[predictors],data['y'])
     y_pred = ridgereg.predict(data[predictors])
-    
+    n = len(data['x'])
     #Check if a plot is to be made for the entered alpha
     if alpha in models_to_plot:
         #plt.subplot(models_to_plot[power])
@@ -115,13 +116,14 @@ def ridge_regression(data, predictors, alpha, models_to_plot={},test=None):
         plt.savefig('./fig/ridge_alpha' + models_to_plot[alpha] + '.png',dpi=dpi)
     
     #Return the result in pre-defined format
-    rss = sum((y_pred-data['y'])**2)
+    rss = (1.0/n)*sum((y_pred-data['y'])**2)
     ret = [rss]
     ret.extend([ridgereg.intercept_])
     ret.extend(ridgereg.coef_)
     if test is not None:
+        nt = len(test['x'])
         y_test = ridgereg.predict(test[predictors])
-        test_rss = sum((y_test - test['y'])**2)
+        test_rss = (1.0/nt)*sum((y_test - test['y'])**2)
         ret.extend([test_rss])
     return ret
 
@@ -155,7 +157,7 @@ plt.xlabel('alpha')
 plt.ylabel('|th_5 value|')
 plt.savefig('./fig/coefs_th5_ridge.png',dpi=dpi)
 
-
+plt.close("all")
 #################### LASSO #######################
 from sklearn.linear_model import Lasso
 def lasso_regression(data, predictors, alpha, models_to_plot={},test=None):
@@ -166,7 +168,7 @@ def lasso_regression(data, predictors, alpha, models_to_plot={},test=None):
         lassoreg = Lasso(alpha=alpha,normalize=True, max_iter=1e5)
     lassoreg.fit(data[predictors],data['y'])
     y_pred = lassoreg.predict(data[predictors])
-    
+    n = len(data['x'])
     #Check if a plot is to be made for the entered alpha
     if alpha in models_to_plot:
         #plt.subplot(models_to_plot[power])
@@ -179,13 +181,14 @@ def lasso_regression(data, predictors, alpha, models_to_plot={},test=None):
       
     
     #Return the result in pre-defined format
-    rss = sum((y_pred-data['y'])**2)
+    rss = (1.0/n)*sum((y_pred-data['y'])**2)
     ret = [rss]
     ret.extend([lassoreg.intercept_])
     ret.extend(lassoreg.coef_)
     if test is not None:
+        nt = len(test['x'])
         y_test = lassoreg.predict(test[predictors])
-        test_rss = sum((y_test - test['y'])**2)
+        test_rss = (1.0/nt)*sum((y_test - test['y'])**2)
         ret.extend([test_rss])
     return ret
 
@@ -211,7 +214,7 @@ for i in range(nl):
     coef_matrix_lasso.iloc[i,] = lasso_regression(data, predictors, alpha_lasso[i], models_to_plot,test)
 
 
-with open('coefridge.tex','w') as f:
+with open('coeflasso.tex','w') as f:
     f.write(coef_matrix_lasso.iloc[:,0:10].to_latex(float_format=lambda x:"{:+.2e}".format(x)))    
 
 plt.figure()
@@ -226,9 +229,9 @@ plt.savefig('./fig/coefs_th5_lasso.png',dpi=dpi)
 
 ################### LEARNING / TEST #################
 plt.figure()
-plt.semilogy(range(0,na),coef_matrix_ridge['rmse']/data.shape[0],'+-',
+plt.semilogy(range(0,na),coef_matrix_ridge['rmse'],'+-',
          color='blue',linewidth='2',markersize=10,label='training')
-plt.semilogy(range(0,na),coef_matrix_ridge['rms_test']/test.shape[0],'+-',
+plt.semilogy(range(0,na),coef_matrix_ridge['rms_test'],'+-',
          color='red',linewidth='2',markersize=10,label='test')
 plt.legend()
 plt.xticks(range(0,nl),[str(alpha) for alpha in alpha_ridge])
@@ -236,6 +239,10 @@ plt.xlabel('alpha')
 plt.ylabel('error')
 plt.savefig('./fig/validation.png',dpi=dpi)
 
+plt.figure()
+y_pred = coef_matrix_simple.loc['max_pow_1','th_0'] + data['x']*coef_matrix_simple.loc['max_pow_1','th_1']
+plt.plot(data['x'],data['y']-y_pred,'.',markersize=20)
+plt.savefig('./fig/residuals.png',dpi=dpi)
 
 def fig_sigm():
     """ Figue of sigmoid
@@ -260,6 +267,23 @@ def trim():
             cmdline = 'convert fig/'+filename+' -trim fig/'+filename
             os.system(cmdline)
 
+plt.figure()
+plt.rc('text', usetex=True)
+plt.rc('font',size = 16)
+x = np.array([-2,-1,1,2])
+ysimple = x
+yridge = 0.6*x
+ylasso = np.array([-1,0,0,1])
+plt.plot([0,0],[-2,2],':k')
+plt.plot([-2,2],[0,0],':k')
+plt.plot(x,ysimple,linewidth=2,label='simple')
+plt.plot(x,yridge,linewidth=2,label='ridge')
+plt.plot(x,ylasso,linewidth=2,label='lasso')
+plt.legend(loc=2)
+plt.ylabel(r'$\theta$')
+plt.xlabel(r'$\theta_{lms}$')
+plt.xticks([-1,1],[r'$-\alpha\nu$',r'$\alpha\nu$'])
+plt.savefig('./fig/updates.png') 
 #List of figs
 #fig_sigm()
 #fig_2cl_nonoise([[-1,-1],[1,1]],0.4,'2cl_nonoise')
