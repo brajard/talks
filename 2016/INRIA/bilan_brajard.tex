@@ -1,0 +1,112 @@
+\documentclass[10pt]{beamer}
+
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{tikz}
+\usepackage{framed}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+  \usepackage{amsmath,amssymb,amsthm}
+  \usepackage{dsfont}\let\mathbb\mathds
+\usepackage{setspace}
+
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{shapes.arrows}
+\usetikzlibrary{arrows}
+\usepackage{array}
+
+%\usetheme{Boadilla}
+\usetheme{inria}
+\usepackage{helvet}
+\usecolortheme{dolphin}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+
+\newcommand{\inriaswitchcolors}[1]{%
+\pgfaliasimage{figfootline}{figfootline-#1}% !!!
+\pgfaliasimage{figbackground}{figbackground-#1}% !!!
+\pgfaliasimage{figbackground}{figbackground-#1}% !!!
+}
+
+%\inriaswitchcolors{pastelgreen}
+\lstnewenvironment{codeC}
+{ \lstset{language=C,
+    otherkeywords={printf,scan}}
+}
+{}
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\plus}[1]{\textcolor{orange}{\textbf{#1}}}
+%\newcommand \emph
+%Default size : 12.8 cm * 9.6 cm
+
+\newenvironment<>{codeblock}[1]{%begin
+  \setbeamercolor{block title}{fg=darkgray,bg=yellow}%
+  \begin{block}{#1}}
+  % \begin{codeC}}
+  %  {\end{codeC}
+{  
+\end{block}}
+
+\newenvironment<>{termblock}[1]{
+    \setbeamercolor{block title}{fg=white,bg=lightgray}%
+    \begin{block}{#1}}
+%     \begin{Verbatim}}
+{%\end{Verbatim}
+\end{block}
+}
+%\newcommand{\output}[1]{
+
+%%% Paramètres du cours (à régler)
+%Numéro du cours
+\newcommand{\nb}{1}
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+
+\title[Bilan/perspective]{Délégation à CLIME : \mbox{Bilan/perspective}} %mbox insecable
+\subtitle{2014-2016}
+\author[J. Brajard]{Julien Brajard}
+\institute[CLIME]{Inria CLIME}
+\date{18 Septembre 2015}
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%% SLIDES DE TITRE
+\begin{frame}
+\titlepage
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Contexte de cette présentation}
+
+\begin {block}{}
+La méthode de renormalisation est une méthode proposé dans~\cite{issartel2007} pour la détection de source dans la dispersion atmosphérique.
+\end{block}
+\bibliographystyle{apalike} 
+\bibliography{bib-assim.bib}
+My pgf version is: \pgfversion
+\end{frame}
+
+\begin{frame}
+\begin{figure}
+\begin{tikzpicture}
+  \begin{scope}[blend group = soft light]
+    \fill[red!40!white]   ( 90:1) circle (2.5);
+    \fill[green!40!white] (210:1) circle (2.5);
+    \fill[blue!40!white]  (330:1) circle (2.5);
+  \end{scope}
+  \node at ( 90:2.7)    {Inria};
+  \node at ( 210:2.7)   {LIP6};
+  \node at ( 330:2.7)   {LOCEAN};
+  \node [text centered, text width=80pt,font=\small] {\textbf{Probl\'ematique g\'eophysique}\\ (ex : Mer M\'editerran\'ee)};
+  \node at (30:2.2) [text centered,text width = 40pt,font=\scriptsize, anchor=center] {Stage Inria-LOCEAN};
+  \node at (150:2.2) [text centered,text width = 40pt,font=\scriptsize\scriptsize, anchor=center] {Stage Inria-LIP6};
+  \node at (270:2.2) [text centered,text width = 40pt,font=\scriptsize, anchor=center] {Stage LIP6-LOCEAN};
+
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+\end{document}
