@@ -1,3 +1,5 @@
+% !TEX encoding = UTF-8 Unicode
+% -*- coding: UTF-8; -*-
 \documentclass[10pt]{beamer}
 
 \usepackage[frenchb]{babel}
@@ -13,6 +15,7 @@
   \usepackage{amsmath,amssymb,amsthm}
   \usepackage{dsfont}\let\mathbb\mathds
 \usepackage{setspace}
+\usepackage{pgfplots}
 
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{shapes.arrows}
@@ -88,6 +91,77 @@ La méthode de renormalisation est une méthode proposé dans~\cite{issartel2007
 \bibliographystyle{apalike} 
 \bibliography{bib-assim.bib}
 My pgf version is: \pgfversion
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Projets initiés grâce à la délégation}
+
+
+\begin{itemize}
+\item Assimilation variationnelle d'ensemble (projet IPSL 2016)
+\item Evaluation des méthodes d'assimilation d'ensemble (projet LEFE-MANU pour 2017)
+\item Création d'un réseau projet autour de l'articulation entre \alert{science des données} et \alert{science géophysique}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Modélisation physique}
+\begin{alertblock}{}
+Les modèles physiques numériques sont basées sur des lois fondamentales et ont un fort pouvoir prédictif
+\end{alertblock}
+\begin{figure}
+\includegraphics[height=.5\textheight]{./fig/rosetta.png}\\
+Trajet de Rosetta pour atteindre  la comète 67P/Churyumov-Gerasimenko après 12 ans de voyage
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Machine learning}
+\begin{alertblock}{}
+Les méthodes de machine-learning ont connu dernièrement un \alert{essor très important} à travers l'utilisation de nouveaux concepts (réseaux profonds) associés à du calcul haute-performance (notamment GPU).
+\end{alertblock}
+\begin{figure}
+\begin{tikzpicture}
+  \begin{axis}[title  = ILSVRC top error (by year),
+    height = .55\textheight,
+    width = .8\textwidth,
+    ybar,
+    x axis line style = { opacity = 0 },
+    axis y line       = none,
+    tickwidth         = 0pt,
+    enlarge x limits  = 0.2,
+    enlarge y limits  = 0.02,
+  symbolic x coords = {2010, 2011, 2012, 2013,2014},
+    nodes near coords,
+  ]
+  \addplot coordinates { (2010,28.2)    (2011,25.8) (2012,16.4) (2013,11.7) (2014,6.7)};
+  %\addplot coordinates { (14320,LaTeX)         (1615,Tools)
+  %                       (560,Distributions)   (3075,Editors)  };
+  %\legend{Topics, Posts}
+  \end{axis}
+  \end{tikzpicture}\\
+  ImageNet Large Scale Visual Recognition  Challenge\\
+ \raggedleft {\footnotesize{\textit{from Russakovsky et al. 2014}}}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Données et modélisation physique ?}
+\begin{columns}
+
+\column{.5\textwidth}
+Beaucoup de données
+\column{.5\textwidth}
+Des modèles complexes
+\begin{figure}
+\includegraphics[width=\textwidth]{./fig/ipcc.png}\\
+\raggedleft{\footnotesize{\textit{from IPCC Synthesis Report (2014)}}}
+\end{figure}
+
+\end{columns}
 \end{frame}
 
 \begin{frame}
