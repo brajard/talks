@@ -31,6 +31,7 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 
+\newcommand{\odif}[2]{\frac{d #1}{d #2}} 
 
 \newcommand{\inriaswitchcolors}[1]{%
 \pgfaliasimage{figfootline}{figfootline-#1}% !!!
@@ -83,25 +84,108 @@
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Contexte de cette présentation}
-
-\begin {block}{}
-La méthode de renormalisation est une méthode proposé dans~\cite{issartel2007} pour la détection de source dans la dispersion atmosphérique.
-\end{block}
+\frametitle{Plan de la présentation}
+\begin{enumerate}
+\item Focus sur un résultat publié en 2016
+\item Perspective sur à la déléguation
+\end{enumerate}
 \bibliographystyle{apalike} 
-\bibliography{bib-assim.bib}
-My pgf version is: \pgfversion
+\nocite{*}
+Publications dans revues internationales:
+\bibliography{bib-deleg}
++ 8 conférences internationales
+
 \end{frame}
 
+\begin{frame}[c]{Assimilation lagrangienne}
+%\framesubtitle{données : mesures d'atténuation d'ondes TV-SAT}
+\vspace{-1em}
+\begin{alertblock}{Objectif}
+Obtenir une estimation de la dynamique de surface meso-échelle
+\end{alertblock}
+\vspace{1em}
+\begin{columns}
+
+\column{.5\textwidth}
+\alert{Méthodologie : }
+
+\begin{itemize}
+\item Utilisation des vitesses produites par les satellite altimétriques comme ébauche.
+\item Assimilation des positions des bouées de surface dérivantes.
+\end{itemize}
+
+
+\alert{Applications}
+\begin{itemize}
+\item Méditerranée Est.
+\end{itemize}
+
+\column{.5\textwidth}
+\begin{figure}
+\includegraphics[width=\textwidth]{fig/pollutantrack.png}
+\end{figure}
+
+\end{columns}
+
+\end{frame}
+
+ \begin{frame}\frametitle{Problème inverse}
+
+\begin{columns}
+\column{.5\textwidth}
+  \begin{figure}
+ \begin{center}
+ \includegraphics[width=\textwidth]{./fig/chart1.png}
+ \end{center}
+ \end{figure}
+ \column{.5\textwidth}
+  \begin{figure}
+ \begin{center}
+ \includegraphics[width=\textwidth]{./fig/Euler_LagrangeNew.png}
+ \end{center}
+ \end{figure}
+ \end{columns}
+ 
+\begin{itemize}
+\item $\mathcal{M}$ est une paramétrisation des effets non-geostrophiques
+\item $\mathcal{G}$ est l'opérateur d'advection résolvant $\odif{\vec{r}}{t} =\vec{U}(\vec{r}(t),t)$
+\item A partir des positions observées $\vec{r}_i$, estimer le champ de vitesse $\vec{U}_0$
+\end{itemize}
+ 
+  
+ \end{frame}
+
+\begin{frame}{Validation avec drifters simulés}
+
+La position des drifter est simulée avec un champ de vitesse issu d'un modèle, le solution est donc connue.
+\vspace{2em}
+\begin{columns}
+\column{.5\textwidth}
+\includegraphics[width=\textwidth]{fig/Before_L2pointw_win24_MEAN_color.png}
+\column{.5\textwidth}
+\includegraphics[width=\textwidth]{fig/After_L2pointw_win24_MEAN_color.png}
+\end{columns}
+
+
+Erreur (norme euclidienne) sur le champ de vitesse avant et après assimilation
+\end{frame}
+
+\begin{frame}{Résultats avec des données réelles}
+Utilisation du champ opbtenu par assimilation de 2 bouées pour la prévision de la trajectoire d'un 3ème bouée
+n'ayant pas été assimilée.\\
+\vspace{3em}
+\centering
+\includegraphics[width=0.7\textwidth]{fig/ReconstructedCNRSExp_bmtogreen_2days_average_zoom.png}
+\end{frame}
 
 \begin{frame}
 \frametitle{Projets initiés grâce à la délégation}
 
 
 \begin{itemize}
-\item Assimilation variationnelle d'ensemble (projet IPSL 2016)
-\item Evaluation des méthodes d'assimilation d'ensemble (projet LEFE-MANU pour 2017)
-\item Création d'un réseau projet autour de l'articulation entre \alert{science des données} et \alert{science géophysique}
+\item Assimilation variationnelle d'ensemble (projet IPSL 2016 "AVES", collaboration entre le LOCEAN, le LMD, CLIME et le CEREA)
+\item Evaluation des méthodes d'assimilation d'ensemble (soumission d'un projet LEFE-MANU pour 2017, partenaires : IPSL, CLIME, CEREA)
+\item Création d'un réseau projet autour de l'articulation entre \alert{science des données} et \alert{science géophysique} entre CLIME, LOCEAN et le LIP6
 \end{itemize}
 
 \end{frame}
@@ -111,6 +195,7 @@ My pgf version is: \pgfversion
 \begin{alertblock}{}
 Les modèles physiques numériques sont basées sur des lois fondamentales et ont un fort pouvoir prédictif
 \end{alertblock}
+\pause
 \begin{figure}
 \includegraphics[height=.5\textheight]{./fig/rosetta.png}\\
 Trajet de Rosetta pour atteindre  la comète 67P/Churyumov-Gerasimenko après 12 ans de voyage
@@ -123,6 +208,7 @@ Trajet de Rosetta pour atteindre  la comète 67P/Churyumov-Gerasimenko après 12
 \begin{alertblock}{}
 Les méthodes de machine-learning ont connu dernièrement un \alert{essor très important} à travers l'utilisation de nouveaux concepts (réseaux profonds) associés à du calcul haute-performance (notamment GPU).
 \end{alertblock}
+\pause
 \begin{figure}
 \begin{tikzpicture}
   \begin{axis}[title  = ILSVRC top error (by year),
@@ -149,13 +235,20 @@ Les méthodes de machine-learning ont connu dernièrement un \alert{essor très 
 \end{frame}
 
 \begin{frame}
-\frametitle{Données et modélisation physique ?}
-\begin{columns}
+\frametitle{Données et modélisation physique ?\\}
+\framesubtitle{Application aux sciences de l'environnement et du climat}
+\begin{columns}[t]
 
 \column{.5\textwidth}
-Beaucoup de données
+Beaucoup de données :
+\begin{figure}
+\includegraphics[width=\textwidth]{./fig/sst.jpg}\\
+Image journalière de température de suface de l'océan ($\sim 250 Mo$)
+
+(Par ex. pour MODIS, depuis 2002 taille total supérieure à $1To$)
+\end{figure}
 \column{.5\textwidth}
-Des modèles complexes
+Des modèles complexes :
 \begin{figure}
 \includegraphics[width=\textwidth]{./fig/ipcc.png}\\
 \raggedleft{\footnotesize{\textit{from IPCC Synthesis Report (2014)}}}
@@ -165,20 +258,21 @@ Des modèles complexes
 \end{frame}
 
 \begin{frame}
+\frametitle{Projet à court terme (3ans)}
 \begin{figure}
 \begin{tikzpicture}
   \begin{scope}[blend group = soft light]
-    \fill[red!40!white]   ( 90:1) circle (2.5);
-    \fill[green!40!white] (210:1) circle (2.5);
-    \fill[blue!40!white]  (330:1) circle (2.5);
+    \fill<3->[red!40!white]   ( 90:1) circle (2.5);
+    \fill<2->[green!40!white] (210:1) circle (2.5);
+    \fill<2->[blue!40!white]  (330:1) circle (2.5);
   \end{scope}
-  \node at ( 90:2.7)    {Inria};
-  \node at ( 210:2.7)   {LIP6};
-  \node at ( 330:2.7)   {LOCEAN};
+  \node<3-> at ( 90:2.7)    {CLIME};
+  \node<2-> at ( 210:2.7)   {LIP6};
+  \node<2-> at ( 330:2.7)   {LOCEAN};
   \node [text centered, text width=80pt,font=\small] {\textbf{Probl\'ematique g\'eophysique}\\ (ex : Mer M\'editerran\'ee)};
-  \node at (30:2.2) [text centered,text width = 40pt,font=\scriptsize, anchor=center] {Stage Inria-LOCEAN};
-  \node at (150:2.2) [text centered,text width = 40pt,font=\scriptsize\scriptsize, anchor=center] {Stage Inria-LIP6};
-  \node at (270:2.2) [text centered,text width = 40pt,font=\scriptsize, anchor=center] {Stage LIP6-LOCEAN};
+  \node <4-> at (30:2.2) [text centered,text width = 40pt,font=\scriptsize, anchor=center] {Stage Inria-LOCEAN};
+  \node <4-> at (150:2.2) [text centered,text width = 40pt,font=\scriptsize\scriptsize, anchor=center] {Stage Inria-LIP6};
+  \node<4-> at (270:2.2) [text centered,text width = 40pt,font=\scriptsize, anchor=center] {Stage LIP6-LOCEAN};
 
 \end{tikzpicture}
 \end{figure}
