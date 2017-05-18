@@ -1,0 +1,24 @@
+* <2017-05-18 Thu>
+speaker : Julien Brajard 
+affiliation : LOCEAN/IPSL, Sorbonne Université, Paris, France
+Title : Assimilation of non-conventional observations. 
+Application to the estimating of ocean surface currents.
+
+Data assimilation consists in optimally combining observations of a system with 
+outputs of a numerical model. In the traditionnal approaches, observations are
+are considered to be eulerian and scalar. Recently, in the field 
+of earth and ocean
+observations, there is an increasing number of obsvervations 
+that are fundamentally
+non-eulerian and/or non scalars: Drifters and floats are advected 
+by currents and bring a lagrangian observation through 
+their successive positions,
+satellite data are giving images that contains structured patterns.
+In this talk, we show a application of data assimilation for blending 
+altimetry and surface drifters data in the Eastern Levantine Mediterranean.
+The method is based on a variational assimilation approach for which 
+the velocity is corrected by matching real drifters positions 
+with those predicted by a simple advection model, 
+while taking into account the wind effect.
+
+
