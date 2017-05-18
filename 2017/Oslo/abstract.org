@@ -1,0 +1,22 @@
+* <2017-05-15 Mon>
+** Abstract for Oslo seminar
+Title: Reconstructing and forecasting oceanic key variables using data-driven algorithms
+
+Presenter: Julien Brajard, associate professor LOCEAN/IPSL (Sorbonne University), Paris, France.
+
+Summary:
+In this talk, we focus on reconstructing and forecasting oceanic key variables such as velocities,
+temperature, and chlorophyll-a that have major impact on climate and human activities (fisheries, pollution, ...).
+The ocean is massively observed via satellite, or in-situ data (oceanic campaigns, drifter, buoys, gliders, ...).
+But even if the mass of observations is huge, the observation is partial : some areas are less observed (e.g. sub-surface),
+some observations are indirect (remote-sensing), and some variables are difficult to observe directly and are deduced via proxies
+(e.g. phytoplankton).
+Therefore, it is essential to use some models of the dynamics or of the relationship between variables in the ocean to reconstruct the
+missing information. 
+The numerical or analytical models are widely used to predict or forecast these variables: they rely on fundamental physical
+laws (fluid dynamics, optics) and some simplification or discretization. Another complementary approach would be to use the observations
+themselves to "learn" some relationship and some predictive laws. This other approach is now possible given the quantity 
+of observations available and the maturity of machine learning algorithms. 
+In the future, the goal would be to merge the two approaches (analytical model + data-driven model) to have the better estimation and 
+comprehension of these variables. 
+This talk gives some example of these new approaches and presents some results obtained recently.
