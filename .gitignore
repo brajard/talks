@@ -128,9 +128,6 @@ sympy-plots-for-*.tex/
 #emacs backup
 *~
 
-#pdf
-*.pdf
-
 #For roscoff
 slashbox.sty
 
