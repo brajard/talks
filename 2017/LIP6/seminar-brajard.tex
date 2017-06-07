@@ -197,7 +197,7 @@
 \title[lagrangian assimilation]{Assimilation of non-conventional observations. Application to the estimating of ocean surface currents.}
 \author[J. Brajard]{julien.brajard@upmc.fr}
 \institute[LOCEAN/UPMC]{LOCEAN-UPMC}
-\date{29 May 2017}
+\date{8 june 2017}
 \begin{document}
 \tikzstyle{every picture}+=[remember picture]
 %%%%%%%%%%%%%%%%%%%%% SLIDES DE TITRE
@@ -213,8 +213,7 @@
 \begin{figure}
 \includegraphics[height=0.1\textheight]{../../fig/logo-locean.png}
 \end{figure}
-Laboratory in University Pierre et Marie Curie (shorlty Sorbonne
-Université) with scientific thematics :
+Laboratory in University Pierre et Marie Curie with scientific thematics :
 \begin{itemize}
 \item Physical oceanography
 \item Marine bio-geochemistry
@@ -368,93 +367,223 @@ with $\Delta_y = \bm{H_k}^T \bm{R_k}^{-1} \left(\bm{y_k}-\bm{H_k}\bm{M_{k,0}}\bm
 \end{frame}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Implementation issues}
+\begin{columns}[t]
+\column{.48\textwidth}
+\begin{block}{Traditionnal approach}
+\begin{enumerate}
+\item Code for the direct model
+\item Code for the adjoint model
+\item Code for the assimilation scheme
+\end{enumerate}
+\end{block}
+\begin{itemize}
+\gooditem Fine tuning of the optimization
+\pooritem Difficult to maintain
+\pooritem Validation of the correspondance between direct/adjoint
+model is difficult.
+\end{itemize}
+\column{.48\textwidth}
+\begin{block}{Automatic approach}
+\begin{tikzpicture}[auto,
+node distance = 0.5cm,
+>=stealth',
+box/.style={text badly centered,rectangle, text width=.9\textwidth,draw,fill=red!20},
+txt/.style={text badly centered,text width=.9\textwidth}]
+\node [txt] (n1)  {Description of the model using a modular graph};
+\node [box] (n2) [below = of n1] {YAO code generator} edge [<-] (n1);
+\node [txt] (n3) [below = of n2] {\vbox{
+\begin{itemize}
+\item Direct model
+\item Adjoint model
+\item toolbox for assimilation/validation
+\end{itemize}}} edge [<-] (n2);
+\end{tikzpicture}
+\end{block}
+\end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Validation of the adjoint code}
+\begin{block}{How to check if the adjoint is correct}
+$$
+R(\alpha) = J(x=\alpha dx) - J(x) - \alpha dx . \nabla_x J(x) =
+o(\alpha^2)
+$$
+\end{block}
+\begin{figure}
+\includegraphics[width=.7\textwidth]{./fig/adj-ieee.png}
+\end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Numerical validation}
+\begin{block}{Why is the test incorrect ?}
+\begin{itemize}
+\item Effective error in the adjoint code
+\item Inaccuracy due to round-off errors
+\end{itemize}
+\end{block}
+\begin{alertblock}{A solution}
+CADNA
+\end{alertblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Result}
+\begin{columns}
+\column{.5\textwidth}
+\begin{figure}
+\includegraphics[width=.9\textwidth]{./fig/adj-ieee.png}
+\caption{Without CADNA}
+\end{figure}
+\column{.5\textwidth}
+\begin{figure}
+\includegraphics[width=.9\textwidth]{./fig/adj-cadna.png}
+\caption{With CADNA}
+\end{figure}
+\end{columns}
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Example of the sallow-water problem}
-\end{frame}
+\begin{block}{Shallow-water equations}
+Shallow-water equations (derived from Navier and Sockes) describe the
+flow of a fluid (e.g. the water) homogenous in the vertical.
+\end{block}
+\begin{columns}
+\column{.5\textwidth}
+\begin{figure}
+\includegraphics[width=.9\textwidth]{./fig/xt_fin.jpg}
+\caption{Water height at t=0}
+\end{figure}
+\column{.5\textwidth}
+\begin{itemize}
+\item Size of the simulation window : 3 months
+\item Spin-up: 10 years
+\end{itemize}
+\end{columns}
 
+
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{"Experimental" setup}
+\frametitle{Assimilation data setup}
+\begin{itemize}
+\item Twin experiment using the reference simulation
+\item Ensemble experiment (30 assimilations to evaluate the uncertainty)
+\item Assimilation window : 3 months
+\item Control parameter : $h_0$
+\item Observations : 
+\begin{itemize}
+\item 30 000 observations 
+\item randomly sampled on the whole assimilation window 
+\item perturbed by a white gaussian noise ($\sigma=1m$).
+\end{itemize}
+\item Background: white gaussian noise ($\sigma=10m$).
+\end{itemize}
+\vspace{-1em}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{results}
+\frametitle{Cost function minimization}
+\framesubtitle{Temps de l'expérience sur un PC : 3h}
+
+\begin{figure}
+\centering
+\includegraphics[width=.8\textwidth]{./fig/cost.jpg}\\
+\caption{Minimisation of the cost function $\mathcal{J}$}
+\end{figure}
+
+{\footnotesize $30000-6400 = 23600 = J_{min}/2$}
+%% Plot of all cost functions
+%% histogram
 \end{frame}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Uncertainty quantitfication}
-$x_a$ can be consider as a random variable, the objective is to
-estimate the distribution
+\frametitle{Preliminary results}
+\begin{columns}[t]
+
+\column{.3\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=4.2cm]{./fig/xb_fin.jpg}\\
+\caption{Background field at t=1 month}
+\end{figure}
+
+\column{.3\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=4.2cm]{./fig/xt_fin.jpg}\\
+\caption{True field at t=1month}
+
+\end{figure}
+
+
+\column{.3\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=4.2cm]{./fig/xa_fin.jpg}\\
+\caption{Analysed height field at t=1 month}
+
+\end{figure}
+
+
+\end{columns}
+
+\vspace{2em}
+
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Ensemble assimilation}
+\frametitle{Errors}
+
+\begin{columns}[t]
+
+\column{.45\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=6cm]{./fig/diff_bt.jpg}\\
+\caption{Error at t=3 month between backround and "truth"}
+\end{figure}
+\column{.45\textwidth}
+\begin{figure}
+\includegraphics[width=6cm]{./fig/diff_at.jpg}\\
+ \caption{Error at t=3 months between analysis and "truth"}
+\end{figure}
+\end{columns}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{rank histogram}
-\end{frame}
+\begin{frame}[t]
+\frametitle{Solution in time}
+\framesubtitle{Water height at point x=45 et y=60}
+\begin{figure}
+\centering
+\includegraphics[width=10.5cm]{./fig/trajectory.jpg}\\
+\end{figure}
+\end{frame} 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{First result}
-\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Conclusion}
-Link with numerical validation, HPC, ...
-\end{frame}
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Variational formulation}
-\tikzstyle{na} = [baseline=-.5ex]
-
-The problem can be solved in the tradiational variational data
-assimilation framework by minimizing:
+Data assimilation is an efficient and operational method to combine a
+numerical model and observations. It involves several scientific
+themes in link with LIP6:
 \begin{itemize}
-\item Error on the observations \tikz[na] \node [coordinate] (n1) {};
+\item Optimization
+\item Computation using large datasets
+\item Numerical validation
+\item High Performance Computing
 \end{itemize}
-\begin{align}\label{Optim}
-\mathcal{J}(\delta \bm{u}) & =  
-\tikz[baseline]{ \node[fill=blue!20,anchor=base] (t1)
-{$\sum _{i=1}^{N_f} \sum_{m=1}^{\left \lfloor{T_w/\Delta t}\right
-                             \rfloor} ||\bm{r}^{\,b}_{i}(\bm{u^b})
-                             +\delta \bm{r}_i(\delta \bm{u})
-                             -\bm{r}_i^{\,obs}(m\Delta t) ||^2 $};
-}
-\nonumber \\
-& + \tikz[baseline]{ \node[fill=red!20,anchor=base] (t2)
-{$\alpha_1 || \bm{\delta u} ||^2_{\bm{B}} $};
-}
-+
-\tikz[baseline]{ \node[fill=green!20,anchor=base] (t3)
-{$\alpha_2 \,\sum_{i,j} (\nabla \cdot \bm{\delta u})^2. $};
-}
-\end{align}
-\begin{itemize}
-\item  Spatial correlation \tikz[na] \node
-  [coordinate] (n2) {};
-\item Constraint of no-divergence \tikz[na] \node
-  [coordinate] (n3) {};
-\end{itemize}
-\begin{tikzpicture}[overlay]
-        \path[->] (n1) edge [bend left] (t1);
-        \path[->] (n2) edge [bend right] (t2);
-        \path[->] (n3) edge [out=0, in=-90] (t3);
-\end{tikzpicture}
 \end{frame}
-
 
 \end{document}
