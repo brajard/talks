@@ -267,12 +267,12 @@ The basics ingredients for data assimilation are :
 \item Some observations at time $\bm{k}$: $\bm{y_k} = H_k(\bm{x_k}) +
   \bm{v_k}$
 \item An background state (often at time 0): $\bm{x^b_0} = \bm{x_0} +
-  \bm{e_k}$
+  \bm{e}$
 \item Error statistics: 
 \begin{itemize}
 \item $\E[\bm{w_kw_k^T}] = \bm{Q_k}$
 \item $\E[\bm{v_kv_k^T}] = \bm{R_k}$
-\item $\E[\bm{e_ke_k^T}] = \bm{B_k}$
+\item $\E[\bm{ee^T}] = \bm{B}$
 \end{itemize}
 \end{itemize}
 \pause
@@ -285,17 +285,86 @@ $M$,$H$,$\bm{y}$,$\bm{x^b}$,$\bm{Q}$,$\bm{R}$ and $\bm{B}$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Minimization problem}
+\tikzstyle{na} = [baseline=-.5ex]
+\begin{block}{Cost function}
+Finding the best estimate $\bm{x^a}=\left(\bm{x_0^a} \cdots \bm{x_k^a}\cdots\bm{x_n^a} \right)$ is equivalent to find the value minimizing $\mathcal{J}(\bm{x_0})$
+\end{block}
+\begin{itemize}
+\item Error on the observations \tikz[na] \node [coordinate] (n1) {};
+\end{itemize}
+\begin{align}
+\mathcal{J}(\bm{x_0}) & =  
+\tikz[baseline]{ \node[fill=blue!20,anchor=base] (t1)
+{$\sum _{k=0}^{K} 
+  \left(\bm{y_k} -  \bm{H_k}\bm{x_k}\right)^T
+  \bm{R_k}^{-1}
+  \left(\bm{y_k} -  \bm{H_k}\bm{x_k}\right)
+ $};
+}
+\nonumber \\
+& + \tikz[baseline]{ \node[fill=red!20,anchor=base] (t2)
+{$\frac{1}{2} \left(\bm{x_0}-\bm{x_0^b}\right)^T\bm{B_0}^{-1} \left(\bm{x_0}-\bm{x_0^b}\right)$};}
+\end{align}
+\begin{itemize}
+\item  Error on the background \tikz[na] \node
+  [coordinate] (n2) {};
+\item Model is supposed to be "perfect" (no model error):$\bm{x_k} = \bm{M_k}\bm{x_{k-1}}$
+\end{itemize}
+\begin{tikzpicture}[overlay]
+        \path[->] (n1) edge [bend left] (t1);
+        \path[->] (n2) edge [bend right] (t2);
+\end{tikzpicture}
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Adjoint}
+\frametitle{A solution ?}
+\begin{block}{Analytic solution}
+The solution of Eq.1 is:
+$$ \bm{x_0^a} = \bm{x_0^b} - \mathcal{H}^{-1}\nabla_{\bm{x_0}}\mathcal{J}(\bm{x_0^b})
+$$
+where $ \mathcal{H} = \bm{B}^{-1} + \sum_{k=0}^n \bm{M_{k,0}}^T\bm{H_k}^T\bm{R_k}^{-1}\bm{H_k}\bm{M_{k,0}}$
+\end{block}
+\begin{alertblock}{Impossible to compute if:}
+\begin{itemize}
+\item The size of $\bm{x_k}$ is too big (typically $\approx 10^5$)
+\item $\bm{H_k}$ and/or $\bm{M_{k,0}}$ are non-linear 
+\end{itemize}
+\end{alertblock}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Adjoint validation}
+\frametitle{Gradient descent technique}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+auto,
+>=stealth',
+box/.style={rectangle, draw, fill=blue!20}]
+\node (x0) {$\bm{x_0}$};
+\node [box,minimum width=7em,minimum height=2em] (M) [right=of x0]{\alt<2>{\red{Direct model}}{$\bm{M_{k,0}}$}} edge [<-] (x0);
+\node (xk) [right=of M]{$\bm{x_k}$} edge [<-] (M);
+\node [box] (J) [right=of xk]{$\mathcal{J}$} edge [<-] (xk);
+\node (y) [above=of J]{$\bm{y_k}$} edge [->] (J);
+\node (Jx0) [right=of J]{$\mathcal{J}(\bm{x_0})$} edge [<-] (J);
+\node [box] (adjy) [below=of J]{$ \nabla_{\bm{y}}\mathcal{J}$};
+\path [->,draw] (Jx0) |- (adjy);
+\node (dy) [left=of adjy] {$\Delta$} edge [<-] (adjy);
+\node [box,minimum width=7em,minimum height=2em] (adj) [left=of dy]{\alt<2>{\red{Adjoint model}}{$\bm{M_{k,0}}^T$}} edge [<-] (dy) ; 
+\node (dx) [left=of adj] {$\Delta_x$} edge [<-] (adj);
+\path[->,draw] (dx) edge [bend left] (x0);
+
+\end{tikzpicture}
+\end{figure}
+
+\begin{block}{Gradient}
+$$ \nabla_{\bm{x_0}}\mathcal{J} = \bm{B}^{-1}\left(\bm{x_0}-\bm{x_0^b}\right) - 
+\sum_{k=0}^n\bm{M_{k,0}}^T \Delta_y $$
+with $\Delta_y = \bm{H_k}^T \bm{R_k}^{-1} \left(\bm{y_k}-\bm{H_k}\bm{M_{k,0}}\bm{x_0}\right) $
+\end{block}
 \end{frame}
 
 
