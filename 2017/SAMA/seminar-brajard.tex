@@ -3,7 +3,7 @@
 \ifdefined\ishandout
 \documentclass[handout]{beamer}
 \else
-\documentclass[11pt]{beamer}
+\documentclass[10pt]{beamer}
 \fi
 
 \usepackage[frenchb]{babel}
@@ -193,56 +193,57 @@
 %NumÃ©ro du cours
 \newcommand{\nb}{1}
 
-\title[lagrangian assimilation]{Assimilation of non-conventional observations. Application to the estimating of ocean surface currents.}
+\title[SAMA-Machine Learning]{}
 \author[J. Brajard]{julien.brajard@upmc.fr}
 \institute[LOCEAN/UPMC]{LOCEAN-UPMC}
-\date{29 May 2017}
+\date{06 Sept 2017}
 \begin{document}
 \tikzstyle{every picture}+=[remember picture]
 
 %%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Position of the problem}
-\begin{columns}
-\column{.5\textwidth}
-  \begin{figure}
- \begin{center}
- \includegraphics[width=\textwidth]{./fig/chart1.png}
-\end{center}
- \end{figure}
- \column{.5\textwidth}
- \begin{figure}
- \begin{center}
-\includegraphics[width=\textwidth]{./fig/Euler_LagrangeNew.png}
-\end{center}
- \end{figure}
- \end{columns}
- 
-\begin{itemize}
-\item $\mathcal{M}$ is a parametrization of non-geostrophic effects (wind)
-\item $\mathcal{G}$ is the advection operator solving
-  $\odif{\vec{r}}{t} =\vec{U}(\vec{r}(t),t)$
-\end{itemize}
+
 \begin{alertblock}{Objective}
 From observed $\vec{r}_i$, estimate the velocity field $\vec{U}_0$
 \end{alertblock}
- \rref[Issa et al. (2016)]
-
-\end{frame}
-
-
-\begin{frame}{Results using real data}
+\begin{columns}[t]
+\column{.5\textwidth}
+\vspace{-3em}
+  \begin{figure}
+ \begin{center}
+ \includegraphics[width=.65\textwidth]{./fig/chart1.png}
+\end{center}
+ \end{figure}
+\vspace{-1em}
+\begin{figure}
+ \begin{center}
+\includegraphics[width=.65\textwidth]{./fig/Euler_LagrangeNew.png}
+\end{center}
+ \end{figure} 
+\column{.5\textwidth}
+\begin{onlyenv}<2>
+\begin{exampleblock}{Result}
 Using the velocity field obtained by assimilating 2 drifters to
-forecast the trajectory of a 3rd drifter (not used in the assimilation).\\
-\vspace{3em}
+forecast the trajectory of a 3rd drifter (not used in the
+assimilation).
+\end{exampleblock}
 \centering
 \includegraphics[width=0.7\textwidth]{fig/ReconstructedCNRSExp_bmtogreen_2days_average_zoom.png}
+\end{onlyenv}
+
+ \end{columns}
+\vspace{1em}
+Issa, L., Brajard, J., Fakhri, M., Hayes, D., Mortier,
+  L., \& Poulain, P. M. (2016). Modelling surface currents in the
+  Eastern Levantine Mediterranean using surface drifters and satellite
+  altimetry. Ocean Modelling, 104, 1-14.
 \end{frame}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Summary of the method}
+\frametitle{Perspectives}
 \begin{columns}[b]
 \column{.5\textwidth}
 \begin{figure}
@@ -267,7 +268,7 @@ neuron/.style={circle,minimum height = .65cm,draw,fill=magenta!20}]
 \caption{Physical network}
 \end{figure}
 \column{.5\textwidth}
-\begin{onlyenv}<2>
+\begin{onlyenv}<2|handout:0>
 \begin{block}{Summary}
 \begin{itemize}
 \item Very simple numerical model
@@ -279,7 +280,7 @@ neuron/.style={circle,minimum height = .65cm,draw,fill=magenta!20}]
 \end{itemize}
 \end{block}
 \end{onlyenv}
-\begin{onlyenv}<3>
+\begin{onlyenv}<3->
 \begin{figure}
 \begin{tikzpicture}[
 auto,
@@ -310,6 +311,13 @@ neuron/.style={circle,minimum height = .65cm,draw,fill=magenta!20}]
 \end{figure}
 \end{onlyenv}
 \end{columns}
+\begin{onlyenv}<4->
+\begin{itemize}
+\item Mixing data based and model based methods
+\item Extracting new features from large/multiscale datasets
+\item Using machine learning to perform forecast
+\end{itemize}
+\end{onlyenv}
 \end{frame}
 
 
