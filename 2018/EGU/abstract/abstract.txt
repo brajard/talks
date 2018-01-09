@@ -1,0 +1,6 @@
+title: Can a neural network learn a numerical model ?
+Authors: Julien Brajard, Anastase Charantonis, Jérôme Sirven
+Summary:  Numerical models are used to simulate the evolution of atmosphere or ocean dynamics. They are implemented through a computer code, that contains predefined rules specifying how to compute the evolution of some outputs (e.g sea surface height) from inputs (e.g. previous states of the model, satellite or in situ observations of other parameters).
+A machine learning approach, in contrast, infers its internal set of rules from a large amount of data. In many fields (image recognition, automatic translation, speech recognition, ...),  the more traditional methods, which rely on predefined rules, have been outperformed by machine learning algorithms.  
+
+This work addresses the question of the application and the usefulness of machine learning for numerical modeling in Geophysics. Results are presented using a demonstration model : A shallow-water model including a forcing by the wind, a diffusive term and a dissipation term. We evaluate the ability of a neural network to reproduce the numerical model "rules" given only the output fields of the model. We also investigate the ability of this neural network to simulate only some specific parts of the numerical model (e.g. parametrizations) and discuss the potential combination of approaches.
