@@ -194,7 +194,7 @@
 %NumÃ©ro du cours
 \newcommand{\nb}{1}
 
-\title[lagrangian assimilation]{Assimilation of non-conventional observations. Application to the estimating of ocean surface currents.}
+\title[data assimilation]{Data assimilation.}
 \author[J. Brajard]{julien.brajard@upmc.fr}
 \institute[LOCEAN/UPMC]{LOCEAN-UPMC}
 \date{8 june 2017}
@@ -288,8 +288,9 @@ $M$,$H$,$\bm{y}$,$\bm{x^b}$,$\bm{Q}$,$\bm{R}$ and $\bm{B}$
 \begin{block}{Cost function}
 Finding the best estimate $\bm{x^a}=\left(\bm{x_0^a} \cdots \bm{x_k^a}\cdots\bm{x_n^a} \right)$ is equivalent to find the value minimizing $\mathcal{J}(\bm{x_0})$
 \end{block}
+\pause
 \begin{itemize}
-\item Error on the observations \tikz[na] \node [coordinate] (n1) {};
+\item<3-> Error on the observations \tikz[na] \node [coordinate] (n1) {};
 \end{itemize}
 \begin{align}
 \mathcal{J}(\bm{x_0}) & =  
@@ -305,13 +306,13 @@ Finding the best estimate $\bm{x^a}=\left(\bm{x_0^a} \cdots \bm{x_k^a}\cdots\bm{
 {$\frac{1}{2} \left(\bm{x_0}-\bm{x_0^b}\right)^T\bm{B_0}^{-1} \left(\bm{x_0}-\bm{x_0^b}\right)$};}
 \end{align}
 \begin{itemize}
-\item  Error on the background \tikz[na] \node
+\item<4->  Error on the background \tikz[na] \node
   [coordinate] (n2) {};
-\item Model is supposed to be "perfect" (no model error):$\bm{x_k} = \bm{M_k}\bm{x_{k-1}}$
+\item<5-> Model is supposed to be "perfect" (no model error):$\bm{x_k} = \bm{M_k}\bm{x_{k-1}}$
 \end{itemize}
 \begin{tikzpicture}[overlay]
-        \path[->] (n1) edge [bend left] (t1);
-        \path[->] (n2) edge [bend right] (t2);
+        \path<3->[->] (n1) edge [bend left] (t1);
+        \path<4->[->] (n2) edge [bend right] (t2);
 \end{tikzpicture}
 \end{frame}
 
@@ -319,13 +320,25 @@ Finding the best estimate $\bm{x^a}=\left(\bm{x_0^a} \cdots \bm{x_k^a}\cdots\bm{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{A solution ?}
+\begingroup\footnotesize
+\begin{equation}
+\mathcal{J}(\bm{x_0})  =  
+\sum _{k=0}^{K} 
+  \left(\bm{y_k} -  \bm{H_k}\bm{x_k}\right)^T
+  \bm{R_k}^{-1}
+  \left(\bm{y_k} -  \bm{H_k}\bm{x_k}\right)
+ +\frac{1}{2} \left(\bm{x_0}-\bm{x_0^b}\right)^T\bm{B_0}^{-1} \left(\bm{x_0}-\bm{x_0^b}\right)\nonumber
+\end{equation}
+\endgroup
+\pause
 \begin{block}{Analytic solution}
 The solution of Eq.1 is:
 $$ \bm{x_0^a} = \bm{x_0^b} - \mathcal{H}^{-1}\nabla_{\bm{x_0}}\mathcal{J}(\bm{x_0^b})
 $$
 where $ \mathcal{H} = \bm{B}^{-1} + \sum_{k=0}^n \bm{M_{k,0}}^T\bm{H_k}^T\bm{R_k}^{-1}\bm{H_k}\bm{M_{k,0}}$
 \end{block}
-\begin{alertblock}{Impossible to compute if:}
+\pause
+\begin{alertblock}{Impossible (very difficult) to compute if:}
 \begin{itemize}
 \item The size of $\bm{x_k}$ is too big (typically $\approx 10^5$)
 \item $\bm{H_k}$ and/or $\bm{M_{k,0}}$ are non-linear 
@@ -344,21 +357,21 @@ auto,
 >=stealth',
 box/.style={rectangle, draw, fill=blue!20}]
 \node (x0) {$\bm{x_0}$};
-\node [box,minimum width=7em,minimum height=2em] (M) [right=of x0]{\alt<2>{\red{Direct model}}{$\bm{M_{k,0}}$}} edge [<-] (x0);
+\node [box,minimum width=7em,minimum height=2em] (M) [right=of x0]{\alt<3>{\red{Direct model}}{$\bm{M_{k,0}}$}} edge [<-] (x0);
 \node (xk) [right=of M]{$\bm{x_k}$} edge [<-] (M);
 \node [box] (J) [right=of xk]{$\mathcal{J}$} edge [<-] (xk);
 \node (y) [above=of J]{$\bm{y_k}$} edge [->] (J);
 \node (Jx0) [right=of J]{$\mathcal{J}(\bm{x_0})$} edge [<-] (J);
 \node [box] (adjy) [below=of J]{$ \nabla_{\bm{y}}\mathcal{J}$};
 \path [->,draw] (Jx0) |- (adjy);
-\node (dy) [left=of adjy] {$\Delta$} edge [<-] (adjy);
-\node [box,minimum width=7em,minimum height=2em] (adj) [left=of dy]{\alt<2>{\red{Adjoint model}}{$\bm{M_{k,0}}^T$}} edge [<-] (dy) ; 
+\node (dy) [left=of adjy] {$\Delta_y$} edge [<-] (adjy);
+\node [box,minimum width=7em,minimum height=2em] (adj) [left=of dy]{\alt<3>{\red{Adjoint model}}{$\bm{M_{k,0}}^T$}} edge [<-] (dy) ; 
 \node (dx) [left=of adj] {$\Delta_x$} edge [<-] (adj);
 \path[->,draw] (dx) edge [bend left] (x0);
 
 \end{tikzpicture}
 \end{figure}
-
+\pause
 \begin{block}{Gradient}
 $$ \nabla_{\bm{x_0}}\mathcal{J} = \bm{B}^{-1}\left(\bm{x_0}-\bm{x_0^b}\right) - 
 \sum_{k=0}^n\bm{M_{k,0}}^T \Delta_y $$
@@ -379,12 +392,14 @@ with $\Delta_y = \bm{H_k}^T \bm{R_k}^{-1} \left(\bm{y_k}-\bm{H_k}\bm{M_{k,0}}\bm
 \item Code for the assimilation scheme
 \end{enumerate}
 \end{block}
+\pause
 \begin{itemize}
 \gooditem Fine tuning of the optimization
 \pooritem Difficult to maintain
 \pooritem Validation of the correspondance between direct/adjoint
 model is difficult.
 \end{itemize}
+\pause
 \column{.48\textwidth}
 \begin{block}{Automatic approach}
 \begin{tikzpicture}[auto,
@@ -410,10 +425,11 @@ txt/.style={text badly centered,text width=.9\textwidth}]
 \frametitle{Validation of the adjoint code}
 \begin{block}{How to check if the adjoint is correct}
 $$
-R(\alpha) = J(x=\alpha dx) - J(x) - \alpha dx . \nabla_x J(x) =
-o(\alpha^2)
+R(\alpha) = J(x+\alpha dx) - J(x) - \alpha dx . \nabla_x J(x) =
+O(\alpha^2)
 $$
 \end{block}
+\pause
 \begin{figure}
 \includegraphics[width=.7\textwidth]{./fig/adj-ieee.png}
 \end{figure}
@@ -429,8 +445,10 @@ $$
 \item Inaccuracy due to round-off errors
 \end{itemize}
 \end{block}
+\pause
 \begin{alertblock}{A solution}
-CADNA
+Estimation of the round-off error during the direct and adjoint
+simulation: CADNA library
 \end{alertblock}
 \end{frame}
 
@@ -440,12 +458,13 @@ CADNA
 \begin{columns}
 \column{.5\textwidth}
 \begin{figure}
-\includegraphics[width=.9\textwidth]{./fig/adj-ieee.png}
+\includegraphics[width=.95\textwidth]{./fig/adj-ieee.png}
 \caption{Without CADNA}
 \end{figure}
+\pause
 \column{.5\textwidth}
 \begin{figure}
-\includegraphics[width=.9\textwidth]{./fig/adj-cadna.png}
+\includegraphics[width=.95\textwidth]{./fig/adj-cadna.png}
 \caption{With CADNA}
 \end{figure}
 \end{columns}
@@ -462,7 +481,7 @@ flow of a fluid (e.g. the water) homogenous in the vertical.
 \column{.5\textwidth}
 \begin{figure}
 \includegraphics[width=.9\textwidth]{./fig/xt_fin.jpg}
-\caption{Water height at t=0}
+\caption{Water height at t=3 month}
 \end{figure}
 \column{.5\textwidth}
 \begin{itemize}
@@ -480,7 +499,7 @@ flow of a fluid (e.g. the water) homogenous in the vertical.
 \item Twin experiment using the reference simulation
 \item Ensemble experiment (30 assimilations to evaluate the uncertainty)
 \item Assimilation window : 3 months
-\item Control parameter : $h_0$
+\item Control parameter : initial height $h_0$
 \item Observations : 
 \begin{itemize}
 \item 30 000 observations 
@@ -495,7 +514,7 @@ flow of a fluid (e.g. the water) homogenous in the vertical.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Cost function minimization}
-\framesubtitle{Temps de l'expérience sur un PC : 3h}
+\framesubtitle{running time : 10hours on Cluster CICLAD ( 640 AMD core 2.4GHz) 24 nodes}
 
 \begin{figure}
 \centering
@@ -515,24 +534,24 @@ flow of a fluid (e.g. the water) homogenous in the vertical.
 \column{.3\textwidth}
 \begin{figure}
 \centering
-\includegraphics[width=4.2cm]{./fig/xb_fin.jpg}\\
-\caption{Background field at t=1 month}
+\includegraphics[width=\textwidth]{./fig/xb_fin.jpg}\\
+\caption{Background field at t=3 months}
 \end{figure}
 
 \column{.3\textwidth}
 \begin{figure}
 \centering
-\includegraphics[width=4.2cm]{./fig/xt_fin.jpg}\\
-\caption{True field at t=1month}
+\includegraphics[width=\textwidth]{./fig/xt_fin.jpg}\\
+\caption{True field at t=3 months}
 
 \end{figure}
 
-
+\pause
 \column{.3\textwidth}
 \begin{figure}
 \centering
-\includegraphics[width=4.2cm]{./fig/xa_fin.jpg}\\
-\caption{Analysed height field at t=1 month}
+\includegraphics[width=\textwidth]{./fig/xa_fin.jpg}\\
+\caption{Analysed height field at t=3 months}
 
 \end{figure}
 

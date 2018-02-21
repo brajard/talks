@@ -3,7 +3,7 @@
 \ifdefined\ishandout
 \documentclass[handout]{beamer}
 \else
-\documentclass[11pt]{beamer}
+\documentclass[10pt]{beamer}
 \fi
 
 \usepackage[frenchb]{babel}
@@ -193,214 +193,57 @@
 %NumÃ©ro du cours
 \newcommand{\nb}{1}
 
-\title[lagrangian assimilation]{Assimilation of non-conventional observations. Application to the estimating of ocean surface currents.}
+\title[SAMA-Machine Learning]{}
 \author[J. Brajard]{julien.brajard@upmc.fr}
 \institute[LOCEAN/UPMC]{LOCEAN-UPMC}
-\date{29 May 2017}
+\date{06 Sept 2017}
 \begin{document}
 \tikzstyle{every picture}+=[remember picture]
-%%%%%%%%%%%%%%%%%%%%% SLIDES DE TITRE
-\begin{frame}
-\titlepage
-%\centering{
-%\url{http://australe.upmc.fr} (onglet EPU-C5-IGE Info Gen)}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{LOCEAN institute}
-\begin{figure}
-\includegraphics[height=0.1\textheight]{../../fig/logo-locean.png}
-\end{figure}
-Laboratory in University Pierre et Marie Curie (shorlty Sorbonne
-Université) with scientific thematics :
-\begin{itemize}
-\item Physical oceanography
-\item Marine bio-geochemistry
-\item Climate
-\item Paleocenography
-\item ...
-\end{itemize}
-Using a wide spectra of approaches:
-\begin{itemize}
-\item Numerical modelling
-\item Statistical modelling
-\item Observations (campaigns, or autonomous plateforms)
-\item Remote-sensing
-\end{itemize}
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Data assimilation}
-\begin{block}{Objective}
-Optimally combine output of an numerical model and some observations
-\end{block}
-\begin{tikzpicture}
-\draw[thick,->](-0.2,0)--(10,0) node[below]{$time$};
-\draw[thick,->](0,-0.2)--(0,5) node[left]{$x$};
-\draw[red,very thick] plot [smooth] 
-coordinates {(0,1)  (1,1)  (3,2) (5,0.5) (7,4) (9,3) } ;
-\draw plot [mark=*, mark size=5pt, only marks, mark options={color=red}]
-coordinates{(0,1)} node [left,xshift=-0.5em]{\textcolor{red}{$x^b$}};
-\draw <2-> plot [mark=*, mark size=3pt, only marks, mark options={color=blue}]
-coordinates {(0.5,2) (3,3) (4,0.5) (6,4.5) (8,3)};
-\draw <3-> [magenta,very thick] plot [smooth] 
-coordinates {(0,2)  (1,2.5)  (3,2.8) (4.6,0.1) (6,4) (9,2.5) } ;
-\draw <3-> plot [mark=*, mark size=5pt, only marks, mark options={color=magenta}]
-coordinates{(0,2)} node [left,xshift=-0.5em]{\textcolor{magenta}{$x^a$}};
-\draw (0.1,5.4) node [anchor=west] {\textcolor{red} {$-$ background}};
-\draw <2-> (0.1,4.8) node [anchor=west] {\textcolor{blue} {$\bullet$ observations}};
-\draw <3-> (0.1,4.2) node[anchor=west]  {\textcolor{magenta} {$-$ analyze}};
-\end{tikzpicture}
-\end{frame}
-
 
 %%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Some equations...}
-The basics ingredients for data assimilation are :
-\begin{itemize}[<+->]
-\item A state vector: $\bm{x_k}$
-\item A dynamical model (with error): $\bm{x_k} = M_k(\bm{x_{k-1}}) +
-  \bm{w_k}$
-\item Some observations at time $\bm{k}$: $\bm{y_k} = H_k(\bm{x_k}) +
-  \bm{v_k}$
-\item An background state (often at time 0): $\bm{x^b_0} = \bm{x_0} +
-  \bm{e_k}$
-\item Error statistics: 
-\begin{itemize}
-\item $\E[\bm{w_kw_k^T}] = \bm{Q_k}$
-\item $\E[\bm{v_kv_k^T}] = \bm{R_k}$
-\item $\E[\bm{e_ke_k^T}] = \bm{B_k}$
-\end{itemize}
-\end{itemize}
-\pause
-\begin{alertblock}{Objective}
-Estimate the more likely state $\bm{x_k^a}$ knowing
-$M$,$H$,$\bm{y}$,$\bm{x^b}$,$\bm{Q}$,$\bm{R}$ and $\bm{B}$
-\end{alertblock}
-\end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Example of "non-conventional" observations}
-\begin{columns}[t]
-\column{.5\textwidth}
-Remote sensing
-\begin{figure}
-\includegraphics[width=\textwidth]{./fig/chla-norway.jpg}
-\caption{chlorophylle-a concentration }
-\end{figure}
-\pause
-\column{.5\textwidth}
-Lagrangian observations
-\begin{figure}
-\includegraphics[width=\textwidth]{./fig/RealvsSimulatedTraj.pdf}
-\caption{Drifters deployed on 29 Aug. 2013 (x) versus trajectories
-  simulated using altimetry field (-)}
-\end{figure}
-
-\end{columns}
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Position of the problem}
-\begin{columns}
-\column{.5\textwidth}
-  \begin{figure}
- \begin{center}
- \includegraphics[width=\textwidth]{./fig/chart1.png}
-\end{center}
- \end{figure}
- \column{.5\textwidth}
- \begin{figure}
- \begin{center}
-\includegraphics[width=\textwidth]{./fig/Euler_LagrangeNew.png}
-\end{center}
- \end{figure}
- \end{columns}
- 
-\begin{itemize}
-\item $\mathcal{M}$ is a parametrization of non-geostrophic effects (wind)
-\item $\mathcal{G}$ is the advection operator solving
-  $\odif{\vec{r}}{t} =\vec{U}(\vec{r}(t),t)$
-\end{itemize}
 \begin{alertblock}{Objective}
 From observed $\vec{r}_i$, estimate the velocity field $\vec{U}_0$
 \end{alertblock}
- \rref[Issa et al. (2016)]
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Variational formulation}
-\tikzstyle{na} = [baseline=-.5ex]
-
-The problem can be solved in the tradiational variational data
-assimilation framework by minimizing:
-\begin{itemize}
-\item Error on the observations \tikz[na] \node [coordinate] (n1) {};
-\end{itemize}
-\begin{align}\label{Optim}
-\mathcal{J}(\delta \bm{u}) & =  
-\tikz[baseline]{ \node[fill=blue!20,anchor=base] (t1)
-{$\sum _{i=1}^{N_f} \sum_{m=1}^{\left \lfloor{T_w/\Delta t}\right
-                             \rfloor} ||\bm{r}^{\,b}_{i}(\bm{u^b})
-                             +\delta \bm{r}_i(\delta \bm{u})
-                             -\bm{r}_i^{\,obs}(m\Delta t) ||^2 $};
-}
-\nonumber \\
-& + \tikz[baseline]{ \node[fill=red!20,anchor=base] (t2)
-{$\alpha_1 || \bm{\delta u} ||^2_{\bm{B}} $};
-}
-+
-\tikz[baseline]{ \node[fill=green!20,anchor=base] (t3)
-{$\alpha_2 \,\sum_{i,j} (\nabla \cdot \bm{\delta u})^2. $};
-}
-\end{align}
-\begin{itemize}
-\item  Spatial correlation \tikz[na] \node
-  [coordinate] (n2) {};
-\item Constraint of no-divergence \tikz[na] \node
-  [coordinate] (n3) {};
-\end{itemize}
-\begin{tikzpicture}[overlay]
-        \path[->] (n1) edge [bend left] (t1);
-        \path[->] (n2) edge [bend right] (t2);
-        \path[->] (n3) edge [out=0, in=-90] (t3);
-\end{tikzpicture}
-\end{frame}
-
-\begin{frame}{Validation with simulated drifters}
-
-Drifter position is simulated using a model velocity field, the "true"
-solution is supposed to be known.
-\vspace{2em}
-\begin{columns}
+\begin{columns}[t]
 \column{.5\textwidth}
-\includegraphics[width=\textwidth]{fig/Before_L2pointw_win24_MEAN_color.png}
+\vspace{-3em}
+  \begin{figure}
+ \begin{center}
+ \includegraphics[width=.65\textwidth]{./fig/chart1.png}
+\end{center}
+ \end{figure}
+\vspace{-1em}
+\begin{figure}
+ \begin{center}
+\includegraphics[width=.65\textwidth]{./fig/Euler_LagrangeNew.png}
+\end{center}
+ \end{figure} 
 \column{.5\textwidth}
-\includegraphics[width=\textwidth]{fig/After_L2pointw_win24_MEAN_color.png}
-\end{columns}
-
-Euclidian error on velocity field before and after assimilation.
-\end{frame}
-
-\begin{frame}{Results using real data}
+\begin{onlyenv}<2>
+\begin{exampleblock}{Result}
 Using the velocity field obtained by assimilating 2 drifters to
-forecast the trajectory of a 3rd drifter (not used in the assimilation).\\
-\vspace{3em}
+forecast the trajectory of a 3rd drifter (not used in the
+assimilation).
+\end{exampleblock}
 \centering
 \includegraphics[width=0.7\textwidth]{fig/ReconstructedCNRSExp_bmtogreen_2days_average_zoom.png}
+\end{onlyenv}
+
+ \end{columns}
+\vspace{1em}
+Issa, L., Brajard, J., Fakhri, M., Hayes, D., Mortier,
+  L., \& Poulain, P. M. (2016). Modelling surface currents in the
+  Eastern Levantine Mediterranean using surface drifters and satellite
+  altimetry. Ocean Modelling, 104, 1-14.
 \end{frame}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Summary of the method}
+\frametitle{Perspectives}
 \begin{columns}[b]
 \column{.5\textwidth}
 \begin{figure}
@@ -425,7 +268,7 @@ neuron/.style={circle,minimum height = .65cm,draw,fill=magenta!20}]
 \caption{Physical network}
 \end{figure}
 \column{.5\textwidth}
-\begin{onlyenv}<2>
+\begin{onlyenv}<2|handout:0>
 \begin{block}{Summary}
 \begin{itemize}
 \item Very simple numerical model
@@ -437,7 +280,7 @@ neuron/.style={circle,minimum height = .65cm,draw,fill=magenta!20}]
 \end{itemize}
 \end{block}
 \end{onlyenv}
-\begin{onlyenv}<3>
+\begin{onlyenv}<3->
 \begin{figure}
 \begin{tikzpicture}[
 auto,
@@ -468,89 +311,15 @@ neuron/.style={circle,minimum height = .65cm,draw,fill=magenta!20}]
 \end{figure}
 \end{onlyenv}
 \end{columns}
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Machine leaning for non-conventional observations}
-\begin{block}{}
-Internal representation of an image in a latent space (of reduced
-dimension)
-\end{block}
-\begin{figure}
-\centering
-\begin{tikzpicture}
-[
-auto,
-node distance = 0.5cm,
->=stealth',
-image/.style={rectangle,minimum height = .65cm, draw,fill=blue!20},
-latent/.style={rectangle,minimum height = .65cm, draw,fill=red!20},
-model/.style={rectangle,minimum height = .65cm,draw,fill=green!20}]
-\node[image] (out) {Ouput Image (= Input Image)} ;
-\node[model] (nn2) [below=of out]{neural network} edge [->] (out);
-\node [latent] (hid) [below=of nn2]{Internal representation of an image} edge [->]
-(nn2);
-\node[model] (nn1) [below=of hid]{neural network}edge[->] (hid);
-
-\node [image] (in) [below=of nn1]{Input Image} edge[->] (nn1);
-\visible<2> {\node (x) [right=of hid]{\footnotesize{pseudo-observation, state variables, ...}}
-edge [<-] (hid);}
-\end{tikzpicture}
-\end{figure}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Application to the prediction of Total Suspended Matter}
-\begin{figure}
-\includegraphics[width=0.9\textwidth]{./fig/arch-tsm.png}
-\caption{Proposed architechture to forecast total suspended matter}
-\end{figure}
-\rref[Brajard et al. (2017)]
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{First results}
-\begin{columns}
-\column{.5\textwidth}
-\begin{figure}
-\includegraphics[width=0.9\textwidth]{./fig/scatter-tsm.png}
-\caption{Scatter plot between real data and neural network prediction}
-\end{figure}
-\column{.5\textwidth}
-\begin{figure}
-\includegraphics[width=0.9\textwidth]{./fig/serie-tsm.png}
-\caption{Zoom of a time serie of the truth (in blue), the persistence
-  model (in red) and the neural network prediction (in black)}
-\end{figure}
-\end{columns}
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Conclusion}
-\begin{block}{Bayesian data assimilation approach}
+\begin{onlyenv}<4->
 \begin{itemize}
-\gooditem Some non-conventional data (e.g. lagrangian) can be handled
-\gooditem Gives a theoritical framework (bayesian)
-\pooritem A lot of a-priori assumption have to be made (e.g. error
-statistics)
-\pooritem Difficult when the model is badly known or too costly 
+\item Mixing data based and model based methods
+\item Extracting new features from large/multiscale datasets
+\item Using machine learning to perform forecast
 \end{itemize}
-\end{block}
-\begin{exampleblock}{Machine learning approach}
-\begin{itemize}
-\gooditem Very flexible method
-\gooditem Can extract relevant structures in the image
-\pooritem No theoritical framework
-\pooritem Uncertainty difficult (but not impossible) to evaluate
-\end{itemize}
-\end{exampleblock}
+\end{onlyenv}
 \end{frame}
+
 
 
 \end{document}
