@@ -27,6 +27,7 @@
 \usepackage{bm}
 \usepackage{hhline}
 \usepackage{xmpmulti}
+\usepackage{pgfplots}
 
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{positioning}
@@ -209,16 +210,96 @@
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{What is machine learning ?}
+\begin{block}{A machine}
+\begin{equation*}
+y = \mathcal{M}(x,\theta)
+\end{equation*}
+\begin{itemize}
+\item $x$: input
+\item $y$: output
+\item $\mathcal{M}$: a model (named "machine")
+\item $\theta$ : parameters of the model $\mathcal{M}$.
+\end{itemize}
+\end{block}
+\alert{Machine learning} consists in optimizing $\theta$ using a set of data. 
+This is the training process.
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Example 1: Computer Vision}
+\begin{figure}
+\includegraphics[width=\textwidth]{./figs/compute-vision.png}
+\end{figure}
+\rref[Li, Karpathy and Johnson, 2016, Stanford CS231n course]
 
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{New advances of machine learning}
+\frametitle{Example 1: Computer Vision}
+\framesubtitle{Image Net Large Scale Recogonition Challenge (ILSVRC)}
+\begin{figure}
 
+\begin{tikzpicture} 
+  \begin{axis}[ 
+    x tick label style={ 
+      /pgf/number format/1000 sep=}, 
+    ylabel=Classification error, 
+    xtick={2010,2011,2012,2013,2014,2015,2016,2017},
+    xticklabels={2010,2011,2012,2013,2014,2015,2016,hum.},
+    enlargelimits=0.15, 
+     bar width=7pt, 
+    ybar,
+   legend style={at={(0.5,-0.15)},
+     anchor=north,legend columns=-1}, 
+   x tick label style={font=\footnotesize,rotate=45, anchor=east},
+   very axis plot/.append style={
+      ybar,
+      bar width=.2,
+      bar shift=0pt,
+      fill},
+      nodes near coords,
+   ] 
+   \addplot[ybar,fill=blue!60, bar shift=0pt]
+   coordinates {(2010,28) (2011,26)}; 
+   \addplot[ybar,fill=red!60]
+   coordinates {(2012,16) (2013,12) (2014,7) (2015,3.6) (2016,3)}; 
+   \addplot[ybar,fill=green!60, bar shift=0pt] 
+   coordinates 
+   {(2017,5.1)};  
+   \legend{traditional algo.,Deep Learning,Human}
+ \end{axis} 
+\end{tikzpicture}
+\end{figure}
 \end{frame}
 
+
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Machine Translation}
+Objective : translate a text from a language to another.
+\begin{figure}
+\includegraphics[width=.6\textwidth]{./figs/google-trad.png}
+\end{figure}
+\begin{itemize}
+\item 2014: First scientif paper in neural networks in machine translation.
+\item 2016: Neural machine translation outperforme tradiational approaches on public benchmarks
+\item 2017: Most of the systems (Google, Systran, WIPO) switch to neural machine translation 
+\end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Advances in machine learning}
+\framesubtitle{Example 2: Playing games}
+
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}
