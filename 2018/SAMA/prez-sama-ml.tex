@@ -195,7 +195,8 @@
 \newcommand{\nb}{1}
 
 \title[machine learning]{Machine Learning à l'IPSL}
-\author[J. Brajard]{julien.brajard@sorbonne-universite.fr}
+\author[J. Brajard]{J. Brajard, L. Barthes, O. Bouchet, C. Mallet, E. de Bezenac, O. Schwander, S. Thiria}
+
 \institute[LOCEAN/SU]{LOCEAN-SU}
 \date{13 Mars 2018}
 \begin{document}
@@ -359,7 +360,8 @@ A non-exhaustive list:
   \visible<2->{
     \begin{itemize}
       \item inferance of non obervable parameters of rain events.
-      \item Completion (inpainting) of satellite data under clouds
+      \item Completion (inpainting) of satellite data under clouds.
+      \item Parametrization of sub-scale processes in numerical models.
     \end{itemize}
   }
 \item Quality control
@@ -385,6 +387,20 @@ A non-exhaustive list:
 \rref[De Bezenac et al. 2017]
 
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Evaluate CMIP5 models about upwelling representation}
+\alert{Objective:} Compare, evaluate (and combine) climate model outputs in the region of the Senegal upwelling.\\
+\alert{Model:} Clustering using Self-Organizing-Maps (a type of neural network).
+\begin{figure}
+\includegraphics<1>[width=\textwidth]{./figs/upwelling-cl.png}
+\includegraphics<2>[width=.65\textwidth]{./figs/upwelling-diag.png}
+\end{figure}
+
+\end{frame}
+
+
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Some examples}
@@ -394,4 +410,20 @@ climate
 
 
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{institutional context}
+- Make our planet great again
+- Intelligence artificielle et climat
+- Extreme Earth
+- SAMA-Machine Learning group
+
+Inpainting
+parametrization
+climate
+
+
+\end{frame}
+
 \end{document}
