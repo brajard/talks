@@ -320,29 +320,69 @@ Objective : translate a text from a language to another.
 \frametitle{Link between climate-related study and machine learning }
 \begin{figure}
 \includegraphics[height=.7\textheight]{./figs/nature.png}
-\rref{Jones, Nature 548, 379–380 (24 August 2017)}
 \end{figure}
+\rref[Jones, Nature 548, 379–380 (24 August 2017)]
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Subjects to be addressed}
-Forecasts
-Nowcast
-Feature identification
-parameter estimation
-quality control
-model aggregation
+\frametitle{Some problems to be addressed by machine learning ?}
+A non-exhaustive list:
+\begin{itemize}
+\item Forecasting
+  \visible<2->{
+    \begin{itemize}
+    \item Sea surface temperature advection
+    \end{itemize}
+  }
+\item Nowcasting
+  \visible<2->{
+    \begin{itemize}
+    \item Rain cells nowcasting from radar data
+    \item Total suspended matter (sea surface satellite images)
+    \end{itemize}
+  }
+\item Model aggregation
+  \visible<2->{
+    \begin{itemize}
+    \item CMIP5 model ranking on senegal upwelling representation.
+    \end{itemize}
+  }
+\item Feature identification
+  \visible<2->{
+    \begin{itemize}
+      \item Eddy detection over Mediterranean Sea.
+    \end{itemize}
+  }
+\item Parameter estimation
+  \visible<2->{
+    \begin{itemize}
+      \item inferance of non obervable parameters of rain events.
+      \item Completion (inpainting) of satellite data under clouds
+    \end{itemize}
+  }
+\item Quality control
+\end{itemize}
 \end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Some examples}
-Inpainting
-parametrization
-climate thiria
-
+\frametitle{Sea Surface Temperature forecast (SST)}
+\alert{Objective:} predict daily SST images from past SST images.\\
+\alert{Model:} Combination of a convolutive neural network model for motion estimate and a warping scheme to advect the input image.
+\begin{figure}
+\begin{tikzpicture}
+\begin{scope}[text width=8em,anchor=east, align=right]
+\node (line2) {Deep learning forecast};
+\node [above of = line2,node distance = 1.2cm] (line1) {Reanalysis (truth)};
+\node [below of = line2,node distance = 2cm] (line3) {Motion estimate};
+\end{scope}
+\node [right of = line2, anchor=west, node distance = 1.8cm] (im) {\includegraphics[height=5cm]{./figs/sst.png}};
+\end{tikzpicture}
+\end{figure}
+\rref[De Bezenac et al. 2017]
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
