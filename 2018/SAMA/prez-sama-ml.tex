@@ -244,7 +244,7 @@ This is the training process.
 \framesubtitle{Image Net Large Scale Recogonition Challenge (ILSVRC)}
 \begin{figure}
 
-\begin{tikzpicture} 
+\begin{tikzpicture} [scale=0.8, every node/.style={scale=0.6}]
   \begin{axis}[ 
     x tick label style={ 
       /pgf/number format/1000 sep=}, 
@@ -275,6 +275,7 @@ This is the training process.
  \end{axis} 
 \end{tikzpicture}
 \end{figure}
+Deep learning architectures was based on Convolutional Neural Networks (CNN).
 \end{frame}
 
 
@@ -287,9 +288,10 @@ Objective : translate a text from a language to another.
 \includegraphics[width=.6\textwidth]{./figs/google-trad.png}
 \end{figure}
 \begin{itemize}
-\item 2014: First scientif paper in neural networks in machine translation.
-\item 2016: Neural machine translation outperforme tradiational approaches on public benchmarks
-\item 2017: Most of the systems (Google, Systran, WIPO) switch to neural machine translation 
+\item 2014: First scientic paper in neural networks in machine translation.
+\item 2016: Neural machine translation outperform tradiational approaches on public benchmarks
+\item 2017: Most of the systems (Google, Systran, WIPO) switch to
+  neural machine translation  (using recurrent neural networks)
 \end{itemize}
 \end{frame}
 
@@ -298,16 +300,41 @@ Objective : translate a text from a language to another.
 \begin{frame}
 \frametitle{Advances in machine learning}
 \framesubtitle{Example 2: Playing games}
-
+\begin{columns}
+\column{.5\textwidth}
+\begin{itemize}
+\item 1997: Deep Blue defeats Kasparov at Chess.
+\item 2016: AlphaGo's victory again Lee Sedol at Go.
+\item 2017: AphaGo Zero learns how to play Go only by playing against
+  itself. It outperformed previous AlphaGo version (Reinforcement
+  learning)
+\item 2017: DeepStack beats professional human poker players.
+\end{itemize}
+\column{.5\textwidth}
+\includegraphics[width=\textwidth]{./figs/alphago.jpg}
+\end{columns}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Link between climate-related study and machine learning }
-Nature
-
+\begin{figure}
+\includegraphics[height=.7\textheight]{./figs/nature.png}
+\rref{Jones, Nature 548, 379–380 (24 August 2017)}
+\end{figure}
 \end{frame}
 
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Subjects to be addressed}
+Forecasts
+Nowcast
+Feature identification
+parameter estimation
+quality control
+model aggregation
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}
