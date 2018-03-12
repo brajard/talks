@@ -288,10 +288,10 @@ Objective : translate a text from a language to another.
 \includegraphics[width=.6\textwidth]{./figs/google-trad.png}
 \end{figure}
 \begin{itemize}
-\item 2014: First scientic paper in neural networks in machine translation.
+\item Oct. 2013: Pionneering scientic paper about neural networks in machine translation(Kalchbrenner, N., and Blunsom, P).
 \item 2016: Neural machine translation outperform tradiational approaches on public benchmarks
-\item 2017: Most of the systems (Google, Systran, WIPO) switch to
-  neural machine translation  (using recurrent neural networks)
+\item 2017: Major systems (Google, Systran, WIPO, Microsoft) switch to
+  neural machine translation  (using deep recurrent neural networks)
 \end{itemize}
 \end{frame}
 
@@ -343,12 +343,12 @@ A non-exhaustive list:
 \begin{frame}
 \frametitle{Contexte institutionnel à l'IPSL (et au-delà)}
 
-\begin{itemize}
-\item Projet européen de rehcerche et d'innovation (RIA) sur sur l'Intelligence Artificiel.\\
+\begin{itemize}[<+->]
+\item Projet européen de recherche et d'innovation (RIA) sur l'Intelligence Artificiel.\\
 Importance des enjeux sociétaux et économiques, et notamment construction d'un volet "Climat"\\
 {\scriptsize\url{http://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/topics/ict-26-2018-2020.html}}
 \item Projets "Make ou planet great again", lauréat Pr V. Balaji (Automn 2018).\\
-Utiliser des simulation hautes résolutions afin de mieux représenter l'effet des nuages dans les modèles de climat.
+Utiliser des simulations hautes résolutions afin de mieux représenter l'effet des nuages dans les modèles de climat.
 \item Projet "Extreme earth" (porté par ECMWF)\\
 Représentation et prédiction d'évènements extrêmes (avec une composante Big Data, Deep learning)\\
 {\scriptsize\url{www.extremearth.eu}}
@@ -374,7 +374,7 @@ Représentation et prédiction d'évènements extrêmes (avec une composante Big
     \end{block}
     \column{.2\textwidth}
     \begin{figure}
-      \includegraphics[width=\textwidth]{./figs/logo-saclay.png}
+      \includegraphics[width=\textwidth]{./figs/logo-saclay.jpg}
     \end{figure}
   \end{columns}
 \pause
@@ -428,7 +428,7 @@ A non-exhaustive list:
   \visible<2->{
     \begin{itemize}
     \item Rain cells nowcasting from radar data
-    \item Total suspended matter (sea surface satellite images)
+    \item \alert<3>{Total suspended matter (sea surface satellite images)}
     \end{itemize}
   }
 \item Model aggregation
@@ -447,12 +447,12 @@ A non-exhaustive list:
 \item Parameter estimation
   \visible<2->{
     \begin{itemize}
-      \item Completion (inpainting) of satellite data under clouds.
-      \item Parametrization of sub-scale processes in numerical models.
+      \item \alert<4>{Completion (inpainting) of satellite data under clouds.}
+      \item \alert<5>{Parametrization of sub-scale processes in numerical models.}
       \item Phytoplancton type estimation from satellite images.
     \end{itemize}
   }
-\item Quality control
+\item \alert<6>{Quality control}
 \end{itemize}
 \end{frame}
 
@@ -479,7 +479,7 @@ non-obbservable parameters\\
 \begin{figure}
 \includegraphics<2>[width=\textwidth]{./figs/rain-gen.png}
 \includegraphics<3>[width=\textwidth]{./figs/rain-res.png}
-\rref[A AJOUTER]
+\rref[Dilmi et al. 2017]
 \end{figure}
 \end{columns}
 \end{frame}
@@ -493,6 +493,7 @@ non-obbservable parameters\\
 \begin{figure}
 \includegraphics[width=.8\textwidth]{./figs/phyto.pdf}
 \end{figure}
+Training set: 5500 in-situ data (MAREDAT global database)
 \rref[Hourani et al. 2017]
 \end{frame}
 
@@ -520,8 +521,8 @@ non-obbservable parameters\\
 %%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Evaluate CMIP5 models about upwelling representation}
-\alert{Objective:} Compare, evaluate (and combine) climate model outputs in the region of the Senegal upwelling.\\
-\alert{Model:} Clustering using Self-Organizing-Maps (a type of neural network).
+\alert{Objective:} Compare, evaluate (and combine) climate model outputs.\\
+\alert{Model:} Clustering using Self-Organizing-Maps.
 \begin{figure}
 \includegraphics<1>[width=\textwidth]{./figs/upwelling-cl.png}
 \includegraphics<2>[width=.65\textwidth]{./figs/upwelling-diag.png}
@@ -532,13 +533,25 @@ non-obbservable parameters\\
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Les besoins pour le future}
+\frametitle{Les besoins pour le futur}
 \begin{itemize}
-\item Renforcer les liens entre formations (Master) de l'IPSL et les UFR d'ingénierie.
-\item Mieux cibler les grandes questions scientifiques liées à l'apprentissage automatique.
-\item Améliorer la visibilité de ce domaine à l'IPSL.
-\item Bénéficier d'une infrastructure technique permettant la mise aux point des algorithmes d'apprentissage profond.
-\item Structurer la recherche en apprentissage automatique sur les thèmes du climat et des sciences de l'environnement en lien avec d'autres équipes (nationales et internationales).
+\item<1-> Renforcer les liens entre formations (Master) de l'IPSL et les
+  UFR d'ingénierie.
+\begin{itemize}
+\item Stage pluri-disciplinaires
+\end{itemize}
+\item<2-> Mieux cibler les grandes questions scientifiques liées à l'apprentissage automatique.
+\item<3-> Améliorer la visibilité d'apprentissage automatique à l'IPSL.
+\item<4-> Bénéficier d'une infrastructure technique permettant la mise aux
+  point des algorithmes d'apprentissage (apprentissage profond, ...).
+\item<5-> Structurer la recherche en apprentissage automatique sur les
+  thèmes du climat et des sciences de l'environnement en lien avec
+  d'autres équipes (nationales et internationales).
+\begin{itemize}
+\item AMS: Committee on Artificial Intelligence Applications to
+  Environmental Science
+\item ...
+\end{itemize}
 \end{itemize}
 
 \end{frame}
